@@ -15,7 +15,6 @@ on:
   pull_request:
     branches:
       - '**'
-  workflow_dispatch
 
 ###############################################################################
 # Platform script options shared among all jobs
