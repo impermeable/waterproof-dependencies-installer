@@ -1,4 +1,5 @@
 # Waterproof Dependencies Installer
+# DO NOT MERGE
 > Windows installer which installes all dependencies needed for the Waterproof application.
 
 ### Usage
