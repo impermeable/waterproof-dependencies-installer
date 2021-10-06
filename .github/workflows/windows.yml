@@ -15,6 +15,7 @@ on:
   pull_request:
     branches:
       - '**'
+  workflow_dispatch:
 
 ###############################################################################
 # Platform script options shared among all jobs
@@ -53,7 +54,14 @@ jobs:
           repository: coq/platform
           path: platform
 
-      - name: Run common platform script
+      - name: Set switch name in coq platform
+        shell: cmd
+        # We need to output without a (windows style new line here) else bash will complain AND we rely on the fact that the file has a trailing new line.
+        run: |
+          echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof" >> platform\coq_platform_switch_name.sh
+          type platform\coq_platform_switch_name.sh
+
+      - name: Run coq platform make windows
         shell: cmd
         run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_coq_platform -arch=${{matrix.architecture}} -extent=b -parallel=p -jobs=2 -vst=n -compcert=n
           
@@ -73,7 +81,12 @@ jobs:
         shell: cmd
         run: C:\cygwin_coq_platform\bin\bash --login -c "cd coq-platform/ && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
 
+      - name: Run test file
+        shell: cmd
+        run: C:\cygwin_coq_platform\bin\bash --login -c "cd coq-platform/ && ./test.sh"  
+
       - name: 'Upload Artifact'
+        if: always()
         uses: actions/upload-artifact@v2
         with:
           name: 'Windows installer ${{matrix.architecture}} bits'
