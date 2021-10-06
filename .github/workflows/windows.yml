@@ -69,6 +69,8 @@ jobs:
         shell: cmd
         run: |
           copy main\* C:\cygwin_coq_platform\home\runneradmin\coq-platform\
+          mkdir C:\cygwin_coq_platform\home\runneradmin\coq-platform\test_files\
+          copy main\test_files\* C:\cygwin_coq_platform\home\runneradmin\coq-platform\test_files\
           C:\cygwin_coq_platform\bin\bash --login -c "cd coq-platform && ./install_packages.sh packages.cfg"
         
       - name: Patch SerAPI
