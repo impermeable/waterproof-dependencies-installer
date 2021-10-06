@@ -1,3 +1,7 @@
+Section "Waterproof_ltac2_tactics" Sec_Waterproof_ltac2_tactics
+SetOutPath "$INSTDIR\"
+!include "files_Waterproof_ltac2_tactics.nsh"
+SectionEnd
 Section /o "zfc" Sec_zfc
 SetOutPath "$INSTDIR\"
 !include "files_zfc.nsh"
