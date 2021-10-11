@@ -3,9 +3,9 @@
 
 ### Usage
 
-![image](https://user-images.githubusercontent.com/16321928/123624232-9ec84980-d80e-11eb-9829-ca653ba6f6b8.png "Installation Process")
+![image](https://user-images.githubusercontent.com/23257952/136795885-21559223-33d8-45fc-8a5b-02499d38fca0.png "Installation Process")
 
-⚠ Note that the installation path should be chosen to be `C:\cygwin64_coq\home\trist\.opam\_coq-platform_.2021.02.1\`
+⚠ Note that the installation path should be chosen to be `C:\cygwin_coq_platform\home\runneradmin\.opam\coq_for_waterproof\`
 
 ⚠ Note that in the library selection window, Coq-SerAPI is required for Waterproof to function!
 
