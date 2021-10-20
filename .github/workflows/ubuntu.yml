@@ -51,12 +51,12 @@ jobs:
         # We need to output without a (windows style new line here) else bash will complain AND we rely on the fact that the file has a trailing new line.
         run: |
           pwd
-          ls
           sed -i 's/_coq-platform_.$COQ_PLATFORM_VERSION/coq_for_waterproof/g' platform/coq_platform_switch_name.sh
           cat platform/coq_platform_switch_name.sh
 
       - name: Install bubblewrap and build-essential (and curl?)
         run: |
+          pwd
           sudo apt-get update -y
           sudo apt-get install bubblewrap build-essential -y
           sudo apt install curl -y
@@ -64,6 +64,7 @@ jobs:
       - name: Run coq platform make
         shell: bash
         run: |
+          pwd
           cd platform
           chmod +x coq_platform_make.sh
           ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n
@@ -75,7 +76,8 @@ jobs:
           ls
           pwd
           cp -r main/. platform
-          mkdir platform/test_files/
+          mkdir -p platform/test_files/
+          pwd
           cp -r main/test_files/. platform/test_files
           cd platform
           chmod +x install_packages.sh
