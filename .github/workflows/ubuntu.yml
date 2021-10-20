@@ -50,7 +50,7 @@ jobs:
 #         shell: cmd
         # We need to output without a (windows style new line here) else bash will complain AND we rely on the fact that the file has a trailing new line.
         run: |
-          echo 'COQ_PLATFORM_SWITCH_NAME= coq_for_waterproof' >> platform/coq_platform_switch_name.sh
+          echo 'COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof' >> platform/coq_platform_switch_name.sh
           cat platform/coq_platform_switch_name.sh
 
       - name: Run coq platform make
