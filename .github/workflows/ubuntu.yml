@@ -47,21 +47,24 @@ jobs:
           path: platform
 
       - name: Set switch name in coq platform
-#         shell: cmd
+        shell: bash
         # We need to output without a (windows style new line here) else bash will complain AND we rely on the fact that the file has a trailing new line.
         run: |
-          cd platform
-          sed '$d' coq_platform_switch_name.sh
-          echo 'COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof' >> coq_platform_switch_name.sh
-          cd ..
+          pwd
+          ls
+          sed -i 's/_coq-platform_.$COQ_PLATFORM_VERSION/coq_for_waterproof/g' platform/coq_platform_switch_name.sh
           cat platform/coq_platform_switch_name.sh
 
+      - name: Install bubblewrap and build-essential (and curl?)
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install bubblewrap build-essential -y
+          sudo apt install curl -y
+
       - name: Run coq platform make
-#         shell: cmd
+        shell: bash
         run: |
           cd platform
-          sudo apt-get install build-essential -y
-          sudo apt install curl -y
           chmod +x coq_platform_make.sh
           ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n
           cd ..
