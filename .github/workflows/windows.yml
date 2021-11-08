@@ -52,6 +52,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: coq/platform
+          ref: '2021.02.2'
           path: platform
 
       - name: Set switch name in coq platform
