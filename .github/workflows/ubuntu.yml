@@ -51,7 +51,7 @@ jobs:
         # We need to output without a (windows style new line here) else bash will complain AND we rely on the fact that the file has a trailing new line.
         run: |
           pwd
-          echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> platform/package_picks/coq_platform_switch_name.sh
+          echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >>
           cat platform/package_picks/coq_platform_switch_name.sh
 
       - name: Install bubblewrap and build-essential (and curl?)
@@ -67,7 +67,7 @@ jobs:
           pwd
           cd platform
           chmod +x coq_platform_make.sh
-          ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n
+          ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01"
           cd ..
           
       - name: Install packages specified in cfg file
