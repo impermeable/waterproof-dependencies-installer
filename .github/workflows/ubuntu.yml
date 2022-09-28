@@ -57,7 +57,6 @@ jobs:
       - name: Install bubblewrap and build-essential (and curl?)
         run: |
           pwd
-          echo ${COQ_PLATFORM_SWITCH_NAME}
           sudo apt-get update -y
           sudo apt-get install bubblewrap build-essential -y
           sudo apt install curl -y
@@ -68,9 +67,7 @@ jobs:
           pwd
           cd platform
           chmod +x coq_platform_make.sh
-          ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01"
-          expect "Set the new opam switch as default now (y/n)?"
-          send "y"
+          ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
           cd ..
           
       - name: Install packages specified in cfg file
