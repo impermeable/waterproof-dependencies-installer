@@ -51,7 +51,8 @@ jobs:
         # We need to output without a (windows style new line here) else bash will complain AND we rely on the fact that the file has a trailing new line.
         run: |
           pwd
-          sed -i 's/_coq-platform_.$COQ_PLATFORM_VERSION/coq_for_waterproof/g' platform/package_picks/coq_platform_switch_name.sh
+        #  sed -i 's/"__coq-platform.${COQ_PLATFORM_RELEASE}${COQ_PLATFORM_PACKAGE_PICK_POSTFIX}"/coq_for_waterproof/g' platform/package_picks/coq_platform_switch_name.sh
+          echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> platform/package_picks/coq_platform_switch_name.sh
           cat platform/package_picks/coq_platform_switch_name.sh
 
       - name: Install bubblewrap and build-essential (and curl?)
