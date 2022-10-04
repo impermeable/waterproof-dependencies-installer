@@ -1,0 +1,87 @@
+# This is a basic workflow to help you get started with Actions
+
+name: MacOS
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+###############################################################################
+# Platform script options shared among all jobs
+###############################################################################
+env:
+  COQREGTESTING: y
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  Ubuntu_platform:
+    name: MacOS
+    runs-on: macos-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Set git to use LF
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+          
+      - name: Git checkout install scripts
+        uses: actions/checkout@v2
+        with:
+          path: main
+          
+      - name: Git checkout Coq platform
+        uses: actions/checkout@v2
+        with:
+          repository: coq/platform
+          path: platform
+
+      - name: Install homebrew, bubblewrap and build-essential (and curl?)
+        shell: bash
+        run: |
+          pwd
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          brew install bubblewrap
+          brew install make
+          brew install gcc
+          brew install unzip
+
+      - name: Set switch name in coq platform
+        shell: bash
+        run: |
+          cd platform/package_picks/
+          echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> platform/package_picks/coq_platform_switch_name.sh
+          cat platform/package_picks/coq_platform_switch_name.sh
+          cd ..
+
+      - name: Run coq platform make
+        shell: bash
+        run: |
+          chmod +x coq_platform_make.sh
+          ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
+          cd ..
+          rm -rf platform
+
+      - name: Install serapi
+        shell: 
+        run: |
+          opam install coq-serapi
+
+      - name: 'Upload Artifact'
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: 'MacOs installer Shell Script'
+          path: main/macOs_installer/
+          retention-days: 5
+          
