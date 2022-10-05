@@ -46,7 +46,7 @@ jobs:
           repository: coq/platform
           path: platform
 
-      - name: Install homebrew, bubblewrap and build-essential (and curl?)
+      - name: Install homebrew and make
         shell: bash
         run: |
           pwd
@@ -59,8 +59,8 @@ jobs:
         shell: bash
         run: |
           cd platform/package_picks/
-          echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> platform/package_picks/coq_platform_switch_name.sh
-          cat platform/package_picks/coq_platform_switch_name.sh
+          echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> coq_platform_switch_name.sh
+          cat coq_platform_switch_name.sh
           cd ..
 
       - name: Run coq platform make
