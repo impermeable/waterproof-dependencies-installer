@@ -51,7 +51,6 @@ jobs:
         run: |
           pwd
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install bubblewrap
           brew install make
           brew install gcc
           brew install unzip
