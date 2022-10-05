@@ -54,6 +54,11 @@ jobs:
           brew install make
           brew install gcc
           brew install unzip
+#           The location in which homebrew is installed depends on the
+#           architecture of the mac, apple silicone uses opt/homebrew
+          if [[ $(uname -m) == 'arm64' ]]; then
+            export PATH=/opt/homebrew/bin:$PATH
+          fi
 
       - name: Set switch name in coq platform
         shell: bash
@@ -76,6 +81,17 @@ jobs:
         shell: bash
         run: |
           opam install -y coq-serapi
+            opam install -y coq-coquelicot
+
+      - name: Install Waterproof library
+        shell: bash
+        run: |
+          git clone https://github.com/impermeable/coq-waterproof
+          cd coq-waterproof
+          make
+          make install
+          cd ..
+          rm -rf coq-waterproof
 
       - name: 'Upload Artifact'
         if: always()
