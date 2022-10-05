@@ -48,7 +48,6 @@ jobs:
 
       - name: Set switch name in coq platform
         shell: bash
-        # We need to output without a (windows style new line here) else bash will complain AND we rely on the fact that the file has a trailing new line.
         run: |
           pwd
           echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> platform/package_picks/coq_platform_switch_name.sh
@@ -70,40 +69,11 @@ jobs:
           ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
           cd ..
           
-      - name: Install packages specified in cfg file
-#         shell: cmd
+      - name: Install serapi
+        shell: bash
         run: |
-          cp -r main/. platform
-          mkdir -p platform/test_files/
-          cp -r main/test_files/. platform/test_files
-          cd platform
-          chmod +x install_packages.sh
-          ./install_packages.sh packages.cfg
-          cd ..
-
-# This seems to be only for windows so idk
-      - name: Patch SerAPI
-#         shell: cmd
-        run: |
-          cp main/patch_serapi.sh .
-          chmod +x patch_serapi.sh
-          ./patch_serapi.sh
-         
-# TODO the thing below makes no sense of course
-      - name: Create installer
-#         shell: cmd
-        run: |
-          cd platform
-          ./linux/create_linux_installer.sh
-          mkdir /cygdrive/c/installer
-          cp linux_installer/*.exe /cygdrive/c/installer/"
-
-      - name: Run test file
-#         shell: cmd
-        run: |
-          cd platform/
-          chmod +x test.sh
-          ./test.sh
+          opam install -y coq-serapi
+ 
 
       - name: 'Upload Artifact'
         if: always()
