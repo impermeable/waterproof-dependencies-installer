@@ -54,8 +54,6 @@ jobs:
           brew install make
           brew install gcc
           brew install unzip
-#           The location in which homebrew is installed depends on the
-#           architecture of the mac, apple silicone uses opt/homebrew
           if [[ $(uname -m) == 'arm64' ]]; then
             export PATH=/opt/homebrew/bin:$PATH
           fi
