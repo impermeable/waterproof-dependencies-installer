@@ -75,7 +75,7 @@ jobs:
       - name: Install serapi
         shell: bash
         run: |
-          opam install coq-serapi
+          opam install -y coq-serapi
 
       - name: 'Upload Artifact'
         if: always()
