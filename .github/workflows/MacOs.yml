@@ -73,7 +73,7 @@ jobs:
           rm -rf platform
 
       - name: Install serapi
-        shell: 
+        shell: bash
         run: |
           opam install coq-serapi
 
