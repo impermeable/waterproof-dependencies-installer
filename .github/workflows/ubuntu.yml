@@ -73,7 +73,17 @@ jobs:
         shell: bash
         run: |
           opam install -y coq-serapi
- 
+          opam install -y coq-coquelicot
+
+      - name: Install Waterproof library
+        shell: bash
+        run: |
+          git clone https://github.com/impermeable/coq-waterproof
+          cd coq-waterproof
+          make
+          make install
+          cd ..
+          rm -rf coq-waterproof
 
       - name: 'Upload Artifact'
         if: always()

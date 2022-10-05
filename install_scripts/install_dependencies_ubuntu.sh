@@ -20,9 +20,14 @@ cd ..
 rm -rf platform
 
 #Install Serapi
-#git clone https://github.com/ejgallego/coq-serapi.git
-#cd coq-serapi
-opam install coq-serapi
+opam install -y coq-serapi
+opam install -y coq-coquelicot
 
-
+#Install Waterproof tacticst clone
+git clone https://github.com/impermeable/coq-waterproof
+cd coq-waterproof
+make
+make install
+cd ..
+rm -rf coq-waterproof
 
