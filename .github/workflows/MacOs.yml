@@ -58,14 +58,15 @@ jobs:
       - name: Set switch name in coq platform
         shell: bash
         run: |
-          cd platform/package_picks/
-          echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> coq_platform_switch_name.sh
-          cat coq_platform_switch_name.sh
-          cd ..
+          echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> platform/package_picks/coq_platform_switch_name.sh
+          cat platform/package_picks/coq_platform_switch_name.sh
 
       - name: Run coq platform make
         shell: bash
         run: |
+          pwd
+          cd platform
+          pwd
           chmod +x coq_platform_make.sh
           ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
           cd ..
