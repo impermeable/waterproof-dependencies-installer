@@ -70,9 +70,10 @@ jobs:
 
       - name: Install system utilities
         run: |
-          sudo port install findutils
-          sudo port install coreutils
-          sudo port install py38-pip; port select --set pip3 pip38; pip3 install macpack
+          brew install findutils
+          brew install coreutils
+          brew install python3
+          pip3 install macpack
 
       - name: Set switch name in coq platform
         shell: bash
