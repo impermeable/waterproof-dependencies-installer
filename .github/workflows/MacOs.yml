@@ -91,8 +91,11 @@ jobs:
       - name: Create installer
         shell: bash
         run: |
+          cd macos
           opam switch coq_for_waterproof
-          macos/create_installer_macos.sh
+          chmod +x create_installer_macos.sh
+          ./create_installer_macos.sh
+          cd ..
 
 
       - name: 'Upload Artifact'
