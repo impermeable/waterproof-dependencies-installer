@@ -58,6 +58,18 @@ jobs:
             export PATH=/opt/homebrew/bin:$PATH
           fi
 
+      #Github actions uses bash 3 instead of bash 4 which is needed for the installer script :) 
+      - name: Install Bash 4 and GNU sed on Mac
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          brew update
+
+          brew install bash
+          brew install gnu-sed
+
+          echo "/usr/local/bin" >> $GITHUB_PATH
+          echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
+
       - name: Set switch name in coq platform
         shell: bash
         run: |
