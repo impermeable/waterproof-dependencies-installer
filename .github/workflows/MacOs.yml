@@ -69,33 +69,37 @@ jobs:
         run: |
           pwd
           cd platform
-          pwd
           chmod +x coq_platform_make.sh
-          ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
-          cd ..
-          rm -rf platform
+          ./coq_platform_make.sh -extent=x -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
 
-      - name: Install serapi
+#      - name: Install serapi
+#        shell: bash
+#        run: |
+#          opam install -y coq-serapi
+#            opam install -y coq-coquelicot
+
+#      - name: Install Waterproof library
+#       shell: bash
+#        run: |
+#          git clone https://github.com/impermeable/coq-waterproof
+#          cd coq-waterproof
+#          make
+#          make install
+#          cd ..
+#          rm -rf coq-waterproof
+
+      - name: Create installer
         shell: bash
         run: |
-          opam install -y coq-serapi
-            opam install -y coq-coquelicot
+          opam switch __coq-platform.2022.09.0~package-pick-8.14~2022.01.sh
+          macos/create_installer_macos.sh
 
-      - name: Install Waterproof library
-        shell: bash
-        run: |
-          git clone https://github.com/impermeable/coq-waterproof
-          cd coq-waterproof
-          make
-          make install
-          cd ..
-          rm -rf coq-waterproof
 
       - name: 'Upload Artifact'
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: 'MacOs installer Shell Script'
-          path: main/macOs_installer/
+          path: platform/macos/*.dmg
           retention-days: 5
           
