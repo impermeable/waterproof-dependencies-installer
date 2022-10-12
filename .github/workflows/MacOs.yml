@@ -91,14 +91,10 @@ jobs:
       - name: Create installer
         shell: bash
         run: |
-          pwd
           cd platform
-          pwd
-          cd macos
-          pwd
           opam switch coq_for_waterproof
-          chmod +x create_installer_macos.sh
-          ./create_installer_macos.sh
+          chmod +x macos/create_installer_macos.sh
+          ./macos/create_installer_macos.sh
           cd ..
 
 
