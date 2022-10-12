@@ -70,7 +70,7 @@ jobs:
           pwd
           cd platform
           chmod +x coq_platform_make.sh
-          ./coq_platform_make.sh -extent=x -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
+          ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
 
 #      - name: Install serapi
 #        shell: bash
