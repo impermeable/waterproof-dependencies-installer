@@ -91,7 +91,7 @@ jobs:
       - name: Create installer
         shell: bash
         run: |
-          opam switch __coq-platform.2022.09.0~package-pick-8.14~2022.01.sh
+          opam switch coq_for_waterproof
           macos/create_installer_macos.sh
 
 
