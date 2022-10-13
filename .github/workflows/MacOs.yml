@@ -68,12 +68,6 @@ jobs:
           echo "/usr/local/bin" >> $GITHUB_PATH
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
 
-      - name: Install system utilities
-        run: |
-          brew install findutils
-          brew install coreutils
-          pip3 install macpack
-
       - name: Set switch name in coq platform
         shell: bash
         run: |
@@ -103,6 +97,12 @@ jobs:
 #          make install
 #          cd ..
 #          rm -rf coq-waterproof
+
+      - name: Install system utilities
+        run: |
+          brew install findutils
+          brew install coreutils
+          pip3 install macpack
 
       - name: Create installer
         shell: bash
