@@ -64,7 +64,6 @@ jobs:
         run: |
           brew install bash
           brew install gnu-sed
-
           echo "/usr/local/bin" >> $GITHUB_PATH
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
 
@@ -73,7 +72,7 @@ jobs:
         run: |
           echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> platform/package_picks/coq_platform_switch_name.sh
           cat platform/package_picks/coq_platform_switch_name.sh
-
+          
       - name: Run coq platform make
         shell: bash
         run: |
@@ -113,7 +112,6 @@ jobs:
           ./macos/create_installer_macos.sh
           cd ..
 
-
       - name: 'Upload Artifact'
         if: always()
         uses: actions/upload-artifact@v2
@@ -121,4 +119,3 @@ jobs:
           name: 'MacOs installer Shell Script'
           path: platform/macos/*.dmg
           retention-days: 5
-          
