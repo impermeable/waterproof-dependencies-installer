@@ -7,7 +7,7 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches:
-      - main
+      - macos
   pull_request:
     branches:
       - '**'
@@ -72,7 +72,7 @@ jobs:
         run: |
           echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> platform/package_picks/coq_platform_switch_name.sh
           cat platform/package_picks/coq_platform_switch_name.sh
-          
+
       - name: Run coq platform make
         shell: bash
         run: |
