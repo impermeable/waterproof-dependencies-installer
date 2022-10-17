@@ -46,15 +46,6 @@ jobs:
           repository: coq/platform
           path: platform
 
-      - name: Cache opam/coq
-        id: cache-opam
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-opam-modules
-        with:
-          path: ~/.opam
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-
       - name: Install homebrew and make
         shell: bash
         run: |
@@ -83,8 +74,7 @@ jobs:
           echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> platform/package_picks/coq_platform_switch_name.sh
           cat platform/package_picks/coq_platform_switch_name.sh
 
-      - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
-        name: Run coq platform make
+      - name: Run coq platform make
         shell: bash
         run: |
           pwd
@@ -92,12 +82,11 @@ jobs:
           chmod +x coq_platform_make.sh
           ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
 
-      - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
-        name: Install serapi
-        shell: bash
-        run: |
-          opam install -y coq-serapi
-          opam install -y coq-coquelicot
+#      - name: Install serapi
+#        shell: bash
+#        run: |
+#          opam install -y coq-serapi
+#            opam install -y coq-coquelicot
 
 #      - name: Install Waterproof library
 #       shell: bash
@@ -115,14 +104,14 @@ jobs:
           brew install coreutils
           pip3 install macpack
 
-#      - name: Create installer
-#        shell: bash
-#        run: |
-#          cd platform
-#          opam switch coq_for_waterproof
-#          chmod +x macos/create_installer_macos.sh
-#          ./macos/create_installer_macos.sh
-#          cd ..
+      - name: Create installer
+        shell: bash
+        run: |
+          cd platform
+          opam switch coq_for_waterproof
+          chmod +x macos/create_installer_macos.sh
+          ./macos/create_installer_macos.sh
+          cd ..
 
 
       - name: 'Upload Artifact'
