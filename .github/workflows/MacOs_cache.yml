@@ -46,6 +46,15 @@ jobs:
           repository: coq/platform
           path: platform
 
+      - name: Cache opam/coq
+        id: cache-opam
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-opam-modules
+        with:
+          path: ~/.opam
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+
       - name: Install homebrew and make
         shell: bash
         run: |
@@ -64,6 +73,7 @@ jobs:
         run: |
           brew install bash
           brew install gnu-sed
+
           echo "/usr/local/bin" >> $GITHUB_PATH
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
 
@@ -73,7 +83,8 @@ jobs:
           echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> platform/package_picks/coq_platform_switch_name.sh
           cat platform/package_picks/coq_platform_switch_name.sh
 
-      - name: Run coq platform make
+      - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
+        name: Run coq platform make
         shell: bash
         run: |
           pwd
@@ -81,11 +92,12 @@ jobs:
           chmod +x coq_platform_make.sh
           ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
 
-      - name: Install serapi
+      - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
+        name: Install serapi
         shell: bash
         run: |
           opam install -y coq-serapi
-            opam install -y coq-coquelicot
+          opam install -y coq-coquelicot
 
 #      - name: Install Waterproof library
 #       shell: bash
@@ -112,6 +124,7 @@ jobs:
           ./macos/create_installer_macos.sh
           cd ..
 
+
       - name: 'Upload Artifact'
         if: always()
         uses: actions/upload-artifact@v2
@@ -119,3 +132,4 @@ jobs:
           name: 'MacOs installer Shell Script'
           path: platform/macos/*.dmg
           retention-days: 5
+          
