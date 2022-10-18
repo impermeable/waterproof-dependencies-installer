@@ -77,9 +77,9 @@ jobs:
           echo "/usr/local/bin" >> $GITHUB_PATH
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
 
-      - name: Install Opam?
+      - name: Init Opam?
         run: |
-          brew install opam
+          opam init
 
       - name: Set switch name in coq platform
         shell: bash
