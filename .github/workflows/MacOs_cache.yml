@@ -118,7 +118,14 @@ jobs:
           brew install findutils
           brew install coreutils
           pip3 install macpack
-#          brew install adwaita-icon-theme
+          brew install adwaita-icon-theme
+      
+      # These libraries returned {dir} not found errors, installing them seems to solve the issue.
+      # Problem with installed libraries for workflows?
+      - name: Install libraries that gave errors in installer creation
+        run: |
+        brew install adwaita-icon-theme
+        brew install glib
 
       - name: Create installer
         shell: bash
