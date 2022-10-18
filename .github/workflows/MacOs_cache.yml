@@ -118,7 +118,7 @@ jobs:
           brew install findutils
           brew install coreutils
           pip3 install macpack
-          brew install adwaita-icon-theme
+#          brew install adwaita-icon-theme
 
       - name: Create installer
         shell: bash
