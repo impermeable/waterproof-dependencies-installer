@@ -124,8 +124,8 @@ jobs:
       # Problem with installed libraries for workflows?
       - name: Install libraries that gave errors in installer creation
         run: |
-        brew install adwaita-icon-theme
-        brew install glib
+          brew install adwaita-icon-theme
+          brew install glib
 
       - name: Create installer
         shell: bash
