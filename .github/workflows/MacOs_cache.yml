@@ -46,6 +46,33 @@ jobs:
           repository: coq/platform
           path: platform
 
+      - name: Checking glib directory
+        shell: bash
+        run: |
+        pwd
+        cd \usr\local
+        pwd
+        cd share
+        pwd
+        cd glib-2.0
+        pwd
+        cd schemas
+        pwd
+        ls
+        
+
+      - name: Checking glib directory
+        shell: bash
+        run: |
+        pwd
+        cd \usr\share
+        pwd
+        cd glib-2.0
+        pwd
+        cd schemas
+        pwd
+        ls
+
       - name: Cache opam/coq
         id: cache-opam
         uses: actions/cache@v3
@@ -118,7 +145,6 @@ jobs:
           brew install findutils
           brew install coreutils
           pip3 install macpack
-          brew install adwaita-icon-theme
       
       # These libraries returned {dir} not found errors, installing them seems to solve the issue.
       # Problem with installed libraries for workflows?
