@@ -53,7 +53,7 @@ jobs:
           cache-name: cache-opam-modules
         with:
           path: ~/.opam
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-no_install
 
       - name: Install homebrew and make
         shell: bash
@@ -115,14 +115,14 @@ jobs:
           brew install coreutils
           pip3 install macpack
 
-      - name: Create installer
-        shell: bash
-        run: |
-          cd platform
-          opam switch coq_for_waterproof
-          chmod +x macos/create_installer_macos.sh
-          ./macos/create_installer_macos.sh
-          cd ..
+#      - name: Create installer
+#        shell: bash
+#        run: |
+#          cd platform
+#          opam switch coq_for_waterproof
+#          chmod +x macos/create_installer_macos.sh
+#          ./macos/create_installer_macos.sh
+#          cd ..
 
 
       - name: 'Upload Artifact'
