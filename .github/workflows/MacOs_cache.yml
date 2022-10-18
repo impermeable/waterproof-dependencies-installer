@@ -115,14 +115,14 @@ jobs:
           brew install coreutils
           pip3 install macpack
 
-#      - name: Create installer
-#        shell: bash
-#        run: |
-#          cd platform
-#          opam switch coq_for_waterproof
-#          chmod +x macos/create_installer_macos.sh
-#          ./macos/create_installer_macos.sh
-#          cd ..
+      - name: Create installer
+        shell: bash
+        run: |
+          cd platform
+          opam switch coq_for_waterproof
+          chmod +x macos/create_installer_macos.sh
+          ./macos/create_installer_macos.sh
+          cd ..
 
 
       - name: 'Upload Artifact'
