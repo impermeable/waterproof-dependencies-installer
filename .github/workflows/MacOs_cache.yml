@@ -77,6 +77,10 @@ jobs:
           echo "/usr/local/bin" >> $GITHUB_PATH
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
 
+      - name: Install Opam?
+        run: |
+          brew install opam
+
       - name: Set switch name in coq platform
         shell: bash
         run: |
@@ -114,6 +118,7 @@ jobs:
           brew install findutils
           brew install coreutils
           pip3 install macpack
+          brew install adwaita-icon-theme
 
       - name: Create installer
         shell: bash
