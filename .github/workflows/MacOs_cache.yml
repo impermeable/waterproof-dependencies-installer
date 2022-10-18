@@ -49,29 +49,29 @@ jobs:
       - name: Checking glib directory
         shell: bash
         run: |
-        pwd
-        cd \usr\local
-        pwd
-        cd share
-        pwd
-        cd glib-2.0
-        pwd
-        cd schemas
-        pwd
-        ls
+          pwd
+          cd \usr\local
+          pwd
+          cd share
+          pwd
+          cd glib-2.0
+          pwd
+          cd schemas
+          pwd
+          ls
         
 
       - name: Checking glib directory
         shell: bash
         run: |
-        pwd
-        cd \usr\share
-        pwd
-        cd glib-2.0
-        pwd
-        cd schemas
-        pwd
-        ls
+          pwd
+          cd \usr\share
+          pwd
+          cd glib-2.0
+          pwd
+          cd schemas
+          pwd
+          ls
 
       - name: Cache opam/coq
         id: cache-opam
