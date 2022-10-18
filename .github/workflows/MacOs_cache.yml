@@ -50,7 +50,7 @@ jobs:
         shell: bash
         run: |
           pwd
-          cd \usr\local
+          cd /usr/local
           pwd
           cd share
           pwd
@@ -65,7 +65,7 @@ jobs:
         shell: bash
         run: |
           pwd
-          cd \usr\share
+          cd /usr/share
           pwd
           cd glib-2.0
           pwd
