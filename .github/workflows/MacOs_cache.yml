@@ -156,6 +156,7 @@ jobs:
           ls
           cp main/create_installer_macos.sh platform/macos/create_installer_macos.sh
           cd platform
+          cat /macos/create_installer_macos.sh
           pwd
           ls
           opam switch coq_for_waterproof
