@@ -113,11 +113,6 @@ jobs:
 #          cd ..
 #          rm -rf coq-waterproof
 
-      - name: Opam install coq-ide
-        shell: bash
-        run: |
-          opam install -y coqide
-          
       - name: Install system utilities
         shell: bash
         run: |
@@ -132,6 +127,11 @@ jobs:
         run: |
           brew install adwaita-icon-theme
           brew install gtksourceview3
+
+      - name: Opam install coq-ide
+        shell: bash
+        run: |
+          opam install -y coqide
 
       - name: Checking glib directory and compiling?
         shell: bash
