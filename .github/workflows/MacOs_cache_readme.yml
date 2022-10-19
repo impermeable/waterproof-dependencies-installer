@@ -46,14 +46,14 @@ jobs:
           repository: coq/platform
           path: platform
 
-      - name: Cache opam/coq
-        id: cache-opam
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-opam-modules
-        with:
-          path: ~/.opam
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-pick_name
+#      - name: Cache opam/coq
+#        id: cache-opam
+#        uses: actions/cache@v3
+#        env:
+#          cache-name: cache-opam-modules
+#        with:
+#          path: ~/.opam
+#          key: ${{ runner.os }}-build-${{ env.cache-name }}-pick_name
 
       - name: Install homebrew and make
         shell: bash
@@ -93,8 +93,8 @@ jobs:
           echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof~8.14~2022.01 >> platform/package_picks/coq_platform_switch_name.sh
           cat platform/package_picks/coq_platform_switch_name.sh
 
-      - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
-        name: Run coq platform make
+#      - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
+      - name: Run coq platform make
         shell: bash
         run: |
           pwd
@@ -102,8 +102,8 @@ jobs:
           chmod +x coq_platform_make.sh
           ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
 
-      - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
-        name: Install serapi
+#      - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
+      - name: Install serapi
         shell: bash
         run: |
           opam install -y coq-serapi
