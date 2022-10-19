@@ -185,6 +185,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: 'MacOs installer Shell Script'
-          path: platform/macos/*.dmg
+          path: platform/macos_installer/*
           retention-days: 5
           
