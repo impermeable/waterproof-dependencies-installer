@@ -102,7 +102,6 @@ jobs:
         run: |
           opam install -y coq-serapi
           opam install -y coq-coquelicot
-          opam install -y coqide
 
 #      - name: Install Waterproof library
 #       shell: bash
@@ -114,6 +113,11 @@ jobs:
 #          cd ..
 #          rm -rf coq-waterproof
 
+      - name: Opam install coq-ide
+        shell: bash
+        run: |
+          opam install -y coqide
+          
       - name: Install system utilities
         shell: bash
         run: |
