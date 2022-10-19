@@ -126,6 +126,7 @@ jobs:
         shell: bash
         run: |
           brew install adwaita-icon-theme
+          brew install gtksourceview
 
       - name: Checking glib directory
         shell: bash
