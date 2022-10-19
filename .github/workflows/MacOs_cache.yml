@@ -141,21 +141,18 @@ jobs:
           pwd
           ls
 
-      - name: Remove gschemas.compiled copy
-        shell: bash
-        run: |
-          cd platform
-          sed -i 's/add_single_file "$/#/' macos/create_installer_macos.sh
-          cat macos/create_installer_macos.sh
+      #- name: Remove gschemas.compiled copy
+      #  shell: bash
+      #  run: |
+      #    cd platform
+      #    sed -i 's/add_single_file "$/#/' macos/create_installer_macos.sh
+      #    cat macos/create_installer_macos.sh
 
 
       - name: Create installer
         shell: bash
         run: |
-          cd platform
-          cd macos
-          pwd
-          ls
+          cp ./create_installer_macos.sh platform/macos/create_installer_macos.sh
           cd platform
           opam switch coq_for_waterproof
           chmod +x macos/create_installer_macos.sh
