@@ -152,6 +152,7 @@ jobs:
       - name: Create installer
         shell: bash
         run: |
+          cd main
           pwd
           ls
           opam switch coq_for_waterproof
