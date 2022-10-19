@@ -141,11 +141,11 @@ jobs:
           pwd
           ls
 
-      - name: Remove gshcemas.compiled copy
+      - name: Remove gschemas.compiled copy
         shell: bash
         run: |
           cd platform
-          sed -i '' 's/add_single_file "${PKG_MANAGER_ROOT}" "share/glib-2.0/schemas" "gschemas.compiled"/#add_single_file "${PKG_MANAGER_ROOT}" "share/glib-2.0/schemas" "gschemas.compiled"/' macos/create_installer_macos.sh
+          sed -i 's/add_single_file "$/#/' macos/create_installer_macos.sh
 
 
       - name: Create installer
