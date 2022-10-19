@@ -176,7 +176,7 @@ jobs:
           cd platform
           pwd
           ls
-          opam switch coq_for_waterproof
+          opam switch coq_for_waterproof~8.14~2022.01
           chmod +x macos/create_installer_macos.sh
           ./macos/create_installer_macos.sh
 
