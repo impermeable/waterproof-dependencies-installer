@@ -131,7 +131,8 @@ jobs:
       - name: Opam install coq-ide
         shell: bash
         run: |
-          opam install --yes coqide
+          brew install expat libxml2
+          opam install -y coqide
 
       - name: Checking glib directory and compiling?
         shell: bash
