@@ -189,9 +189,9 @@ jobs:
       - name: Check install
         shell: bash
         run: |
-        cd platform/macos_installer
-        pwd
-        ls
+          cd platform/macos_installer
+          pwd
+          ls
 
       - name: 'Upload Artifact'
         if: always()
