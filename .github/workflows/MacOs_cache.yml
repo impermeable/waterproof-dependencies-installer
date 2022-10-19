@@ -152,7 +152,8 @@ jobs:
       - name: Create installer
         shell: bash
         run: |
-          cp ./create_installer_macos.sh platform/macos/create_installer_macos.sh
+          pwd
+          cp /create_installer_macos.sh platform/macos/create_installer_macos.sh
           cd platform
           opam switch coq_for_waterproof
           chmod +x macos/create_installer_macos.sh
