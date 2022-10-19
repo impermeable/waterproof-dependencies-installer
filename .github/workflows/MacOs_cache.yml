@@ -131,7 +131,7 @@ jobs:
       - name: Opam install coq-ide
         shell: bash
         run: |
-          opam install -y coqide
+          opam install --yes coqide
 
       - name: Checking glib directory and compiling?
         shell: bash
