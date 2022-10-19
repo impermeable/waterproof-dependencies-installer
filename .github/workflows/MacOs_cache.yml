@@ -156,12 +156,11 @@ jobs:
           ls
           cp main/create_installer_macos.sh platform/macos/create_installer_macos.sh
           cd platform
-          cd macos
           pwd
           ls
           opam switch coq_for_waterproof
-          chmod +x create_installer_macos.sh
-          ./create_installer_macos.sh
+          chmod +x macos/create_installer_macos.sh
+          ./macos/create_installer_macos.sh
 
 
       - name: 'Upload Artifact'
