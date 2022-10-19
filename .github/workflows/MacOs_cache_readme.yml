@@ -184,7 +184,7 @@ jobs:
           ls
           opam switch coq_for_waterproof~8.14~2022.01
           chmod +x macos/create_installer_macos.sh
-          ./macos/create_installer_macos.sh -q
+          ./macos/create_installer_macos.sh
 
       - name: Check install
         shell: bash
