@@ -153,8 +153,9 @@ jobs:
         shell: bash
         run: |
           pwd
+          ls
           opam switch coq_for_waterproof
-          chmod +x create_installer_macos.sh
+          chmod +x ./create_installer_macos.sh
           ./create_installer_macos.sh
 
 
