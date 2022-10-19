@@ -128,7 +128,7 @@ jobs:
           brew install adwaita-icon-theme
           brew install gtksourceview3
 
-      - name: Checking glib directory
+      - name: Checking glib directory and compiling?
         shell: bash
         run: |
           pwd
@@ -139,6 +139,7 @@ jobs:
           cd glib-2.0
           pwd
           cd schemas
+          glib-compile-schemas .
           pwd
           ls
 
@@ -150,19 +151,28 @@ jobs:
       #    cat macos/create_installer_macos.sh
 
 
-      - name: Create installer
+#      - name: Create installer (cp installer_macos)
+#        shell: bash
+#        run: |
+#          pwd
+#          ls
+#          cp main/create_installer_macos.sh platform/macos/create_installer_macos.sh
+#          cd platform
+#          pwd
+#          ls
+#          opam switch coq_for_waterproof
+#          chmod +x macos/create_installer_macos.sh
+#          ./macos/create_installer_macos.sh
+
+      - name: Create installer (original)
         shell: bash
         run: |
-          pwd
-          ls
-          cp main/create_installer_macos.sh platform/macos/create_installer_macos.sh
           cd platform
           pwd
           ls
           opam switch coq_for_waterproof
           chmod +x macos/create_installer_macos.sh
           ./macos/create_installer_macos.sh
-
 
       - name: 'Upload Artifact'
         if: always()
