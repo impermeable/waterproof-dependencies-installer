@@ -146,11 +146,17 @@ jobs:
         run: |
           cd platform
           sed -i 's/add_single_file "$/#/' macos/create_installer_macos.sh
+          cat macos/create_installer_macos.sh
 
 
       - name: Create installer
         shell: bash
         run: |
+          cd platform
+          cd macos
+          pwd
+          ls
+          cd platform
           opam switch coq_for_waterproof
           chmod +x macos/create_installer_macos.sh
           ./macos/create_installer_macos.sh
