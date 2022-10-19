@@ -53,7 +53,7 @@ jobs:
           cache-name: cache-opam-modules
         with:
           path: ~/.opam
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-pick_name
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-no_install
 
       - name: Install homebrew and make
         shell: bash
@@ -81,11 +81,11 @@ jobs:
         run: |
           brew install opam
 
-      - name: Pick Package
-        run: |
-          cd platform/package_picks
-          chmod +x package-pick-8.14~2022.01.sh
-          ./package-pick-8.14~2022.01.sh
+#      - name: Pick Package
+#        run: |
+#          cd platform/package_picks
+#          chmod +x package-pick-8.14~2022.01.sh
+#          ./package-pick-8.14~2022.01.sh
 
       - name: Set switch name in coq platform
         shell: bash
@@ -186,11 +186,18 @@ jobs:
           chmod +x macos/create_installer_macos.sh
           ./macos/create_installer_macos.sh -q
 
+      - name: Check install
+        shell: bash
+        run: |
+        cd platform/macos_installer
+        pwd
+        ls
+
       - name: 'Upload Artifact'
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: 'MacOs installer Shell Script'
-          path: platform/macos_installer/*
+          path: platform/macos_installer/*.dmg
           retention-days: 5
           
