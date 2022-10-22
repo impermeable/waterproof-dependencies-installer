@@ -84,7 +84,7 @@ jobs:
       - name: Set switch name in coq platform
         shell: bash
         run: |
-          echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof~8.14~2022.01 >> platform/package_picks/coq_platform_switch_name.sh
+          echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> platform/package_picks/coq_platform_switch_name.sh
           cat platform/package_picks/coq_platform_switch_name.sh
 
       - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
