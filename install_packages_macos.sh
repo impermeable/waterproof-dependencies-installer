@@ -63,7 +63,12 @@ grep -v '^#' $config_file | while read -r line ; do
 
     cd github_packages
     install_package_github $owner_name $repo_name
-    cd ..
+    cd /usr/share
+    ls
+    cd coq
+    ls
+    cd user-contrib
+    ls
 
     echo "Current directory in install_packages_macos"
     pwd 
