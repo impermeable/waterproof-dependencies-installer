@@ -104,8 +104,8 @@ jobs:
           opam install -y coq-serapi
           opam install -y coq-coquelicot
 
-     - name: Install Waterproof library
-       shell: bash
+      - name: Install Waterproof library
+        shell: bash
         run: |
           cd platform
           git clone https://github.com/impermeable/coq-waterproof
