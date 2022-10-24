@@ -93,6 +93,7 @@ jobs:
         shell: bash
         run: |
           cd platform
+          opam init
           chmod +x coq_platform_make.sh
           ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
 
@@ -103,15 +104,16 @@ jobs:
           opam install -y coq-serapi
           opam install -y coq-coquelicot
 
-#      - name: Install Waterproof library
-#       shell: bash
-#        run: |
-#          git clone https://github.com/impermeable/coq-waterproof
-#          cd coq-waterproof
-#          make
-#          make install
-#          cd ..
-#          rm -rf coq-waterproof
+     - name: Install Waterproof library
+       shell: bash
+        run: |
+          cd platform
+          git clone https://github.com/impermeable/coq-waterproof
+          cd coq-waterproof
+          make
+          make install
+          cd ..
+          rm -rf coq-waterproof
 
       - name: Install system utilities
         shell: bash

@@ -63,16 +63,6 @@ grep -v '^#' $config_file | while read -r line ; do
 
     cd github_packages
     install_package_github $owner_name $repo_name
-
-    echo "Searching for /usr"
-    find /usr -type f user-contrib
-
-    echo "Searching for /var"
-    find /var -type f user-contrib
-
-    echo "Searching in /bin"
-    find /bin -type f user-contrib
-    
     cd ..
 
     echo "Current directory in install_packages_macos"
