@@ -67,14 +67,8 @@ grep -v '^#' $config_file | while read -r line ; do
 
     echo "Current directory in install_packages_macos"
     pwd 
-
-    cd /lib
-    ls 
-    cd coq
-    ls
-    cd user-contrib
-    ls
-
+    cd ..
+    
     # Inject install code into installer script
     # Only testing that add_folder_recursively works, update later
     sed -i '/^source "${HERE}"/shell_scripts/installer_create_tree.sh/a add_folder_recursively "lib/coq/user-contrib/" "Waterproof" ' platform/macos/create_installer_macos.sh
