@@ -96,6 +96,7 @@ jobs:
           opam init
           chmod +x coq_platform_make.sh
           ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
+          opam init
 
       - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
         name: Install serapi
@@ -103,6 +104,11 @@ jobs:
         run: |
           opam install -y coq-serapi
           opam install -y coq-coquelicot
+
+      - name: Install coq (Guarantee check)
+        shell: bash
+        run: |
+          brew install coq
 
       - name: Install Waterproof library
         shell: bash
