@@ -43,14 +43,14 @@ jobs:
           repository: coq/platform
           path: platform
 
-#      - name: Cache opam/coq
-#        id: cache-opam
-#        uses: actions/cache@v3
-#        env:
-#          cache-name: cache-opam-modules
-#        with:
-#          path: ~/.opam
-#          key: ${{ runner.os }}-build-${{ env.cache-name }}-8.15
+      - name: Cache opam/coq
+        id: cache-opam
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-opam-modules
+        with:
+          path: ~/.opam
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-8.15
 
       - name: Install homebrew and make
         shell: bash
@@ -78,10 +78,10 @@ jobs:
         run: |
           brew install opam
 
-#      - name: Install coq test
-#        run: |
-#          brew install coq 8.15
-#          brew info coq
+      - name: Install coq test
+        run: |
+          brew install coq@8.15
+          brew info coq
 
       - name: Set switch name in coq platform
         shell: bash
@@ -89,8 +89,8 @@ jobs:
           echo COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof >> platform/package_picks/coq_platform_switch_name.sh
           cat platform/package_picks/coq_platform_switch_name.sh
 
-#      - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
-      - name: Run coq platform make
+      - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
+        name: Run coq platform make
         shell: bash
         run: |
           pwd
@@ -99,8 +99,8 @@ jobs:
           ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.15~2022.04" -set-switch=y 
           brew info coq
 
-#      - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
-      - name: Install serapi
+      - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
+        name: Install serapi
         shell: bash
         run: |
           opam install -y coq-serapi
