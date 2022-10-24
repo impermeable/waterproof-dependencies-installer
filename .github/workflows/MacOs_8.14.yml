@@ -110,16 +110,16 @@ jobs:
         run: |
           brew install coq
 
-      - name: Install Waterproof library
-        shell: bash
-        run: |
-          cd platform
-          git clone https://github.com/impermeable/coq-waterproof
-          cd coq-waterproof
-          make
-          make install
-          cd ..
-          rm -rf coq-waterproof
+#      - name: Install Waterproof library
+#        shell: bash
+#        run: |
+#          cd platform
+#          git clone https://github.com/impermeable/coq-waterproof
+#          cd coq-waterproof
+#          make
+#          make install
+#          cd ..
+#          rm -rf coq-waterproof
 
       - name: Install system utilities
         shell: bash
