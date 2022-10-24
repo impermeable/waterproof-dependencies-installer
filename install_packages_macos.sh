@@ -63,19 +63,14 @@ grep -v '^#' $config_file | while read -r line ; do
 
     cd github_packages
     install_package_github $owner_name $repo_name
-    cd /var/lib
-    ls
-    cd coq
-    ls
-    cd user-contrib
-    ls
+    cd ..
 
     echo "Current directory in install_packages_macos"
     pwd 
     
     # Inject install code into installer script
     # Only testing that add_folder_recursively works, update later
-    sed -i '/^source "${HERE}"/shell_scripts/installer_create_tree.sh/a add_folder_recursively "lib/coq/user-contrib/" "Waterproof" ' ../platform/macos/create_installer_macos.sh
+    sed -i '/^source "${HERE}".*/a add_folder_recursively "lib/coq/user-contrib/" "Waterproof" ' ../platform/macos/create_installer_macos.sh
   elif [[ $line =~ ^OPAM* ]] ; then
     opam install -y $package_name
   fi
