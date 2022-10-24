@@ -80,7 +80,7 @@ jobs:
 
       - name: Install coq test
         run: |
-          brew install coq@8.15
+          brew install coq@8.15.2
           brew info coq
 
       - name: Set switch name in coq platform
