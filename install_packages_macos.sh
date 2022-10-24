@@ -68,8 +68,12 @@ grep -v '^#' $config_file | while read -r line ; do
     echo "Current directory in install_packages_macos"
     pwd 
 
-    cd /lib/coq/user-contrib/
+    cd /lib
     ls 
+    cd coq
+    ls
+    cd user-contrib
+    ls
 
     # Inject install code into installer script
     # Only testing that add_folder_recursively works, update later
