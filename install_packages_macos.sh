@@ -63,7 +63,7 @@ grep -v '^#' $config_file | while read -r line ; do
 
     cd github_packages
     install_package_github $owner_name $repo_name
-    cd /usr/share
+    cd /var/lib
     ls
     cd coq
     ls
