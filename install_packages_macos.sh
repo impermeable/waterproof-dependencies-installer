@@ -63,13 +63,41 @@ grep -v '^#' $config_file | while read -r line ; do
 
     cd github_packages
     install_package_github $owner_name $repo_name
+
+    echo "Searching for /lib/coq/user-contrib"
     cd /lib
     ls
     cd coq
     ls
     cd user-contrib
     ls
-    
+
+    echo "Searching for /var/lib/coq/user-contrib"
+    cd /var/lib
+    ls
+    cd coq
+    ls
+    cd user-contrib
+    ls
+
+    echo "Searching for /usr/lib/coq/user-contrib"
+    cd /usr/lib
+    ls
+    cd coq
+    ls
+    cd user-contrib
+    ls
+
+    echo "Searching for /usr/local/share/coq/user-contrib"
+    cd /usr/local/share
+    ls
+    cd coq
+    ls
+    cd user-contrib
+    ls
+
+    cd ..
+
     echo "Current directory in install_packages_macos"
     pwd 
     
