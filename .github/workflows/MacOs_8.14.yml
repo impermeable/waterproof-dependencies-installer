@@ -7,7 +7,7 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches:
-      - macos
+      - main
   pull_request:
     branches:
       - '**'
@@ -146,12 +146,11 @@ jobs:
       - name: Install packages from cfg and add to installer
         shell: bash
         run: |
-          ls
+          chmod +x main/install_packages_macos.sh
           cd main
-          pwd
           ls
-          chmod +x install_packages_macos.sh
-          ./install_packages_macos.sh packages_macos.cfg
+          cd ..
+          ./main/install_packages_macos.sh packages_macos.cfg
 
 
       - name: Create installer (original)
