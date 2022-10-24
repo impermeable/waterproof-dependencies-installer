@@ -8,7 +8,7 @@ on:
   push:
     branches:
       - macos
-      
+
 #  pull_request:
 #    branches:
 #      - '**'
@@ -92,7 +92,6 @@ jobs:
         name: Run coq platform make
         shell: bash
         run: |
-          pwd
           cd platform
           chmod +x coq_platform_make.sh
           ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
@@ -147,12 +146,9 @@ jobs:
       - name: Install packages from cfg and add to installer
         shell: bash
         run: |
-          chmod +x main/install_packages_macos.sh
           cd main
-          ls
-          cd ..
-          ./main/install_packages_macos.sh packages_macos.cfg
-
+          chmod +x install_packages_macos.sh
+          ./install_packages_macos.sh packages_macos.cfg
 
       - name: Create installer (original)
         shell: bash
