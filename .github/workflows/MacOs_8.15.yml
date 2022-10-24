@@ -80,7 +80,7 @@ jobs:
 
       - name: Install xcode test
         run: |
-          xcode-select --install
+          softwareupdate --install -a
 
       - name: Set switch name in coq platform
         shell: bash
