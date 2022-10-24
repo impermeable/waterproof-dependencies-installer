@@ -74,9 +74,9 @@ jobs:
           echo "/usr/local/bin" >> $GITHUB_PATH
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
 
-      - name: Install Opam
-        run: |
-          brew install opam
+      #- name: Install Opam
+      #  run: |
+      #    brew install opam
 
       - name: Install make test
         run: |
