@@ -53,7 +53,7 @@ jobs:
           cache-name: cache-opam-modules
         with:
           path: ~/.opam
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-no_install
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-8.14
 
       - name: Install homebrew and make
         shell: bash
@@ -146,6 +146,9 @@ jobs:
       - name: Install packages from cfg and add to installer
         shell: bash
         run: |
+          cd main
+          chmod +x install_packages_macos.sh
+          ./install_packages_macos.sh packages_macos.cfg
 
 
       - name: Create installer (original)

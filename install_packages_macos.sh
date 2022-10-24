@@ -65,8 +65,12 @@ grep -v '^#' $config_file | while read -r line ; do
     install_package_github $owner_name $repo_name
     cd ..
 
+    echo "Current directory in install_packages_macos"
+    pwd 
+
     # Inject install code into installer script
-    sed -i '/^echo "Create package list"/a add_custom_package "'"${package_name}"'" "'"${package_path}"'" "'"${package_description}"'"' windows/create_installer_windows.sh
+    # Only testing that add_folder_recursively works, update later
+    sed -i '/^source "${HERE}"/shell_scripts/installer_create_tree.sh/a add_folder_recursively "lib/coq/user-contrib/" "Waterproof" ' platform/macos/create_installer_macos.sh
   elif [[ $line =~ ^OPAM* ]] ; then
     opam install -y $package_name
   fi
@@ -76,8 +80,9 @@ done
 rmdir github_packages
 
 # Inject install imports into create installer script
-sed -i '/^echo "Create package list"/a source add_custom_nsis.sh' windows/create_installer_windows.sh  # Custom package functions
+#sed -i '/^source "${HERE}"/shell_scripts/installer_create_tree.sh/a source add_custom_macos.sh' platform/macos/create_installer_macos.sh  # Custom package functions
 
-sed -i '/^###### Create the NSIS installer #####/a source unselect_packages.sh' windows/create_installer_windows.sh  # Unselect package functions
+# Unneccesary?
+#sed -i '/^###### Create the NSIS installer #####/a source unselect_packages.sh' platform/macos/create_installer_macos.sh  # Unselect package functions
 
-cat windows/create_installer_windows.sh
+cat platform/macos/create_installer_macos.sh
