@@ -67,16 +67,10 @@ grep -v '^#' $config_file | while read -r line ; do
 
     echo "Current directory in install_packages_macos"
     pwd 
-    cd /usr/lib
-    ls
-    cd coq
-    ls
-    cd user-contrib
-    ls
-
+    
     # Inject install code into installer script
     # Only testing that add_folder_recursively works, update later
-    sed -i '/^source "${HERE}"/shell_scripts/installer_create_tree.sh/a add_folder_recursively "lib/coq/user-contrib/" "Waterproof" ' platform/macos/create_installer_macos.sh
+    sed -i '/^source "${HERE}"/shell_scripts/installer_create_tree.sh/a add_folder_recursively "lib/coq/user-contrib/" "Waterproof" ' ../platform/macos/create_installer_macos.sh
   elif [[ $line =~ ^OPAM* ]] ; then
     opam install -y $package_name
   fi
@@ -91,4 +85,4 @@ rmdir github_packages
 # Unneccesary?
 #sed -i '/^###### Create the NSIS installer #####/a source unselect_packages.sh' platform/macos/create_installer_macos.sh  # Unselect package functions
 
-cat platform/macos/create_installer_macos.sh
+cat ../platform/macos/create_installer_macos.sh
