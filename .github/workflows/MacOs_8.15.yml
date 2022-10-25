@@ -134,6 +134,7 @@ jobs:
       - name: find opam coq
         shell: bash
         run: |
+          brew install tree
           cd /usr/local/Cellar
           tree -a opam
 
