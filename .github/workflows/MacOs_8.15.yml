@@ -97,6 +97,8 @@ jobs:
           chmod +x coq_platform_make.sh
           ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.15~2022.04" -set-switch=y 
           brew info coq
+          brew install tree
+          tree -a opam
 
       - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
         name: Install serapi
@@ -138,7 +140,6 @@ jobs:
       - name: find opam coq
         shell: bash
         run: |
-          brew install tree
           tree -a /usr/local/bin/opam 
 
       - name: Install Waterproof library
