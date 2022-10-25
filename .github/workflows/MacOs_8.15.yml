@@ -140,7 +140,8 @@ jobs:
       - name: find opam coq
         shell: bash
         run: |
-          tree -a /usr/local/bin/opam 
+          cd /usr/local
+          tree -a bin
 
       - name: Install Waterproof library
         shell: bash
