@@ -141,6 +141,8 @@ jobs:
         shell: bash
         run: |
           cd main
+          opam switch coq_for_waterproof
+          eval $(opam env)
           chmod +x install_packages_macos.sh
           ./install_packages_macos.sh packages_macos.cfg
 
@@ -148,18 +150,10 @@ jobs:
         shell: bash
         run: |
           cd platform
-          pwd
-          ls
           opam switch coq_for_waterproof
+          eval $(opam env)
           chmod +x macos/create_installer_macos.sh
           ./macos/create_installer_macos.sh -q
-
-      - name: Check install
-        shell: bash
-        run: |
-          cd platform/macos_installer
-          pwd
-          ls
 
       - name: 'Upload Artifact'
         if: always()
