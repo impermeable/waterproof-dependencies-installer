@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 #######################################
 # Adds custom package to NSIS installer configuration files.
 # Globals:
@@ -13,7 +13,7 @@
 # Outputs:
 #   Writes necessary .nsh files such that package $1 is installed in complience with the Coq platform setup.
 #######################################
-function add_custom_package {
+function add_custom_package_macos {
   echo "Adding custom package $1."
   
   # Change all non ascii characters to _
