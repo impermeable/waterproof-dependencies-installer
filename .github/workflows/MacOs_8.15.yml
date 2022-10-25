@@ -47,14 +47,14 @@ jobs:
           repository: coq/platform
           path: platform
 
-      - name: Cache opam/coq
-        id: cache-opam
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-opam-modules
-        with:
-          path: ~/.opam
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-8.15
+      # - name: Cache opam/coq
+      #   id: cache-opam
+      #   uses: actions/cache@v3
+      #   env:
+      #     cache-name: cache-opam-modules
+      #   with:
+      #     path: ~/.opam
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-8.15
 
       - name: Install homebrew and make
         shell: bash
