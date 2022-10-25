@@ -108,7 +108,7 @@ jobs:
       - name: find opam coq
         shell: bash
         run: |
-          find /usr -type f coq 
+          find /usr -name "coq" 
 
       - name: Install Waterproof library
         shell: bash
