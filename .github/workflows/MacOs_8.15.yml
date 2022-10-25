@@ -118,25 +118,6 @@ jobs:
         run: |
           brew install expat libxml2
           opam install -y coqide
-          eval $(opam env)
-          coqc -v || :
-          coq_makefile -v || :
-
-      - name: Checking glib directory and compiling?
-        shell: bash
-        run: |
-          pwd
-          cd /usr/local/share/glib-2.0/schemas
-          glib-compile-schemas .
-          pwd
-          ls
-
-      - name: find opam coq
-        shell: bash
-        run: |
-          brew install tree
-          cd /usr/local/Cellar
-          tree -a opam
 
       - name: Check PATH
         shell: bash
@@ -149,6 +130,7 @@ jobs:
           git clone https://github.com/impermeable/coq-waterproof
           cd coq-waterproof
           make --version
+          eval $(opam env)
           coqc -v || :
           make
           make install
