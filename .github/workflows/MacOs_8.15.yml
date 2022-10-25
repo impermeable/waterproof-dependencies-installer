@@ -140,6 +140,11 @@ jobs:
           cd /usr/local/bin/Cellar
           tree -a opam
 
+      - name: Check PATH
+        shell: bash
+        run: |
+          echo $PATH
+
       - name: Install Waterproof library
         shell: bash
         run: |
