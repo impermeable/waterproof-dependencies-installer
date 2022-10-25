@@ -9,10 +9,6 @@ on:
     branches:
       - macos
 
-  pull_request:
-     branches:
-      - '**'
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -134,11 +130,11 @@ jobs:
           pwd
           ls
 
-      - name: find opam coq
-        shell: bash
-        run: |
-          cd /usr/local/bin/Cellar
-          tree -a opam
+      # - name: find opam coq
+      #   shell: bash
+      #   run: |
+      #     cd /usr/local/bin/Cellar
+      #     tree -a opam
 
       - name: Check PATH
         shell: bash
