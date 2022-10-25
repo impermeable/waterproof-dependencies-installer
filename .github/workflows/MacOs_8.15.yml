@@ -136,6 +136,13 @@ jobs:
           make install
           cd ..
           rm -rf coq-waterproof
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib
+          ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib/Waterproof// || :
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof/ || :
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof// || :
+          ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib/Waterproof/ || :
+          
 
       - name: Install packages from cfg and add to installer
         shell: bash
@@ -145,6 +152,12 @@ jobs:
           eval $(opam env)
           chmod +x install_packages_macos.sh
           ./install_packages_macos.sh packages_macos.cfg
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib
+          ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib/Waterproof// || :
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof/ || :
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof// || :
+          ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib/Waterproof/ || :
 
       - name: Create installer (original)
         shell: bash
@@ -152,6 +165,12 @@ jobs:
           cd platform
           opam switch coq_for_waterproof
           eval $(opam env)
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib
+          ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib/Waterproof// || :
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof/ || :
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof// || :
+          ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib/Waterproof/ || :
           chmod +x macos/create_installer_macos.sh
           ./macos/create_installer_macos.sh -q
 
