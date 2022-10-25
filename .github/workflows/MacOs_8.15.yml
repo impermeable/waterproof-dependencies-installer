@@ -118,6 +118,7 @@ jobs:
         run: |
           brew install expat libxml2
           opam install -y coqide
+          eval $(opam env)
           coqc -v || :
           coq_makefile -v || :
 
