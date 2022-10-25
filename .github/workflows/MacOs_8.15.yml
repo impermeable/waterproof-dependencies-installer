@@ -105,10 +105,10 @@ jobs:
           opam install -y coq-serapi
           opam install -y coq-coquelicot
 
-      - name: find opam coq
-        shell: bash
-        run: |
-          find /usr -name "opam" 
+#      - name: find opam coq
+#        shell: bash
+#        run: |
+#          find /usr -name "opam" 
 
       - name: Install Waterproof library
         shell: bash
