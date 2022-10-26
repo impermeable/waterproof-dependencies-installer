@@ -94,9 +94,8 @@ jobs:
         name: Install serapi
         shell: bash
         run: |
-          opam install -y coq-serapi
+          opam install -y coq-serapi.8.15.0+0.15.2
           opam install -y coq-coquelicot
-          
 
       - name: Install system utilities
         shell: bash
@@ -113,11 +112,11 @@ jobs:
           brew install adwaita-icon-theme
           brew install gtksourceview3
 
-      # - name: Opam install coq-ide
-      #   shell: bash
-      #   run: |
-      #     brew install expat libxml2
-      #     opam install -y coqide
+      - name: Opam install coq-ide
+        shell: bash
+        run: |
+          brew install expat libxml2
+          opam install -y coqide.8.15.2
 
       # - name: Check versions
       #   shell: bash
