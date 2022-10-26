@@ -1,17 +1,11 @@
 # This is a basic workflow to help you get started with Actions
 
-name: MacOS
+name: MacOS-8.14
 
 # Controls when the workflow will run
-# on:
-#  # Triggers the workflow on push or pull request events but only for the main branch
-#  push:
-#    branches:
-#      - macos
-
-#  pull_request:
-#    branches:
-#      - '**'
+on:
+ # Triggers the workflow on push or pull request events but only for the main branch
+  push:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -97,6 +91,7 @@ jobs:
           chmod +x coq_platform_make.sh
           ./coq_platform_make.sh -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01" -set-switch=y 
           opam init
+          eval $(opam env)
 
       - if: ${{ steps.cache-opam.outputs.cache-hit != 'true' }}
         name: Install serapi
@@ -109,17 +104,6 @@ jobs:
         shell: bash
         run: |
           brew install coq
-
-#      - name: Install Waterproof library
-#        shell: bash
-#        run: |
-#          cd platform
-#          git clone https://github.com/impermeable/coq-waterproof
-#          cd coq-waterproof
-#          make
-#          make install
-#          cd ..
-#          rm -rf coq-waterproof
 
       - name: Install system utilities
         shell: bash
@@ -155,6 +139,7 @@ jobs:
         shell: bash
         run: |
           cd main
+          eval $(opam env)
           chmod +x install_packages_macos.sh
           ./install_packages_macos.sh packages_macos.cfg
 
@@ -164,6 +149,7 @@ jobs:
           cd platform
           pwd
           ls
+          eval $(opam env)
           opam switch coq_for_waterproof
           chmod +x macos/create_installer_macos.sh
           ./macos/create_installer_macos.sh -q
