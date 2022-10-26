@@ -95,7 +95,7 @@ jobs:
         shell: bash
         run: |
           opam install -y coq-serapi.8.15.0+0.15.2
-          opam install -y coq-coquelicot
+          opam install -y coq-coquelicot.3.2.0
 
       - name: Install system utilities
         shell: bash
