@@ -113,20 +113,20 @@ jobs:
           brew install adwaita-icon-theme
           brew install gtksourceview3
 
-      - name: Opam install coq-ide
-        shell: bash
-        run: |
-          brew install expat libxml2
-          opam install -y coqide
+      # - name: Opam install coq-ide
+      #   shell: bash
+      #   run: |
+      #     brew install expat libxml2
+      #     opam install -y coqide
 
-      - name: Check versions
-        shell: bash
-        run: |
-          eval $(opam env)
-          opam show coq
-          opam show coq-serapi
-          opam show coq-coquelicot
-          opam show coq-ide
+      # - name: Check versions
+      #   shell: bash
+      #   run: |
+      #     eval $(opam env)
+      #     opam show coq
+      #     opam show coq-serapi
+      #     opam show coq-coquelicot
+      #     opam show coq-ide
 
       # - name: Install Waterproof library
       #   shell: bash
