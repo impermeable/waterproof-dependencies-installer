@@ -40,14 +40,14 @@ jobs:
           repository: coq/platform
           path: platform
 
-      # - name: Cache opam/coq
-      #   id: cache-opam
-      #   uses: actions/cache@v3
-      #   env:
-      #     cache-name: cache-opam-modules
-      #   with:
-      #     path: ~/.opam
-      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-8.15
+      - name: Cache opam/coq
+        id: cache-opam
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-opam-modules
+        with:
+          path: ~/.opam
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-8.15-Waterproof
 
       - name: Install homebrew and make
         shell: bash
@@ -159,20 +159,20 @@ jobs:
           ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof// || :
           ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib/Waterproof/ || :
 
-      - name: Create installer (original)
-        shell: bash
-        run: |
-          cd platform
-          opam switch coq_for_waterproof
-          eval $(opam env)
-          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib
-          ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib
-          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib/Waterproof// || :
-          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof/ || :
-          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof// || :
-          ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib/Waterproof/ || :
-          chmod +x macos/create_installer_macos.sh
-          ./macos/create_installer_macos.sh -q
+      # - name: Create installer (original)
+      #   shell: bash
+      #   run: |
+      #     cd platform
+      #     opam switch coq_for_waterproof
+      #     eval $(opam env)
+      #     ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib
+      #     ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib
+      #     ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib/Waterproof// || :
+      #     ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof/ || :
+      #     ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof// || :
+      #     ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib/Waterproof/ || :
+      #     chmod +x macos/create_installer_macos.sh
+      #     ./macos/create_installer_macos.sh -q
 
       - name: 'Upload Artifact'
         if: always()
