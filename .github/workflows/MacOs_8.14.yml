@@ -3,12 +3,12 @@
 name: MacOS-8.14
 
 # Controls when the workflow will run
-on:
- # Triggers the workflow on push or pull request events but only for the main branch
-  push:
+# on:
+#  # Triggers the workflow on push or pull request events but only for the main branch
+#   push:
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+#   # Allows you to run this workflow manually from the Actions tab
+#   workflow_dispatch:
 
 ###############################################################################
 # Platform script options shared among all jobs
@@ -99,11 +99,6 @@ jobs:
         run: |
           opam install -y coq-serapi
           opam install -y coq-coquelicot
-
-      - name: Install coq (Guarantee check)
-        shell: bash
-        run: |
-          brew install coq
 
       - name: Install system utilities
         shell: bash

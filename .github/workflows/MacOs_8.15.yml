@@ -119,10 +119,14 @@ jobs:
           brew install expat libxml2
           opam install -y coqide
 
-      - name: Check PATH
+      - name: Check versions
         shell: bash
         run: |
-          echo $PATH
+          eval $(opam env)
+          opam show coq
+          opam show coq-serapi
+          opam show coq-coquelicot
+          opam show coq-ide
 
       # - name: Install Waterproof library
       #   shell: bash
@@ -163,15 +167,8 @@ jobs:
         shell: bash
         run: |
           cd platform
-          opam info
           opam switch coq_for_waterproof
           eval $(opam env)
-          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib
-          ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib
-          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib/Waterproof// || :
-          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof/ || :
-          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof// || :
-          ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib/Waterproof/ || :
           chmod +x macos/create_installer_macos.sh
           ./macos/create_installer_macos.sh -q
 
