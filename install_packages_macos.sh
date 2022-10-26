@@ -70,7 +70,7 @@ grep -v '^#' $config_file | while read -r line ; do
     
     # Inject install code into installer script
     # Only testing that add_folder_recursively works, update later
-    sed -i '/^source "${HERE}".*/a add_folder_recursively "/Users/runner/.opam/coq_for_waterproof/lib/coq/user-contrib" "Waterproof" ' ../platform/macos/create_installer_macos.sh
+    sed -i '/^add_folder_recursively "${PKG_MANAGER_ROOT}".*/a add_folder_recursively "/Users/runner/.opam/coq_for_waterproof/lib/coq/user-contrib" "Waterproof" ' ../platform/macos/create_installer_macos.sh
   elif [[ $line =~ ^OPAM* ]] ; then
     opam install -y $package_name
   fi
