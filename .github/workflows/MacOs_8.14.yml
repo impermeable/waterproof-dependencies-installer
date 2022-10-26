@@ -148,8 +148,8 @@ jobs:
         run: |
           cd platform
           pwd
-          ls
           eval $(opam env)
+          opm info
           opam switch coq_for_waterproof
           chmod +x macos/create_installer_macos.sh
           ./macos/create_installer_macos.sh -q

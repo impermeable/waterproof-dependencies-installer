@@ -163,6 +163,7 @@ jobs:
         shell: bash
         run: |
           cd platform
+          opam info
           opam switch coq_for_waterproof
           eval $(opam env)
           ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib
