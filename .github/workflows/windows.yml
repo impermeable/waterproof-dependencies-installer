@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: coq/platform
-          ref: '2022.01.0'
+          ref: '2022.04.1'
           path: platform
 
       - name: Set switch name in coq platform
@@ -62,8 +62,8 @@ jobs:
 
       - name: Run coq platform make windows
         shell: cmd
-        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_coq_platform -arch=${{matrix.architecture}} -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.14~2022.01"
-          
+        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_coq_platform -arch=${{matrix.architecture}} -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.15~2022.04" -set-switch=y
+
       - name: Install packages specified in cfg file
         shell: cmd
         run: |
