@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 
+set -e
 
 #######################################
 # Installs Github repository.
