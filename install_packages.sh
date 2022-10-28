@@ -20,6 +20,10 @@ function install_package_github {
 
   # Build and install repository
   cd $2  # Enter repository
+  
+  # print last commit
+  git log -1
+  
   make
   make install
   cd ..  # Leave repository
