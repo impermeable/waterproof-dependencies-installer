@@ -82,7 +82,4 @@ rmdir github_packages
 # Inject install imports into create installer script
 #sed -i '/^source "${HERE}"/shell_scripts/installer_create_tree.sh/a source add_custom_macos.sh' platform/macos/create_installer_macos.sh  # Custom package functions
 
-# Unneccesary?
-#sed -i '/^###### Create the NSIS installer #####/a source unselect_packages.sh' platform/macos/create_installer_macos.sh  # Unselect package functions
-
 cat ../platform/macos/create_installer_macos.sh
