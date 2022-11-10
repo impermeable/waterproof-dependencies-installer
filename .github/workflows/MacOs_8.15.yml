@@ -1,13 +1,10 @@
 # This is a basic workflow to help you get started with Actions
-
-name: MacOS
+name: MacOS 8.15
 
 # Controls when the workflow will run
 on:
  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches:
-      - macos
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -23,7 +20,7 @@ jobs:
   # This workflow contains a single job called "build"
   Ubuntu_platform:
     name: MacOS
-    runs-on: macos-latest
+    runs-on: macos-11
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -50,7 +47,7 @@ jobs:
       #     cache-name: cache-opam-modules
       #   with:
       #     path: ~/.opam
-      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-8.15
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-8.15-Waterproof
 
       - name: Install homebrew and make
         shell: bash
@@ -65,7 +62,7 @@ jobs:
             export PATH=/opt/homebrew/bin:$PATH
           fi
 
-      #Github actions uses bash 3 instead of bash 4 which is needed for the installer script :) 
+      # Github actions uses bash 3 instead of bash 4 which is needed for the installer script :) 
       - name: Install Bash 4 and GNU sed on Mac
         run: |
           brew install bash
@@ -97,8 +94,8 @@ jobs:
         name: Install serapi
         shell: bash
         run: |
-          opam install -y coq-serapi
-          opam install -y coq-coquelicot
+          opam install -y coq-serapi.8.15.0+0.15.2
+          opam install -y coq-coquelicot.3.2.0
 
       - name: Install system utilities
         shell: bash
@@ -119,61 +116,60 @@ jobs:
         shell: bash
         run: |
           brew install expat libxml2
-          opam install -y coqide
+          opam install -y coqide.8.15.2
 
-      - name: Checking glib directory and compiling?
-        shell: bash
-        run: |
-          pwd
-          cd /usr/local/share/glib-2.0/schemas
-          glib-compile-schemas .
-          pwd
-          ls
-
-      # - name: find opam coq
+      # - name: Check versions
       #   shell: bash
       #   run: |
-      #     cd /usr/local/bin/Cellar
-      #     tree -a opam
+      #     eval $(opam env)
+      #     opam show coq
+      #     opam show coq-serapi
+      #     opam show coq-coquelicot
+      #     opam show coq-ide
 
-      - name: Check PATH
-        shell: bash
-        run: |
-          echo $PATH
-
-      - name: Install Waterproof library
-        shell: bash
-        run: |
-          git clone https://github.com/impermeable/coq-waterproof
-          cd coq-waterproof
-          make
-          make install
-          cd ..
-          rm -rf coq-waterproof
+      # - name: Install Waterproof library
+      #   shell: bash
+      #   run: |
+      #     git clone https://github.com/impermeable/coq-waterproof
+      #     cd coq-waterproof
+      #     make --version
+      #     eval $(opam env)
+      #     coqc -v || :
+      #     make
+      #     make install
+      #     cd ..
+      #     rm -rf coq-waterproof
+      #     ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib
+      #     ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib
+      #     ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib/Waterproof// || :
+      #     ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof/ || :
+      #     ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof// || :
+      #     ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib/Waterproof/ || :
+          
 
       - name: Install packages from cfg and add to installer
         shell: bash
         run: |
           cd main
+          opam switch coq_for_waterproof
+          eval $(opam env)
           chmod +x install_packages_macos.sh
           ./install_packages_macos.sh packages_macos.cfg
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib
+          ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib/Waterproof// || :
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof/ || :
+          ls ~/.opam/coq_for_waterproof/lib/coq//user-contrib//Waterproof// || :
+          ls ~/.opam/coq_for_waterproof/lib/coq/user-contrib/Waterproof/ || :
 
       - name: Create installer (original)
         shell: bash
         run: |
           cd platform
-          pwd
-          ls
           opam switch coq_for_waterproof
+          eval $(opam env)
           chmod +x macos/create_installer_macos.sh
           ./macos/create_installer_macos.sh -q
-
-      - name: Check install
-        shell: bash
-        run: |
-          cd platform/macos_installer
-          pwd
-          ls
 
       - name: 'Upload Artifact'
         if: always()
