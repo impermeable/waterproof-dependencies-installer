@@ -71,7 +71,7 @@ grep -v '^#' $config_file | while read -r line ; do
     cd ..
 
     # Inject install code into installer script
-    sed -i '/^###### Get filtered (newline separated) list of explicitly installed packages #####/a add_custom_package "'"${package_name}"'" "'"${package_path}"'" "'"${package_description}"'"' shell_scripts/installer_create_tree.sh
+    sed -i '/^##### System independent opam file copying #####/a add_custom_package "'"${package_name}"'" "'"${package_path}"'" "'"${package_description}"'"' windows/create_installer_windows.sh
   elif [[ $line =~ ^OPAM* ]] ; then
     opam install -y $package_name
   fi
@@ -81,7 +81,7 @@ done
 rmdir github_packages
 
 # Inject install imports into create installer script
-sed -i '/^###### Get filtered (newline separated) list of explicitly installed packages #####/a source add_custom_nsis.sh' shell_scripts/installer_create_tree.sh  # Custom package functions
+sed -i '/^##### System independent opam file copying #####/a source add_custom_nsis.sh' windows/create_installer_windows.sh  # Custom package functions
 
 sed -i '/^###### Create the NSIS installer #####/a source unselect_packages.sh' windows/create_installer_windows.sh  # Unselect package functions
 
