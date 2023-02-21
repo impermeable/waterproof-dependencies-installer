@@ -16,7 +16,7 @@ function install_package_github {
   echo "Installing Github package $1/$2."
   
   # Clone repo
-  git clone https://github.com/$1/$2
+  git clone --branch $3 https://github.com/$1/$2
 
   # Build and install repository
   cd $2  # Enter repository
@@ -29,7 +29,7 @@ function install_package_github {
   cd ..  # Leave repository
   rm -rf $2  # Delete repository
   
-  echo "Finished installing Github package $1/$2."
+  echo "Finished installing Github package $1/$2 with tag $3."
 }
 
 #######################################
@@ -65,9 +65,10 @@ grep -v '^#' $config_file | while read -r line ; do
     package_description=${package_info[4]}
     owner_name=${package_info[5]}
     repo_name=${package_info[6]}
+    tag=${package_info[7]}
 
     cd github_packages
-    install_package_github $owner_name $repo_name
+    install_package_github $owner_name $repo_name $tag
     cd ..
 
     # Inject install code into installer script
