@@ -6,12 +6,12 @@ name: Windows
 
 ###############################################################################
 # Schedule:
-# Push on add-git-tags branch
+# Push on use-git-tags branch
 ###############################################################################
 on:
   push:
     branches:
-      - add-git-tags
+      - use-git-tags
   pull_request:
   workflow_dispatch:
 
@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: main
-          ref: add-git-tags
+          ref: use-git-tags
 
       - name: Git checkout Coq platform
         uses: actions/checkout@v2
