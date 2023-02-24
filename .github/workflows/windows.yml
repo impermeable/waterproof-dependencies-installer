@@ -50,6 +50,7 @@ jobs:
       - name: Some steps for debugging
         shell: cmd
         run: |
+          cd main
           dir
 
       - name: Git checkout Coq platform
@@ -75,7 +76,7 @@ jobs:
         run: |
           copy main\* C:\cygwin_coq_platform\home\runneradmin\coq-platform\
           mkdir C:\cygwin_coq_platform\home\runneradmin\coq-platform\test_files\
-          copy main\test_files\* C:\cygwin_coq_platform\home\runneradmin\coq-platform\test_files\
+          copy main\test_files\* C:\t -cygwin_coq_platform\home\runneradmin\coq-platform\test_files\
           C:\cygwin_coq_platform\bin\bash --login -c "cd coq-platform && ./install_packages.sh packages.cfg"
 
       - name: Patch SerAPI
