@@ -52,6 +52,7 @@ jobs:
         run: |
           cd main
           dir
+          cd ..
 
       - name: Git checkout Coq platform
         uses: actions/checkout@v2
@@ -74,6 +75,10 @@ jobs:
       - name: Install packages specified in cfg file
         shell: cmd
         run: |
+          dir C:\
+          dir C:\cygwin_coq_platform
+          dir C:\cygwin_coq_platform\home
+          dir C:\cygwin_coq_platform\home\runneradmin
           copy main\* C:\cygwin_coq_platform\home\runneradmin\coq-platform\
           mkdir C:\cygwin_coq_platform\home\runneradmin\coq-platform\test_files\
           copy main\test_files\* C:\t -cygwin_coq_platform\home\runneradmin\coq-platform\test_files\
