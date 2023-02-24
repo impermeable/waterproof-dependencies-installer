@@ -79,6 +79,7 @@ jobs:
           dir C:\cygwin_coq_platform
           dir C:\cygwin_coq_platform\home
           dir C:\cygwin_coq_platform\home\runneradmin
+          mkdir C:\cygwin_coq_platform\home\runneradmin\coq-platform\
           copy main\* C:\cygwin_coq_platform\home\runneradmin\coq-platform\
           mkdir C:\cygwin_coq_platform\home\runneradmin\coq-platform\test_files\
           copy main\test_files\* C:\t -cygwin_coq_platform\home\runneradmin\coq-platform\test_files\
