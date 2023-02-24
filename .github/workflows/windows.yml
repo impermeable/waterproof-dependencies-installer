@@ -47,6 +47,11 @@ jobs:
           path: main
           ref: use-git-tags
 
+      - name: Some steps for debugging
+        shell: cmd
+        run: |
+          echo cwd
+
       - name: Git checkout Coq platform
         uses: actions/checkout@v2
         with:
