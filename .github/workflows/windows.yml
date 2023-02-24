@@ -50,7 +50,7 @@ jobs:
       - name: Some steps for debugging
         shell: cmd
         run: |
-          echo cwd
+          cwd
 
       - name: Git checkout Coq platform
         uses: actions/checkout@v2
