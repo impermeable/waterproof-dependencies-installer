@@ -42,7 +42,7 @@ function install_package_github {
 #   Changes create installer script to have $1 unselected by default in installer
 #######################################
 function unselect {
-      sed -i '/^###### Create the NSIS installer #####/a unselect_package '"$1" windows/create_installer_windows.sh
+      sed -i '/^###### Create the NSIS installer #####/a unselect_package '"$1" ../platform/windows/create_installer_windows.sh
 }
 
 # Create folder in which to perform Github clones
@@ -72,7 +72,7 @@ grep -v '^#' $config_file | while read -r line ; do
     cd ..
 
     # Inject install code into installer script
-    sed -i '/^echo "Create package list"/a add_custom_package "'"${package_name}"'" "'"${package_path}"'" "'"${package_description}"'"' windows/create_installer_windows.sh
+    sed -i '/^echo "Create package list"/a add_custom_package "'"${package_name}"'" "'"${package_path}"'" "'"${package_description}"'"' ../platform/windows/create_installer_windows.sh
   elif [[ $line =~ ^OPAM* ]] ; then
     opam install -y $package_name
   fi
@@ -82,8 +82,8 @@ done
 rmdir github_packages
 
 # Inject install imports into create installer script
-sed -i '/^echo "Create package list"/a source add_custom_nsis.sh' windows/create_installer_windows.sh  # Custom package functions
+sed -i '/^echo "Create package list"/a source add_custom_nsis.sh' ../platform/windows/create_installer_windows.sh  # Custom package functions
 
-sed -i '/^###### Create the NSIS installer #####/a source unselect_packages.sh' windows/create_installer_windows.sh  # Unselect package functions
+sed -i '/^###### Create the NSIS installer #####/a source unselect_packages.sh' ../platform/windows/create_installer_windows.sh  # Unselect package functions
 
-cat windows/create_installer_windows.sh
+cat ../platform/windows/create_installer_windows.sh
