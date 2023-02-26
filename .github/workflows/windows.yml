@@ -101,6 +101,8 @@ jobs:
         shell: cmd
         run: |
           dir
+          dir C:\cygwin_coq_platform\home\runneradmin\wpdinstaller\
+          dir C:\cygwin_coq_platform\home\runneradmin\wpdinstaller\windows\
           C:\cygwin_coq_platform\bin\bash --login -c "cd wpdinstaller && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
 
       - name: Sign the installer
