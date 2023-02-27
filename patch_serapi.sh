@@ -9,7 +9,11 @@ sed -i '/^OPAM_FILE_WHITELIST\[base-threads\]/ c#OPAM_FILE_WHITELIST\[base-threa
 sed -i '/^OPAM_FILE_WHITELIST\[ppx_deriving\]/ c#OPAM_FILE_WHITELIST\[ppx_deriving\]' platform/windows/create_installer_windows.sh
 sed -i '/^OPAM_FILE_WHITELIST\[sexplib0\]/ c#OPAM_FILE_WHITELIST\[sexplib0\]' platform/windows/create_installer_windows.sh
 sed -i '/^OPAM_FILE_WHITELIST\[result\]/ c#OPAM_FILE_WHITELIST\[result\]' platform/windows/create_installer_windows.sh
-          
+
+sed -i 's#unselect_packages.sh#../wpdinstaller/unselect_packages.sh#g' platform/windows/create_installer_windows.sh
+sed -i 's$cp source/coq-compcert/LICENSE coq-compcert-license.txt$#cp source/coq-compcert/LICENSE coq-compcert-license.txt$g' platform/windows/create_installer_windows.sh
+sed -i "s#'\\\n'\"sexplib0\"##g" platform/shell_scripts/installer_create_tree.sh
+
 # Change META files to not uses threading which is not supported on Windows
 sed -i '/^requires(mt,mt_posix)/ c#requires(mt,mt_posix)' .opam/coq_for_waterproof/lib/threads/META
 sed -i '/^type_of_threads = "posix"/ c#type_of_threads = "none"' .opam/coq_for_waterproof/lib/threads/META
