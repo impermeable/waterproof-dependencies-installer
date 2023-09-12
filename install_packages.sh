@@ -24,8 +24,9 @@ function install_package_github {
   # print last commit
   git log -1
   
-  make
-  make install
+  dune build -p $3
+  dune install -p $3
+  
   cd ..  # Leave repository
   rm -rf $2  # Delete repository
   
