@@ -25,8 +25,8 @@ function install_package_github {
   git log -1
   
   if [ $4 == "dune" ] ; then
-    dune build -p $3
-    dune install -p $3
+    dune build -p $2
+    dune install -p $2
   elif [ $4 == "opam" ] ; then
     opam install -y .
   elif [ $4 == "make" ] ; then
