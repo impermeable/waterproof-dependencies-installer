@@ -24,8 +24,15 @@ function install_package_github {
   # print last commit
   git log -1
   
-  dune build -p $3
-  dune install -p $3
+  if [ $4 == "dune" ] ; then
+    dune build -p $3
+    dune install -p $3
+  elif [ $4 == "opam" ] ; then
+    opam install -y .
+  elif [ $4 == "make" ] ; then
+    make
+    make install
+  fi
   
   cd ..  # Leave repository
   rm -rf $2  # Delete repository
@@ -67,9 +74,10 @@ grep -v '^#' $config_file | while read -r line ; do
     owner_name=${package_info[5]}
     repo_name=${package_info[6]}
     tag=${package_info[7]}
+    install_method=${package_info[8]}
 
     cd github_packages
-    install_package_github $owner_name $repo_name $tag
+    install_package_github $owner_name $repo_name $tag $install_method
     cd ..
 
     # Inject install code into installer script
@@ -83,8 +91,10 @@ done
 rmdir github_packages
 
 # Inject install imports into create installer script
-sed -i '/^echo "Create package list"/a source add_custom_nsis.sh' ../platform/windows/create_installer_windows.sh  # Custom package functions
+# sed -i '/^echo "Create package list"/a source add_custom_nsis.sh' ../platform-2023.03.0/windows/create_installer_windows.sh  # Custom package functions
 
-sed -i '/^###### Create the NSIS installer #####/a source unselect_packages.sh' ../platform/windows/create_installer_windows.sh  # Unselect package functions
+# sed -i '/^###### Create the NSIS installer #####/a source unselect_packages.sh' ../platform-2023.03.0/windows/create_installer_windows.sh  # Unselect package functions
+
+sed -i '/^###################### Create installer.*/i add_folder_recursively \"/home/runneradmin/.opam/CP.2023.03.0~8.17~2023.08/\" \"lib/coq-serapi\" \"files_coq-waterproof\"\nadd_folder_recursively \"/home/runneradmin/.opam/CP.2023.03.0~8.17~2023.08/\" \"lib/coq-lsp\" \"files_coq-waterproof\"\nadd_folder_recursively \"/home/runneradmin/.opam/CP.2023.03.0~8.17~2023.08/\" \"lib/sexplib0\" \"files_coq-waterproof\"\nadd_single_file \"/home/runneradmin/.opam/CP.2023.03.0~8.17~2023.08/\" \"bin/coq-lsp.exe\" \"files_coq-waterproof\"\nadd_single_file \"/home/runneradmin/.opam/CP.2023.03.0~8.17~2023.08/\" \"bin/sertop.exe\" \"files_coq-waterproof\"\nadd_single_file \"/home/runneradmin/.opam/CP.2023.03.0~8.17~2023.08/\" \"bin/sertok.exe\" \"files_coq-waterproof\"\nadd_single_file \"/home/runneradmin/.opam/CP.2023.03.0~8.17~2023.08/\" \"bin/sername.exe\" \"files_coq-waterproof\"\nadd_single_file \"/home/runneradmin/.opam/CP.2023.03.0~8.17~2023.08/\" \"bin/sercomp.exe\" \"files_coq-waterproof\"\nadd_single_file \"/home/runneradmin/.opam/CP.2023.03.0~8.17~2023.08/\" \"bin/fcc.exe\" \"files_coq-waterproof\" ' ../platform-2023.03.0/windows/create_installer_windows.sh
 
 cat ../platform/windows/create_installer_windows.sh
