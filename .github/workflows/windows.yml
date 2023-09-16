@@ -84,6 +84,23 @@ jobs:
           copy main\* C:\cygwin_coq_platform\home\runneradmin\wpdinstaller\
           copy main\test_files\* C:\cygwin_coq_platform\home\runneradmin\wpdinstaller\test_files\
 
+          - name: Install packages specified in cfg file
+          shell: cmd
+          # The folder is now called platform, and it also already contains a folder test_files
+          # mkdir C:\cygwin_coq_platform\home\runneradmin\platform\test_files\
+          run: |          
+            C:\cygwin_coq_platform\bin\bash --login -c "cd wpdinstaller && ./install_packages.sh packages.cfg"
+
+      - name: Install coq-serapi
+        shell: cmd
+        run: |          
+          C:\cygwin_coq_platform\bin\bash --login -c "opam install -y coq-serapi.8.17.0+0.17.0"
+    
+      - name: Install coq-serapi
+        shell: cmd
+        run: |          
+          C:\cygwin_coq_platform\bin\bash --login -c "opam install -y coq-lsp.0.1.7+8.17"
+  
       - name: Install packages specified in cfg file
         shell: cmd
         # The folder is now called platform, and it also already contains a folder test_files
