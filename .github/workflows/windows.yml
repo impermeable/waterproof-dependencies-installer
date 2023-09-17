@@ -70,7 +70,7 @@ jobs:
 
       - name: Run coq platform make windows
         shell: cmd
-        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_wp -arch=${{matrix.architecture}} -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.17~2023.08" -set-switch=y
+        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_wp -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=4 -vst=n -compcert=y -pick="8.17~2023.08" -set-switch=y
 
       - name: Copy scripts to places that are easy to reach from within cygwin
         shell: cmd
@@ -95,14 +95,20 @@ jobs:
         shell: cmd
         run: |          
           C:\cygwin_wp\bin\bash --login -c "opam install -y coq-lsp.0.1.7+8.17"
-  
-      - name: Install packages specified in cfg file
+      
+      - name: Install coq-waterproof
         if: always()
         shell: cmd
-        # The folder is now called platform, and it also already contains a folder test_files
-        # mkdir C:\cygwin_wp\home\runneradmin\platform\test_files\
         run: |          
-          C:\cygwin_wp\bin\bash --login -c "cd wpdinstaller && ./install_packages.sh packages.cfg"
+          C:\cygwin_wp\bin\bash --login -c "opam install -y coq-waterproof.0.1.7+8.17"
+  
+      # - name: Install packages specified in cfg file
+      #   if: always()
+      #   shell: cmd
+      #   # The folder is now called platform, and it also already contains a folder test_files
+      #   # mkdir C:\cygwin_wp\home\runneradmin\platform\test_files\
+      #   run: |          
+      #     C:\cygwin_wp\bin\bash --login -c "cd wpdinstaller && ./install_packages.sh packages.cfg"
 
 #      - name: Patch SerAPI
 #        shell: cmd
