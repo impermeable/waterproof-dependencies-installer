@@ -68,9 +68,17 @@ jobs:
           echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=wp" >> platform\package_picks\coq_platform_switch_name.sh
           type platform\package_picks\coq_platform_switch_name.sh
 
+      - name: Set default install directory
+        shell: cmd
+        run: sed -i 's/  InstallDir "C:\\.*/  InstallDir "C:\\cygwin_wp\\home\\runneradmin\\.opam\\wp"/g' platform/windows/Coq.nsi
+
+      - name: Comment compcert
+        shell: cmd
+        run: sed -i 's$cp source/coq-compcert/LICENSE coq-compcert-license.txt$#cp source/coq-compcert/LICENSE coq-compcert-license.txt$g' platform/windows/create_installer_windows.sh
+
       - name: Run coq platform make windows
         shell: cmd
-        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_wp -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=4 -vst=n -compcert=y -pick="8.17~2023.08" -set-switch=y
+        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_wp -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.17~2023.08" -set-switch=y
 
       - name: Copy scripts to places that are easy to reach from within cygwin
         shell: cmd
