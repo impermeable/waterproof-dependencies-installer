@@ -72,7 +72,7 @@ jobs:
         shell: cmd
         run: |
           sed -i 's/  InstallDir "C:\\${MY_PRODUCT}"        /  InstallDir "C:\\cygwin_wp\\home\\runneradmin\\.opam\\wp"/g' platform/windows/Coq.nsi
-          echo platform/windows/Coq.nsi
+          cat platform/windows/Coq.nsi
 
       - name: Comment compcert
         shell: cmd
