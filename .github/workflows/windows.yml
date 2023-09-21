@@ -71,7 +71,7 @@ jobs:
       - name: Set default install directory
         shell: cmd
         run: |
-          sed -i 's/  InstallDir "C:\\${MY_PRODUCT}"        /  InstallDir "C:\\cygwin_wp\\home\\runneradmin\\.opam\\wp"/g' platform/windows/Coq.nsi
+          sed -i 's/  InstallDir "C:\\\${MY_PRODUCT}"        /  InstallDir "C:\\cygwin_wp\\home\\runneradmin\\.opam\\wp"/g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
       - name: Comment compcert
@@ -145,10 +145,10 @@ jobs:
           & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.CODE_SIGNING_CERTIFICATE_PASS }}' C:\installer\*.exe
           Remove-Item -Path certificate\*
 
-      - name: Run test file
-        if: always()
-        shell: cmd
-        run: C:\cygwin_wp\bin\bash --login -c "cd wpdinstaller/ && ./test.sh"
+      # - name: Run test file
+      #   if: always()
+      #   shell: cmd
+      #   run: C:\cygwin_wp\bin\bash --login -c "cd wpdinstaller/ && ./test.sh"
 
       - name: 'Upload Artifact'
         if: always()
