@@ -71,7 +71,7 @@ jobs:
       - name: Set default install directory
         shell: cmd
         run: |
-          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:/cygwin_wp/home/runneradmin/.opam/wp"/g' platform/windows/Coq.nsi
+          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\cygwin_wp\\\home\\\runneradmin\\\.opam\\wp"/g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
       - name: Comment compcert
