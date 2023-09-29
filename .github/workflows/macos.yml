@@ -72,6 +72,7 @@ jobs:
       #     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       
       # Is this action necessary?
+      # This seems to make coq_platform_make run much faster (?)
       - name: Install Bash 4 and GNU sed on Mac
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -99,9 +100,7 @@ jobs:
         if: always()
         shell: bash
         run: |
-          opam switch
           opam switch wp
-          opam switch opam switch CP.2023.03.0~8.17~2023.08
           eval $(opam env)
       
       # Create installer with no additional packages for now just as a test
