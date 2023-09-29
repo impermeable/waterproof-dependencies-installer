@@ -59,8 +59,8 @@ jobs:
 
       - name: Set switch name in coq platform
         run: |
-          echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof" >> platform\package_picks\coq_platform_switch_name.sh
-          type platform\package_picks\coq_platform_switch_name.sh
+          echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof" >> platform/package_picks/coq_platform_switch_name.sh
+          type platform/package_picks/coq_platform_switch_name.sh
 
       # I believe the macos-latest image comes with xcode installed, uncomment if not
       # - name: Install XCode
@@ -73,7 +73,7 @@ jobs:
       #     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
       - name: Run coq platform make script
-        run: sh platform\coq_platform_make.sh  
+        run: sh platform/coq_platform_make.sh  
 
       # Output switch names and try a few to see which one is being set
       - name: Activate switch
@@ -87,7 +87,7 @@ jobs:
       - name: Create installer
         run: |
           cd platform
-          sh macos\create_installer_macos.sh
+          sh macos/create_installer_macos.sh
           mkdir /usr/local/installer && cp macos_installer/*dmg /usr/local/installer
 
       # How does signing the installer work now? -sign and -signcert are options for the create installer script
