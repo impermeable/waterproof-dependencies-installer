@@ -55,7 +55,10 @@ jobs:
       - name: Test
         run: |
           ls
-
+          cd platform
+          ls
+          cd package_picks
+          ls
 
       - name: Set switch name in coq platform
         run: |
