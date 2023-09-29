@@ -86,7 +86,7 @@ jobs:
       - name: Set switch name in coq platform
         shell: bash
         run: |
-          echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=wp" >> platform/package_picks/coq_platform_switch_name.sh
+          sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp' platform/package_picks/coq_platform_switch_name.sh
           cat platform/package_picks/coq_platform_switch_name.sh
 
       - name: Run coq platform make script
