@@ -1,0 +1,111 @@
+# Main doc: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/introduction-to-github-actions
+# Runners spec: https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners
+# Glob expressions: https://github.com/actions/toolkit/tree/main/packages/glob
+
+name: MacOS
+
+###############################################################################
+# Schedule:
+# Push on main branch
+###############################################################################
+on:
+  push:
+    branches:
+      - 8.17-macos
+  pull_request:
+  workflow_dispatch:
+
+###############################################################################
+# Platform script options shared among all jobs
+###############################################################################
+env:
+  COQREGTESTING: y
+
+###############################################################################
+# Builds Windows installer
+###############################################################################
+jobs:
+  MacOS_platform:
+    name: MacOS
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      # matrix:
+
+    steps:
+      - name: Set git to use LF
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
+      - name: Git checkout install scripts
+        uses: actions/checkout@v2
+        with:
+          path: main
+          ref: 8.17-macos
+
+      - name: Git checkout Coq platform
+        uses: actions/checkout@v2
+        with:
+          repository: coq/platform
+          ref: '2023.03.0'
+          path: platform
+      
+      # Testing to see the file layout on macos
+      - name: Test
+        run: |
+          ls
+
+
+      - name: Set switch name in coq platform
+        run: |
+          echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof" >> platform\package_picks\coq_platform_switch_name.sh
+          type platform\package_picks\coq_platform_switch_name.sh
+
+      # I believe the macos-latest image comes with xcode installed, uncomment if not
+      # - name: Install XCode
+      #   run: |
+      #     xcode-select --install
+
+      # I believe the macos-latest image comes with homebrew installed, uncomment if not
+      # - name: Install HomeBrew
+      #   run: |
+      #     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+      - name: Run coq platform make script
+        run: sh platform\coq_platform_make.sh  
+
+      # Output switch names and try a few to see which one is being set
+      - name: Activate switch
+        run: |
+          opam switch
+          opam switch coq_for_waterproof
+          opam switch opam switch CP.2023.03.0~8.17~2023.08
+          eval $(opam env)
+      
+      # Create installer with no additional packages for now just as a test
+      - name: Create installer
+        run: |
+          cd platform
+          sh macos\create_installer_macos.sh
+          mkdir /usr/local/installer && cp macos_installer/*dmg /usr/local/installer
+
+      # How does signing the installer work now? -sign and -signcert are options for the create installer script
+
+      # - name: Sign the installer
+      #   run: |
+      #     New-Item -ItemType directory -Path certificate
+      #     Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
+      #     certutil -decode certificate\certificate.txt certificate\certificate.pfx
+      #     & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.CODE_SIGNING_CERTIFICATE_PASS }}' C:\installer\*.exe
+      #     Remove-Item -Path certificate\*
+
+
+
+      - name: 'Upload Artifact'
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: 'MacOS DMG Installer'
+          path: /usr/local/installer/*.dmg
+          retention-days: 5
