@@ -53,6 +53,7 @@ jobs:
       
       # Testing to see the file layout on macos
       - name: Test
+        shell: bash
         run: |
           ls
           cd platform
@@ -61,6 +62,7 @@ jobs:
           ls
 
       - name: Set switch name in coq platform
+        shell: bash
         run: |
           echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=coq_for_waterproof" >> platform/package_picks/coq_platform_switch_name.sh
           type platform/package_picks/coq_platform_switch_name.sh
@@ -76,10 +78,12 @@ jobs:
       #     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
       - name: Run coq platform make script
+        shell: bash
         run: sh platform/coq_platform_make.sh  
 
       # Output switch names and try a few to see which one is being set
       - name: Activate switch
+        shell: bash
         run: |
           opam switch
           opam switch coq_for_waterproof
@@ -88,6 +92,7 @@ jobs:
       
       # Create installer with no additional packages for now just as a test
       - name: Create installer
+        shell: bash
         run: |
           cd platform
           sh macos/create_installer_macos.sh
