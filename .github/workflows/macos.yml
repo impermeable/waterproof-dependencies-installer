@@ -51,25 +51,7 @@ jobs:
           ref: '2023.03.0'
           path: platform
       
-      # Test python and pip
-      - name: Test
-        shell: bash
-        run: |
-          which -a pip
-          which -a python
-          pip3 --version
-
-      # I believe the macos-latest image comes with xcode installed, uncomment if not
-      # - name: Install XCode
-      #   run: |
-      #     xcode-select --install
-
-      # I believe the macos-latest image comes with homebrew installed, uncomment if not
-      # - name: Install HomeBrew
-      #   run: |
-      #     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      
-      # Bash 4 is necessary for the platform create_installer script..
+      # Updated bash is necessary for the platform create_installer script.
       - name: Install Bash 4 and GNU sed on Mac
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -94,7 +76,6 @@ jobs:
         shell: bash
         run: sh platform/coq_platform_make.sh -parallel=p -jobs=2 -compcert=n -extent=i -pick="8.17~2023.08" -set-switch=y
 
-      # Output switch names and try a few to see which one is being set
       - name: Activate switch
         if: always()
         shell: bash
@@ -107,9 +88,9 @@ jobs:
         shell: bash
         run: |
           pip3 install macpack
+          brew install findutils
       
       # Create installer with no additional packages for now just as a test
-      # Also try calling the creat_installer with bash to use v4 instead of v3
       - name: Create installer
         if: always()
         shell: bash
