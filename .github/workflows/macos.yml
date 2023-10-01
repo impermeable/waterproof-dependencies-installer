@@ -89,8 +89,8 @@ jobs:
         shell: bash
         run: |
           bash --version
-          type echo $GITHUB_PATH
-          type echo $PATH
+          echo $GITHUB_PATH
+          echo $PATH
 
 
       - name: Set switch name in coq platform
