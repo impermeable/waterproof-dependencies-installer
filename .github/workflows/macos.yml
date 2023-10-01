@@ -83,16 +83,6 @@ jobs:
           echo "/usr/local/bin" >> $GITHUB_PATH
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
           echo "/usr/local/bin/bash" >> $GITHUB_PATH
-          
-      # Still bash 3 seems to be used sometimes which gives problems in the installer script
-      # Check version as well as order of execution
-      - name: Test to make sure correct bash use
-        shell: bash
-        run: |
-          bash --version
-          echo $GITHUB_PATH
-          echo $PATH
-
 
       - name: Set switch name in coq platform
         if: always()
@@ -114,9 +104,16 @@ jobs:
           opam switch wp
           eval $(opam env)
       
+      - name: Install packages for installer script
+        if: always()
+        shell: bash
+        run: |
+          pip install macpack
+      
       # Create installer with no additional packages for now just as a test
       # Also try calling the creat_installer with bash to use v4 instead of v3
-      - name: Create installer
+      - name: Create installe
+        if: always()
         shell: bash
         run: |
           cd platform
