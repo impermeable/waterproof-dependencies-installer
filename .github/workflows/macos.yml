@@ -89,6 +89,7 @@ jobs:
         run: |
           pip3 install macpack
           brew install findutils
+          brew install coreutils
       
       # Create installer with no additional packages for now just as a test
       - name: Create installer
