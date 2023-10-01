@@ -71,8 +71,7 @@ jobs:
       #   run: |
       #     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       
-      # Is this action necessary?
-      # This seems to make coq_platform_make run much faster (?)
+      # Bash 4 is necessary for the platform create_installer script..
       - name: Install Bash 4 and GNU sed on Mac
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -83,8 +82,19 @@ jobs:
       
           echo "/usr/local/bin" >> $GITHUB_PATH
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
+        
+      # Still bash 3 seems to be used sometimes which gives problems in the installer script
+      # Check version as well as order of execution
+      - name: Test to make sure correct bash use
+        shell: bash
+        run: |
+          bash --version
+          type echo $GITHUB_PATH
+          type echo $PATH
+
 
       - name: Set switch name in coq platform
+        if: always()
         shell: bash
         run: |
           sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp' platform/package_picks/coq_platform_switch_name.sh
@@ -104,11 +114,12 @@ jobs:
           eval $(opam env)
       
       # Create installer with no additional packages for now just as a test
+      # Also try calling the creat_installer with bash to use v4 instead of v3
       - name: Create installer
         shell: bash
         run: |
           cd platform
-          sh macos/create_installer_macos.sh
+          bash macos/create_installer_macos.sh
           mkdir /usr/local/installer && cp macos_installer/*dmg /usr/local/installer
 
       # How does signing the installer work now? -sign and -signcert are options for the create installer script
