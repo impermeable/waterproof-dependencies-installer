@@ -51,6 +51,13 @@ jobs:
           ref: '2023.03.0'
           path: platform
       
+            
+      # Another fix suggested by platform, pkg-config may not be registering new libraries
+      - name: Uninstall all brew packages to fix pkg-config
+        if: always()
+        shell: bash
+        run: brew uninstall $(brew list)
+
       # Updated bash is necessary for the platform create_installer script.
       - name: Install Bash 4 and GNU sed on Mac
         run: |
@@ -70,14 +77,8 @@ jobs:
         run: |
           sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp' platform/package_picks/coq_platform_switch_name.sh
           cat platform/package_picks/coq_platform_switch_name.sh
-      
-      # Another fix suggested by platform, pkg-config may not be registering new libraries
-      - name: Uninstall all brew packages to fix pkg-config
-        if: always()
-        shell: bash
-        run: brew uninstall $(brew list)
 
-      - name: Run coq platform make script 
+      - name: Run coq platform make script
         if: always()
         shell: bash
         run: |
