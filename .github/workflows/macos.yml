@@ -70,26 +70,14 @@ jobs:
         run: |
           sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp' platform/package_picks/coq_platform_switch_name.sh
           cat platform/package_picks/coq_platform_switch_name.sh
-
-      # This is extremely stupid but coq-platform says possible homebrew issues are solved by running the script 2-3 times.
-      # Lets see...
-      - name: Run coq platform make script 1 
+      
+      # Another fix suggested by platform, pkg-config may not be registering new libraries
+      - name: Uninstall all brew packages to fix pkg-config
         if: always()
         shell: bash
-        run: |
-          sh platform/coq_platform_make.sh -parallel=p -jobs=2 -compcert=n -extent=i -pick="8.17~2023.08" -set-switch=y
+        run: brew uninstall $(brew list)
 
-      # This is extremely stupid but coq-platform says possible homebrew issues are solved by running the script 2-3 times.
-      # Lets see...
-      - name: Run coq platform make script 2 
-        if: always()
-        shell: bash
-        run: |
-          sh platform/coq_platform_make.sh -parallel=p -jobs=2 -compcert=n -extent=i -pick="8.17~2023.08" -set-switch=y
-
-      # This is extremely stupid but coq-platform says possible homebrew issues are solved by running the script 2-3 times.
-      # Lets see...
-      - name: Run coq platform make script 3 
+      - name: Run coq platform make script 
         if: always()
         shell: bash
         run: |
