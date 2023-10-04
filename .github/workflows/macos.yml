@@ -50,8 +50,7 @@ jobs:
           repository: coq/platform
           ref: '2023.03.0'
           path: platform
-      
-            
+       
       # Another fix suggested by platform, pkg-config may not be registering new libraries
       - name: Uninstall all brew packages to fix pkg-config
         if: always()
@@ -71,14 +70,40 @@ jobs:
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
           echo "/usr/local/bin/bash" >> $GITHUB_PATH
 
-      - name: Set switch name in coq platform
+      - name: Set switch name in coq platform 1
+        if: always()
+        shell: bash
+        run: |
+          sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp1' platform/package_picks/coq_platform_switch_name.sh
+          cat platform/package_picks/coq_platform_switch_name.sh
+
+      - name: Run coq platform make script 1
+        if: always()
+        shell: bash
+        run: |
+          sh platform/coq_platform_make.sh -parallel=p -jobs=2 -compcert=n -extent=i -pick="8.17~2023.08" -set-switch=y
+
+      - name: Set switch name in coq platform 2
+        if: always()
+        shell: bash
+        run: |
+          sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp2' platform/package_picks/coq_platform_switch_name.sh
+          cat platform/package_picks/coq_platform_switch_name.sh
+
+      - name: Run coq platform make script 2
+        if: always()
+        shell: bash
+        run: |
+          sh platform/coq_platform_make.sh -parallel=p -jobs=2 -compcert=n -extent=i -pick="8.17~2023.08" -set-switch=y
+
+      - name: Set switch name in coq platform 3
         if: always()
         shell: bash
         run: |
           sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp' platform/package_picks/coq_platform_switch_name.sh
           cat platform/package_picks/coq_platform_switch_name.sh
 
-      - name: Run coq platform make script
+      - name: Run coq platform make script 3
         if: always()
         shell: bash
         run: |
