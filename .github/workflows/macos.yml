@@ -73,12 +73,26 @@ jobs:
 
       # This is extremely stupid but coq-platform says possible homebrew issues are solved by running the script 2-3 times.
       # Lets see...
-      - name: Run coq platform make script
+      - name: Run coq platform make script 1 
         if: always()
         shell: bash
         run: |
           sh platform/coq_platform_make.sh -parallel=p -jobs=2 -compcert=n -extent=i -pick="8.17~2023.08" -set-switch=y
+
+      # This is extremely stupid but coq-platform says possible homebrew issues are solved by running the script 2-3 times.
+      # Lets see...
+      - name: Run coq platform make script 2 
+        if: always()
+        shell: bash
+        run: |
           sh platform/coq_platform_make.sh -parallel=p -jobs=2 -compcert=n -extent=i -pick="8.17~2023.08" -set-switch=y
+
+      # This is extremely stupid but coq-platform says possible homebrew issues are solved by running the script 2-3 times.
+      # Lets see...
+      - name: Run coq platform make script 3 
+        if: always()
+        shell: bash
+        run: |
           sh platform/coq_platform_make.sh -parallel=p -jobs=2 -compcert=n -extent=i -pick="8.17~2023.08" -set-switch=y
 
       # Run a test to see if this changes something in installer
