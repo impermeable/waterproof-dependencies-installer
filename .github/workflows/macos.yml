@@ -125,18 +125,21 @@ jobs:
         shell: bash
         run: |
           echo dir: Users runner .opam
-          cd /Users/runner/.opam
+          cd /Users/runner/.opam/CP.2023.03.0~8.17~2023.08
           ls
-          echo dir: Longer .opam
-          cd /Users/runner/work/waterproof-dependencies-installer/waterproof-dependencies-installer/.opam
+          echo binaries
+          cd /Users/runner/.opam/CP.2023.03.0~8.17~2023.08/bin
           ls
 
       - name: Test PATH variable
         if: always()
         shell: bash
         run: |
+          echo PATH
           echo $PATH
-          export PATH=$PATH:~/Users/runner/work/waterproof-dependencies-installer/waterproof-dependencies-installer/.opam/CP.2023.03.0~8.17~2023.08
+          echo GITHUB PATH
+          echo $GITHUB_PATH
+          echo "/Users/runner/.opam/CP.2023.03.0~8.17~2023.08/bin" >> $GITHUB_PATH
 
       - name: Check if coq is actually installed
         if: always()
