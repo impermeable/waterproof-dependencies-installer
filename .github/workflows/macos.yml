@@ -63,12 +63,12 @@ jobs:
         if: always()
         shell: bash
         run: |
-          ls
-          cd ..
-          ls
+          echo dir: Users
           cd /Users
           ls
-       
+          echo dir: Users runner
+          cd /Users/runner
+
       # Another fix suggested by platform, pkg-config may not be registering new libraries
       - name: Uninstall all brew packages to fix pkg-config
         if: always()
@@ -118,6 +118,14 @@ jobs:
           pip3 install macpack
           brew install findutils
           brew install coreutils
+
+      # I expect this to fail, need to see what Users exist
+      - name: Test directories in Github 2
+        if: always()
+        shell: bash
+        run: |
+          echo dir: Users runner .opam
+          cd /Users/runner/.opam
 
       - name: Test PATH variable
         if: always()
