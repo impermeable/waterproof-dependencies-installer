@@ -126,13 +126,17 @@ jobs:
         run: |
           echo dir: Users runner .opam
           cd /Users/runner/.opam
+          ls
+          echo dir: Longer .opam
+          cd /Users/runner/work/waterproof-dependencies-installer/waterproof-dependencies-installer/.opam
+          ls
 
       - name: Test PATH variable
         if: always()
         shell: bash
         run: |
           echo $PATH
-      #     export PATH=$PATH:~/Users/
+          export PATH=$PATH:~/Users/runner/work/waterproof-dependencies-installer/waterproof-dependencies-installer/.opam/CP.2023.03.0~8.17~2023.08
 
       - name: Check if coq is actually installed
         if: always()
@@ -140,17 +144,17 @@ jobs:
         run: | 
           coqc -v 
 
-      - name: Try Opam install coq
-        if: always()
-        shell: bash
-        run: | 
-          opam install coq.8.17.1
+      # - name: Try Opam install coq
+      #   if: always()
+      #   shell: bash
+      #   run: | 
+      #     opam install coq.8.17.1
 
-      - name: Check if coq is actually installed after opam
-        if: always()
-        shell: bash
-        run: | 
-          coqc -v 
+      # - name: Check if coq is actually installed after opam
+      #   if: always()
+      #   shell: bash
+      #   run: | 
+      #     coqc -v 
       
       # Create installer with no additional packages for now just as a test
       - name: Create installer
