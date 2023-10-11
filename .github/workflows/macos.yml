@@ -119,11 +119,11 @@ jobs:
           brew install findutils
           brew install coreutils
 
-      # - name: Test PATH variable
-      #   if: always()
-      #   shell: bash
-      #   run: |
-      #     echo $PATH
+      - name: Test PATH variable
+        if: always()
+        shell: bash
+        run: |
+          echo $PATH
       #     export PATH=$PATH:~/Users/
 
       - name: Check if coq is actually installed
