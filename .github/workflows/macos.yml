@@ -50,6 +50,11 @@ jobs:
           repository: coq/platform
           ref: '2023.03.0'
           path: platform
+
+      - name: Make sure XCode is installed
+        if: always()
+        shell: bash
+        run: xcode-select --install
        
       # Another fix suggested by platform, pkg-config may not be registering new libraries
       - name: Uninstall all brew packages to fix pkg-config
