@@ -51,10 +51,23 @@ jobs:
           ref: '2023.03.0'
           path: platform
 
-      - name: Make sure XCode is installed
+      - name: Update XCode installation
         if: always()
         shell: bash
-        run: xcode-select --install
+        run: |
+          sudo rm -rf /Library/Developer/CommandLineTools
+          xcode-select --install
+
+      # I expect this to fail, need to see what Users exist
+      - name: Test directories in Github
+        if: always()
+        shell: bash
+        run: |
+          ls
+          cd ..
+          ls
+          cd /Users
+          ls
        
       # Another fix suggested by platform, pkg-config may not be registering new libraries
       - name: Uninstall all brew packages to fix pkg-config
@@ -64,6 +77,7 @@ jobs:
 
       # Updated bash is necessary for the platform create_installer script.
       - name: Install Bash 4 and GNU sed on Mac
+        if: always()
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
           brew update
@@ -104,6 +118,13 @@ jobs:
           pip3 install macpack
           brew install findutils
           brew install coreutils
+
+      # - name: Test PATH variable
+      #   if: always()
+      #   shell: bash
+      #   run: |
+      #     echo $PATH
+      #     export PATH=$PATH:~/Users/
 
       - name: Check if coq is actually installed
         if: always()
