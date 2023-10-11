@@ -58,17 +58,6 @@ jobs:
           sudo rm -rf /Library/Developer/CommandLineTools
           xcode-select --install
 
-      # I expect this to fail, need to see what Users exist
-      - name: Test directories in Github
-        if: always()
-        shell: bash
-        run: |
-          echo dir: Users
-          cd /Users
-          ls
-          echo dir: Users runner
-          cd /Users/runner
-
       # Another fix suggested by platform, pkg-config may not be registering new libraries
       - name: Uninstall all brew packages to fix pkg-config
         if: always()
@@ -89,12 +78,12 @@ jobs:
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
           echo "/usr/local/bin/bash" >> $GITHUB_PATH
 
-      # - name: Set switch name in coq platform
-      #   if: always()
-      #   shell: bash
-      #   run: |
-      #     sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp' platform/package_picks/coq_platform_switch_name.sh
-      #     cat platform/package_picks/coq_platform_switch_name.sh
+      - name: Set switch name in coq platform
+        if: always()
+        shell: bash
+        run: |
+          sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp' platform/package_picks/coq_platform_switch_name.sh
+          cat platform/package_picks/coq_platform_switch_name.sh
 
       - name: Run coq platform make script
         if: always()
@@ -102,12 +91,11 @@ jobs:
         run: |
           sh platform/coq_platform_make.sh -parallel=p -jobs=2 -compcert=n -extent=i -pick="8.17~2023.08" -set-switch=y
 
-      # Run a test to see if this changes something in installer
       - name: Activate switch
         if: always()
         shell: bash
         run: |
-          opam switch CP.2023.03.0~8.17~2023.08
+          opam switch wp
           eval $(opam env)
           opam switch show
       
@@ -125,10 +113,10 @@ jobs:
         shell: bash
         run: |
           echo dir: Users runner .opam
-          cd /Users/runner/.opam/CP.2023.03.0~8.17~2023.08
+          cd /Users/runner/.opam/wp
           ls
           echo binaries
-          cd /Users/runner/.opam/CP.2023.03.0~8.17~2023.08/bin
+          cd /Users/runner/.opam/wp/bin
           ls
 
       - name: Test PATH variable
@@ -139,25 +127,13 @@ jobs:
           echo $PATH
           echo GITHUB PATH
           echo $GITHUB_PATH
-          echo "/Users/runner/.opam/CP.2023.03.0~8.17~2023.08/bin" >> $GITHUB_PATH
+          echo "/Users/runner/.opam/wp/bin" >> $GITHUB_PATH
 
       - name: Check if coq is actually installed
         if: always()
         shell: bash
         run: | 
           coqc -v 
-
-      # - name: Try Opam install coq
-      #   if: always()
-      #   shell: bash
-      #   run: | 
-      #     opam install coq.8.17.1
-
-      # - name: Check if coq is actually installed after opam
-      #   if: always()
-      #   shell: bash
-      #   run: | 
-      #     coqc -v 
       
       # Create installer with no additional packages for now just as a test
       - name: Create installer
@@ -166,7 +142,6 @@ jobs:
         run: |
           cd platform
           bash macos/create_installer_macos.sh
-          mkdir /usr/local/installer && cp macos_installer/*dmg /usr/local/installer
 
       # How does signing the installer work now? -sign and -signcert are options for the create installer script
 
@@ -185,5 +160,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: 'MacOS DMG Installer'
-          path: /usr/local/installer/*.dmg
+          path: /platform/macos_installer/*.dmg
           retention-days: 5
