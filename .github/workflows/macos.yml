@@ -54,9 +54,6 @@ jobs:
         if: always()
         shell: bash
         run: |
-          echo Users
-          cd /Users
-          ls
           echo Platform
           cd platform
           ls
