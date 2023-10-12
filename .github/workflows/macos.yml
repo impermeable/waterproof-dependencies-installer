@@ -135,12 +135,18 @@ jobs:
       #     & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.CODE_SIGNING_CERTIFICATE_PASS }}' C:\installer\*.exe
       #     Remove-Item -Path certificate\*
 
-
+      - name: Check installer directory
+        if: always()
+        shell: bash
+        run: |
+          cd /Users/runner/platform
+          cd macos_installer
+          ls
 
       - name: 'Upload Artifact'
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: 'MacOS DMG Installer'
-          path: /platform/macos_installer/*.dmg
+          path: /Users/runner/platform/macos_installer/*.dmg
           retention-days: 5
