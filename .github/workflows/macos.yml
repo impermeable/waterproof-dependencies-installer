@@ -139,7 +139,7 @@ jobs:
         if: always()
         shell: bash
         run: |
-          cd /Users/runner/platform
+          cd /Users/platform
           cd macos_installer
           ls
 
@@ -148,5 +148,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: 'MacOS DMG Installer'
-          path: /Users/runner/platform/macos_installer/*.dmg
+          path: /Users/platform/macos_installer/*.dmg
           retention-days: 5
