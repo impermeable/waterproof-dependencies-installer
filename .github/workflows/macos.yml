@@ -30,7 +30,6 @@ jobs:
     runs-on: macos-latest
     strategy:
       fail-fast: false
-      # matrix:
 
     steps:
       - name: Set git to use LF
@@ -78,12 +77,12 @@ jobs:
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
           echo "/usr/local/bin/bash" >> $GITHUB_PATH
 
-      - name: Set switch name in coq platform
-        if: always()
-        shell: bash
-        run: |
-          sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp' platform/package_picks/coq_platform_switch_name.sh
-          cat platform/package_picks/coq_platform_switch_name.sh
+      # - name: Set switch name in coq platform
+      #   if: always()
+      #   shell: bash
+      #   run: |
+      #     sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp' platform/package_picks/coq_platform_switch_name.sh
+      #     cat platform/package_picks/coq_platform_switch_name.sh
 
       - name: Run coq platform make script
         if: always()
@@ -95,7 +94,7 @@ jobs:
         if: always()
         shell: bash
         run: |
-          opam switch wp
+          opam switch CP.2023.03.0~8.17~2023.08
           eval $(opam env)
           opam switch show
       
@@ -107,27 +106,10 @@ jobs:
           brew install findutils
           brew install coreutils
 
-      # I expect this to fail, need to see what Users exist
-      - name: Test directories in Github 2
+      - name: Update PATH variable
         if: always()
         shell: bash
-        run: |
-          echo dir: Users runner .opam
-          cd /Users/runner/.opam/wp
-          ls
-          echo binaries
-          cd /Users/runner/.opam/wp/bin
-          ls
-
-      - name: Test PATH variable
-        if: always()
-        shell: bash
-        run: |
-          echo PATH
-          echo $PATH
-          echo GITHUB PATH
-          echo $GITHUB_PATH
-          echo "/Users/runner/.opam/wp/bin" >> $GITHUB_PATH
+        run: echo "/Users/runner/.opam/CP.2023.03.0~8.17~2023.08/bin" >> $GITHUB_PATH
 
       - name: Check if coq is actually installed
         if: always()
