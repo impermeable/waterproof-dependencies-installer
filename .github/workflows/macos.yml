@@ -50,6 +50,17 @@ jobs:
           ref: '2023.03.0'
           path: platform
 
+      - name: Check installer directory
+        if: always()
+        shell: bash
+        run: |
+          echo Users
+          cd /Users
+          ls
+          echo Platform
+          cd platform
+          ls
+
       - name: Update XCode installation
         if: always()
         shell: bash
@@ -110,12 +121,6 @@ jobs:
         if: always()
         shell: bash
         run: echo "/Users/runner/.opam/CP.2023.03.0~8.17~2023.08/bin" >> $GITHUB_PATH
-
-      - name: Check if coq is actually installed
-        if: always()
-        shell: bash
-        run: | 
-          coqc -v 
       
       # Create installer with no additional packages for now just as a test
       - name: Create installer
@@ -135,18 +140,10 @@ jobs:
       #     & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.CODE_SIGNING_CERTIFICATE_PASS }}' C:\installer\*.exe
       #     Remove-Item -Path certificate\*
 
-      - name: Check installer directory
-        if: always()
-        shell: bash
-        run: |
-          cd /Users/platform
-          cd macos_installer
-          ls
-
       - name: 'Upload Artifact'
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: 'MacOS DMG Installer'
-          path: /Users/platform/macos_installer/*.dmg
+          path: platform/macos_installer/*.dmg
           retention-days: 5
