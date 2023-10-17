@@ -92,6 +92,13 @@ jobs:
       #     sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp' platform/package_picks/coq_platform_switch_name.sh
       #     cat platform/package_picks/coq_platform_switch_name.sh
 
+      - name: Missing dependency
+        if: always()
+        shell: bash
+        run: | 
+          sed -i '/^### GTK sourceview.*/i add_folder_recursively \"/Users/runner/.opam/CP.2023.03.0~8.17~2023.08/\" \"lib/sexplib0\"' platform/macos/create_installer_macos.sh
+          cat platform/macos/create_installer_macos.sh
+
       - name: Run coq platform make script
         if: always()
         shell: bash
