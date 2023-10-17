@@ -118,6 +118,21 @@ jobs:
         if: always()
         shell: bash
         run: echo "/Users/runner/.opam" >> $GITHUB_PATH
+
+      - name: Install coq-serapi
+        if: always()
+        shell: bash
+        run: opam install -y coq-serapi.8.17.0+0.17.0
+
+      - name: Install coq-lsp
+        if: always()
+        shell: bash
+        run: opam install -y coq-lsp.0.1.7+8.17
+
+      - name: Install coq-waterproof
+        if: always()
+        shell: bash
+        run: opam install -y coq-waterproof.2.0.1+8.17
       
       # Create installer with no additional packages for now just as a test
       - name: Create installer
