@@ -117,7 +117,7 @@ jobs:
       - name: Update PATH variable
         if: always()
         shell: bash
-        run: echo "/Users/runner/.opam/CP.2023.03.0~8.17~2023.08/bin" >> $GITHUB_PATH
+        run: echo "/Users/runner/.opam" >> $GITHUB_PATH
       
       # Create installer with no additional packages for now just as a test
       - name: Create installer
