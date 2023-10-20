@@ -85,18 +85,18 @@ jobs:
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
           echo "/usr/local/bin/bash" >> $GITHUB_PATH
 
-      # - name: Set switch name in coq platform
-      #   if: always()
-      #   shell: bash
-      #   run: |
-      #     sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp' platform/package_picks/coq_platform_switch_name.sh
-      #     cat platform/package_picks/coq_platform_switch_name.sh
+      - name: Set switch name in coq platform
+        if: always()
+        shell: bash
+        run: |
+          sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp_coq' platform/package_picks/coq_platform_switch_name.sh
+          cat platform/package_picks/coq_platform_switch_name.sh
 
       - name: Missing dependency
         if: always()
         shell: bash
         run: | 
-          sed -i '/^### GTK sourceview.*/i add_folder_recursively \"/Users/runner/.opam/CP.2023.03.0~8.17~2023.08/\" \"lib/sexplib0\"' platform/macos/create_installer_macos.sh
+          sed -i '/^### GTK sourceview.*/i add_folder_recursively \"/Users/runner/.opam/wp_coq/\" \"lib/sexplib0\"' platform/macos/create_installer_macos.sh
           cat platform/macos/create_installer_macos.sh
 
       - name: Run coq platform make script
@@ -109,7 +109,7 @@ jobs:
         if: always()
         shell: bash
         run: |
-          opam switch CP.2023.03.0~8.17~2023.08
+          opam switch wp_coq
           eval $(opam env)
           opam switch show
       
