@@ -85,28 +85,27 @@ jobs:
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
           echo "/usr/local/bin/bash" >> $GITHUB_PATH
 
-      - name: Set switch name in coq platform
-        if: always()
-        shell: bash
-        run: |
-          sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp_coq' platform/package_picks/coq_platform_switch_name.sh
-          cat platform/package_picks/coq_platform_switch_name.sh
+      # - name: Set switch name in coq platform
+      #   if: always()
+      #   shell: bash
+      #   run: |
+      #     sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp_coq' platform/package_picks/coq_platform_switch_name.sh
+      #     cat platform/package_picks/coq_platform_switch_name.sh
 
       # Add placeholder for dmg,app name as well as package pick for readme
       - name: Change switch name in installer script
         if: always()
         shell: bash
         run: |
-          sed -i 's/DMG_NAME=".*/DMG_NAME="Waterproof_COQ_DMG"' platform/macos/create_installer_macos.sh
-          sed -i 's/APP_NAME=".*/APP_NAME="Waterproof_COQ_APP"' platform/macos/create_installer_macos.sh
-          sed -i 's/-pick="${COQ_PLATFORM_PACKAGE_PICK_POSTFIX}"/-packages=~8.17~2023.08/' platform/macos/create_installer_macos.sh
+          sed -i 's/DMG_NAME=".*/DMG_NAME="Waterproof_COQ_DMG"/' platform/macos/create_installer_macos.sh
+          sed -i 's/APP_NAME=".*/APP_NAME="Waterproof_COQ_APP"/' platform/macos/create_installer_macos.sh
           cat platform/macos/create_installer_macos.sh
 
       - name: Missing dependency
         if: always()
         shell: bash
         run: | 
-          sed -i '/^### GTK sourceview.*/i add_folder_recursively \"/Users/runner/.opam/wp_coq/\" \"lib/sexplib0\"' platform/macos/create_installer_macos.sh
+          sed -i '/^### GTK sourceview.*/i add_folder_recursively \"/Users/runner/.opam/CP.2023.03.0~8.17~2023.08/\" \"lib/sexplib0\"' platform/macos/create_installer_macos.sh
           cat platform/macos/create_installer_macos.sh
 
       - name: Run coq platform make script
@@ -119,7 +118,7 @@ jobs:
         if: always()
         shell: bash
         run: |
-          opam switch wp_coq
+          opam switch CP.2023.03.0~8.17~2023.08
           eval $(opam env)
           opam switch show
       
@@ -137,7 +136,7 @@ jobs:
         run: |
           cd /Users/runner/.opam
           ls
-          echo "/Users/runner/.opam/wp_coq" >> $GITHUB_PATH
+          echo "/Users/runner/.opam" >> $GITHUB_PATH
 
       - name: Install coq-serapi
         if: always()
@@ -165,7 +164,7 @@ jobs:
         shell: bash
         run: |
           cd platform
-          bash macos/create_installer_macos.sh -quick
+          bash macos/create_installer_macos.sh
 
       # How does signing the installer work now? -sign and -signcert are options for the create installer script
 
