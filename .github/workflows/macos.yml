@@ -154,7 +154,7 @@ jobs:
         shell: bash
         run: |
           sed -i '/^###### Get the Coq sourc.*/i version=\"wp_coq\"' platform/macos/create_installer_macos.sh
-          sed -i 's/^-pick="${COQ_PLATFORM_PACKAGE_PICK_POSTFIX}"/-packages=~8.17~2023.08' platform/macos/create_installer_macos.sh
+          sed -i 's/^-pick="${COQ_PLATFORM_PACKAGE_PICK_POSTFIX}"/-packages=~8.17~2023.08/' platform/macos/create_installer_macos.sh
           cat platform/macos/create_installer_macos.sh
           
       # Create installer with no additional packages for now just as a test
@@ -163,7 +163,7 @@ jobs:
         shell: bash
         run: |
           cd platform
-          bash macos/create_installer_macos.sh -sign Y -signcert
+          bash macos/create_installer_macos.sh
 
       # How does signing the installer work now? -sign and -signcert are options for the create installer script
 
