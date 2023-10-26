@@ -127,7 +127,7 @@ jobs:
         run: |
           cd /Users/runner/.opam
           ls
-          echo "/Users/runner/.opam" >> $GITHUB_PATH
+          echo "/Users/runner/.opam/wp_coq" >> $GITHUB_PATH
 
       - name: Install coq-serapi
         if: always()
@@ -153,7 +153,7 @@ jobs:
         if: always()
         shell: bash
         run: |
-          sed -i '/^###### Get the Coq sourc.*/i version = \"wp_coq\"' platform/macos/create_installer_macos.sh
+          sed -i '/^###### Get the Coq sourc.*/i version=\"wp_coq\"' platform/macos/create_installer_macos.sh
           cat platform/macos/create_installer_macos.sh
           
       # Create installer with no additional packages for now just as a test
