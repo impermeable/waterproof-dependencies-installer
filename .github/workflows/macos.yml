@@ -141,6 +141,18 @@ jobs:
         shell: bash
         run: opam install -y coq-waterproof.2.0.1+8.17
       
+      - name: Check coq installed
+        if: always()
+        shell: bash
+        run: coqc --version
+
+      - name: Change switch name in installer script
+        if: always()
+        shell: bash
+        run: |
+          sed -i '/^###### Get the Coq sourc.*/i version = wp_coq' platform/macos/create_installer_macos.sh
+          cat platform/macos/create_installer_macos.sh
+          
       # Create installer with no additional packages for now just as a test
       - name: Create installer
         if: always()
