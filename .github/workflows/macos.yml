@@ -92,13 +92,15 @@ jobs:
           sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp_coq' platform/package_picks/coq_platform_switch_name.sh
           cat platform/package_picks/coq_platform_switch_name.sh
 
-      # - name: Change switch name in installer script
-      #   if: always()
-      #   shell: bash
-      #   run: |
-      #     sed -i '/^###### Get the Coq sourc.*/i version=\"wp_coq\"' platform/macos/create_installer_macos.sh
-      #     sed -i 's/-pick="${COQ_PLATFORM_PACKAGE_PICK_POSTFIX}"/-packages=~8.17~2023.08/' platform/macos/create_installer_macos.sh
-      #     cat platform/macos/create_installer_macos.sh
+      # Add placeholder for dmg,app name as well as package pick for readme
+      - name: Change switch name in installer script
+        if: always()
+        shell: bash
+        run: |
+          sed -i 's/DMG_NAME=".*/DMG_NAME="Waterproof_COQ_DMG"' platform/macos/create_installer_macos.sh
+          sed -i 's/APP_NAME=".*/APP_NAME="Waterproof_COQ_APP"' platform/macos/create_installer_macos.sh
+          sed -i 's/-pick="${COQ_PLATFORM_PACKAGE_PICK_POSTFIX}"/-packages=~8.17~2023.08/' platform/macos/create_installer_macos.sh
+          cat platform/macos/create_installer_macos.sh
 
       - name: Missing dependency
         if: always()
