@@ -146,12 +146,12 @@ jobs:
       - name: Install coq-lsp
         if: always()
         shell: bash
-        run: opam install -y coq-lsp.0.1.7+8.17
+        run: opam install -y coq-lsp.0.1.8+8.17
 
       - name: Install coq-waterproof
         if: always()
         shell: bash
-        run: opam install -y coq-waterproof.2.0.1+8.17
+        run: opam pin add -y https://github.com/impermeable/coq-waterproof.git#2.1.0+8.17
       
       # - name: Check coq installed
       #   if: always()
