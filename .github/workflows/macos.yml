@@ -98,7 +98,6 @@ jobs:
         shell: bash
         run: |
           sed -i 's/DMG_NAME=".*/DMG_NAME="Waterproof_Background"/' platform/macos/create_installer_macos.sh
-          sed -i 's/APP_NAME=".*/APP_NAME="Waterproof_Background"/' platform/macos/create_installer_macos.sh
           cat platform/macos/create_installer_macos.sh
 
       - name: Missing dependency
