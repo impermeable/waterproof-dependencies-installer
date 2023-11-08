@@ -93,13 +93,13 @@ jobs:
       #     cat platform/package_picks/coq_platform_switch_name.sh
 
       # Add placeholder for dmg,app name as well as package pick for readme
-      # - name: Change switch name in installer script
-      #   if: always()
-      #   shell: bash
-      #   run: |
-      #     sed -i 's/DMG_NAME=".*/DMG_NAME="Waterproof_Background"/' platform/macos/create_installer_macos.sh
-      #     sed -i 's/APP_NAME=".*/APP_NAME="Waterproof_Background"/' platform/macos/create_installer_macos.sh
-      #     cat platform/macos/create_installer_macos.sh
+      - name: Change switch name in installer script
+        if: always()
+        shell: bash
+        run: |
+          sed -i 's/DMG_NAME=".*/DMG_NAME="Waterproof_Background.app"/' platform/macos/create_installer_macos.sh
+          sed -i 's/APP_NAME=".*/APP_NAME="Waterproof_Background"/' platform/macos/create_installer_macos.sh
+          cat platform/macos/create_installer_macos.sh
 
       - name: Missing dependency
         if: always()
