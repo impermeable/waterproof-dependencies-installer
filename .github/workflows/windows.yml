@@ -11,7 +11,7 @@ name: Windows
 on:
   push:
     branches:
-      - 2.1.0+8.17
+      - 2.1.1+8.18
   pull_request:
   workflow_dispatch:
 
@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: main
-          ref: 2.1.0+8.17
+          ref: 2.1.1+8.18
 
       - name: Some steps for debugging
         shell: cmd
@@ -58,7 +58,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: coq/platform
-          ref: '2023.03.0'
+          ref: '2023.11.0'
           path: platform
 
       - name: Set switch name in coq platform
@@ -86,7 +86,7 @@ jobs:
 
       - name: Run coq platform make windows
         shell: cmd
-        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_wp -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.17~2023.08" -set-switch=y
+        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_wp -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.18~2023.11" -set-switch=y
 
       - name: Copy scripts to places that are easy to reach from within cygwin
         shell: cmd
@@ -104,13 +104,13 @@ jobs:
         if: always()
         shell: cmd
         run: |          
-          C:\cygwin_wp\bin\bash --login -c "opam install -y coq-lsp.0.1.8+8.17"
+          C:\cygwin_wp\bin\bash --login -c "opam install -y coq-lsp.0.1.9+8.18"
       
       - name: Install coq-waterproof
         if: always()
         shell: cmd
         run: |          
-          C:\cygwin_wp\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#2.1.0+8.17"
+          C:\cygwin_wp\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#2.1.1+8.18"
   
       # - name: Install packages specified in cfg file
       #   if: always()
