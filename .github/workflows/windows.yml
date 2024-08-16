@@ -32,7 +32,6 @@ jobs:
       fail-fast: false
       matrix:
         architecture:
-          #- '32'
           - '64'
 
     steps:
