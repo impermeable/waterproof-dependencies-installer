@@ -133,10 +133,10 @@ jobs:
           dir
           dir C:\cygwin_wp\home\runneradmin\
           dir C:\cygwin_wp\home\runneradmin\wpdinstaller\
-          dir C:\cygwin_wp\home\runneradmin\wpdinstaller\windows\
-          dir C:\cygwin_wp\home\runneradmin\platform\
+          dir C:\cygwin_wp\platform\
+          dir C:\cygwin_wp\wpdinstaller
           dir
-          C:\cygwin_wp\bin\bash --login -c "cd ../../platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
+          C:\cygwin_wp\bin\bash --login -c "cd platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
 
       - name: Sign the installer
         if: always()
