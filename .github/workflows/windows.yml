@@ -99,6 +99,7 @@ jobs:
           mkdir C:\cygwin_wp\home\runneradmin\wpdinstaller\test_files
           copy main\* C:\cygwin_wp\home\runneradmin\wpdinstaller\
           copy main\test_files\* C:\cygwin_wp\home\runneradmin\wpdinstaller\test_files\
+          copy platform\* C:\cygwin_wp\home\runneradmin\platform\
     
       - name: Install coq-lsp
         if: always()
@@ -136,7 +137,7 @@ jobs:
           dir C:\cygwin_wp\platform\
           dir C:\cygwin_wp\wpdinstaller
           dir
-          C:\cygwin_wp\bin\bash --login -c "cd platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
+          C:\cygwin_wp\bin\bash --login -c "cd C:\cygwin_wp\home\runneradmin\platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
 
       - name: Sign the installer
         if: always()
