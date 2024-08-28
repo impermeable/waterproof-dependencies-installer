@@ -80,9 +80,12 @@ jobs:
           sed -i '/^###################### Create installer.*/i add_folder_recursively \"/home/runneradmin/.opam/wp/\" \"lib/sexplib0\" \"files_coq-waterproof\"' platform/windows/create_installer_windows.sh
           cat platform/windows/create_installer_windows.sh
           
-      - name: Comment compcert
+      - name: Comment compcert and coqide
         shell: cmd
-        run: sed -i 's$cp source/coq-compcert/LICENSE coq-compcert-license.txt$#cp source/coq-compcert/LICENSE coq-compcert-license.txt$g' platform/windows/create_installer_windows.sh
+        run: |
+          sed -i 's$cp source/coq-compcert/LICENSE coq-compcert-license.txt$#cp source/coq-compcert/LICENSE coq-compcert-license.txt$g' platform/windows/create_installer_windows.sh
+          sed -i 's$cp source/coqide/ide/coqide/coq.ico files/bin/$#cp source/coqide/ide/coqide/coq.ico files/bin/$g' platform/windows/create_installer_windows.sh
+        
 
       - name: Run coq platform make windows
         shell: cmd
@@ -97,10 +100,8 @@ jobs:
           dir C:\cygwin_wp\home\runneradmin
           mkdir C:\cygwin_wp\home\runneradmin\wpdinstaller\
           mkdir C:\cygwin_wp\home\runneradmin\wpdinstaller\test_files
-          mkdir C:\cygwin_wp\home\runneradmin\platform\
           copy main\* C:\cygwin_wp\home\runneradmin\wpdinstaller\
           copy main\test_files\* C:\cygwin_wp\home\runneradmin\wpdinstaller\test_files\
-          copy platform\* C:\cygwin_wp\home\runneradmin\platform\
     
       - name: Install coq-lsp
         if: always()
@@ -138,7 +139,7 @@ jobs:
           dir C:\cygwin_wp\platform\
           dir C:\cygwin_wp\home\runneradmin\platform\
           dir C:\cygwin_wp\wpdinstaller
-          C:\cygwin_wp\bin\bash --login -c "cd ../../home/runneradmin/platform && dir && ls && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
+          C:\cygwin_wp\bin\bash --login -c "cd ../../platform && dir && ls && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
 
       - name: Sign the installer
         if: always()
