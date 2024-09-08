@@ -89,7 +89,7 @@ jobs:
 
       - name: Run coq platform make windows
         shell: cmd
-        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_wp -arch=${{matrix.architecture}} -extent=b -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.18~2023.11" -set-switch=y
+        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_wp -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.18~2023.11" -set-switch=y
 
       - name: Copy scripts to places that are easy to reach from within cygwin
         shell: cmd
@@ -129,7 +129,21 @@ jobs:
 #          copy main\patch_serapi.sh C:\cygwin_wp\home\runneradmin\
 #          C:\cygwin_wp\bin\bash --login -c "./patch_serapi.sh"
 
-      - name: Create installer - comment out coqide
+      # - name: Create installer - comment out coqide
+      #   if: always()
+      #   shell: cmd
+      #   run: |
+      #     dir
+      #     dir C:\cygwin_wp\home\runneradmin\
+      #     dir C:\cygwin_wp\home\runneradmin\wpdinstaller\
+      #     dir C:\cygwin_wp\platform\
+      #     dir C:\cygwin_wp\home\runneradmin\platform\
+      #     dir C:\cygwin_wp\wpdinstaller
+      #     C:\cygwin_wp\bin\bash --login -c "cd ../../platform && sed -i 's$cp source/coqide/ide/coqide/coq.ico files/bin/$#cp source/coqide/ide/coqide/coq.ico files/bin/$g' windows/create_installer_windows.sh && sed -i 's$cp source/coqide/ide/coqide/coq.ico .$#cp source/coqide/ide/coqide/coq.ico .$g' windows/create_installer_windows.sh && cat windows/create_installer_windows.sh"
+      #     C:\cygwin_wp\bin\bash --login -c "cd ../../platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
+
+
+      - name: Create installer 
         if: always()
         shell: cmd
         run: |
@@ -139,7 +153,6 @@ jobs:
           dir C:\cygwin_wp\platform\
           dir C:\cygwin_wp\home\runneradmin\platform\
           dir C:\cygwin_wp\wpdinstaller
-          C:\cygwin_wp\bin\bash --login -c "cd ../../platform && sed -i 's$cp source/coqide/ide/coqide/coq.ico files/bin/$#cp source/coqide/ide/coqide/coq.ico files/bin/$g' windows/create_installer_windows.sh && sed -i 's$cp source/coqide/ide/coqide/coq.ico .$#cp source/coqide/ide/coqide/coq.ico .$g' windows/create_installer_windows.sh && cat windows/create_installer_windows.sh"
           C:\cygwin_wp\bin\bash --login -c "cd ../../platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
 
       - name: Sign the installer
