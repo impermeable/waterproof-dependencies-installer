@@ -60,6 +60,7 @@ jobs:
           repository: coq/platform
           ref: main/6f85b7f
           path: platform
+          fetch-depth: 1
 
       - name: Set switch name in coq platform
         shell: cmd
@@ -86,7 +87,6 @@ jobs:
           sed -i 's$cp source/coq-compcert/LICENSE coq-compcert-license.txt$#cp source/coq-compcert/LICENSE coq-compcert-license.txt$g' platform/windows/create_installer_windows.sh
           sed -i 's$cp source/coqide/ide/coqide/coq.ico files/bin/$#cp source/coqide/ide/coqide/coq.ico files/bin/$g' platform/windows/create_installer_windows.sh
         
-
       - name: Run coq platform make windows
         shell: cmd
         run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_wp -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.18~2023.11" -set-switch=y
