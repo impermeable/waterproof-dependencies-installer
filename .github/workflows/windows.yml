@@ -60,7 +60,7 @@ jobs:
           repository: coq/platform
           ref: main/6f85b7f
           path: platform
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Set switch name in coq platform
         shell: cmd
