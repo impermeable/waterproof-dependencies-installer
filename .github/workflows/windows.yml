@@ -55,10 +55,10 @@ jobs:
           cd ..
 
       - name: Git checkout Coq platform
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: coq/platform
-          ref: main/6f85b7f
+          ref: main/6f85b7ffb0
           path: platform
           fetch-depth: 0
 
