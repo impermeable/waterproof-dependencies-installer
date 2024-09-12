@@ -68,7 +68,6 @@ jobs:
           cd platform
           git reset --hard 6f85b7ffb0
           cd ..
-          
 
       - name: Set switch name in coq platform
         shell: cmd
@@ -93,7 +92,6 @@ jobs:
         shell: cmd
         run: |
           sed -i 's$cp source/coq-compcert/LICENSE coq-compcert-license.txt$#cp source/coq-compcert/LICENSE coq-compcert-license.txt$g' platform/windows/create_installer_windows.sh
-          sed -i 's$cp source/coqide/ide/coqide/coq.ico files/bin/$#cp source/coqide/ide/coqide/coq.ico files/bin/$g' platform/windows/create_installer_windows.sh
         
       - name: Run coq platform make windows
         shell: cmd
