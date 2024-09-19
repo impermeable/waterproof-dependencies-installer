@@ -82,6 +82,8 @@ jobs:
         shell: cmd
         run: |
           cd platform
+          ls
+          git --version
           brew install git
           git reset --hard 6f85b7ffb0
           cd ..
