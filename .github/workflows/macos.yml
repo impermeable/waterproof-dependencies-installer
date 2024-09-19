@@ -105,7 +105,7 @@ jobs:
         if: always()
         shell: bash
         run: | 
-          sed -i '/^### GTK sourceview.*/i add_files_of_system_package \"/Users/runner/.opam/CP.2023.03.0~8.17~2023.08/\" \"lib/sexplib0\"' platform/macos/create_installer_macos.sh
+          sed -i '/^### GTK sourceview.*/i add_files_of_system_package /Users/runner/.opam/CP.2023.03.0~8.17~2023.08/ \"/lib/sexplib0/\"' platform/macos/create_installer_macos.sh
           cat platform/macos/create_installer_macos.sh
 
       - name: Run coq platform make script
