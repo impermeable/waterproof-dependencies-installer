@@ -186,7 +186,7 @@ jobs:
 
       - name: 'Upload Artifact'
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: 'MacOS DMG Installer'
           path: platform/macos_installer/*.dmg
