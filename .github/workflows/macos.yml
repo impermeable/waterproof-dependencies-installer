@@ -11,7 +11,7 @@ name: MacOS
 on:
   push:
     branches:
-      - 8.17-macos
+      - 8.18-macos
   pull_request:
   workflow_dispatch:
 
@@ -38,25 +38,18 @@ jobs:
           git config --global core.eol lf
 
       - name: Git checkout install scripts
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: main
-          ref: 8.17-macos
+          ref: 8.18-macos
 
       - name: Git checkout Coq platform
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: coq/platform
-          ref: '2023.03.0'
+          ref: main
           path: platform
-
-      - name: Check installer directory
-        if: always()
-        shell: bash
-        run: |
-          echo Platform
-          cd platform
-          ls
+          fetch-depth: 1
 
       - name: Update XCode installation
         if: always()
@@ -85,12 +78,12 @@ jobs:
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
           echo "/usr/local/bin/bash" >> $GITHUB_PATH
 
-      # - name: Set switch name in coq platform
-      #   if: always()
-      #   shell: bash
-      #   run: |
-      #     sed -i '$a\COQ_PLATFORM_SWITCH_NAME=wp_coq' platform/package_picks/coq_platform_switch_name.sh
-      #     cat platform/package_picks/coq_platform_switch_name.sh
+      - name: fix platform version
+        shell: cmd
+        run: |
+          cd platform
+          git reset --hard 6f85b7ffb0
+          cd ..
 
       # Add placeholder for dmg,app name as well as package pick for readme
       - name: Change switch name in installer script
@@ -105,20 +98,31 @@ jobs:
         if: always()
         shell: bash
         run: | 
-          sed -i '/^### GTK sourceview.*/i add_files_of_system_package /Users/runner/.opam/CP.2023.03.0~8.17~2023.08/ \"/lib/sexplib0/\"' platform/macos/create_installer_macos.sh
+          sed -i '/^### GTK sourceview.*/i add_folder_recursively \"/Users/runner/.opam/CP.2024.01.0~8.18~2023.11/\" \"lib/sexplib0\"' platform/macos/create_installer_macos.sh
+          cat platform/macos/create_installer_macos.sh
+
+      - name: Missing function from platform script
+        if: always()
+        shell: bash
+        run: | 
+          sed -i '/^###################### Adding stuff.*/i function add_folder_recursively {
+            echo \"Copying files from folder \$1/\$2 ...\"
+            mkdir -p \"\${RSRC_ABSDIR}/\$2/\"
+            cp -R \"\$1/\$2/\" \"\${RSRC_ABSDIR}/\$2/\"
+          }' platform/macos/create_installer_macos.sh
           cat platform/macos/create_installer_macos.sh
 
       - name: Run coq platform make script
         if: always()
         shell: bash
         run: |
-          sh platform/coq_platform_make.sh -parallel=p -jobs=2 -compcert=n -extent=i -pick="8.17~2023.08" -set-switch=y
+          sh platform/coq_platform_make.sh -parallel=p -jobs=2 -compcert=n -extent=i -pick="8.18~2023.11" -set-switch=y
 
       - name: Activate switch
         if: always()
         shell: bash
         run: |
-          opam switch CP.2023.03.0~8.17~2023.08
+          opam switch CP.2024.01.0~8.18~2023.11
           eval $(opam env)
           opam switch show
       
@@ -138,20 +142,20 @@ jobs:
           ls
           echo "/Users/runner/.opam" >> $GITHUB_PATH
 
-      - name: Install coq-serapi
-        if: always()
-        shell: bash
-        run: opam install -y coq-serapi.8.17.0+0.17.0
+      # - name: Install coq-serapi
+      #   if: always()
+      #   shell: bash
+      #   run: opam install -y coq-serapi.8.17.0+0.17.0
 
       - name: Install coq-lsp
         if: always()
         shell: bash
-        run: opam install -y coq-lsp.0.1.8+8.17
+        run: opam install -y coq-lsp.0.1.9+8.18
 
       - name: Install coq-waterproof
         if: always()
         shell: bash
-        run: opam pin add -y https://github.com/impermeable/coq-waterproof.git#2.1.0+8.17
+        run: opam pin add -y https://github.com/impermeable/coq-waterproof.git#2.1.1+8.18
       
       # - name: Check coq installed
       #   if: always()
@@ -178,7 +182,7 @@ jobs:
 
       - name: 'Upload Artifact'
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: 'MacOS DMG Installer'
           path: platform/macos_installer/*.dmg
