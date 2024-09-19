@@ -38,7 +38,7 @@ jobs:
           git config --global core.eol lf
 
       - name: Git checkout install scripts
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: main
           ref: 8.18-macos
