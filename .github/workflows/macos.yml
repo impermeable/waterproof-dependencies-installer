@@ -82,6 +82,7 @@ jobs:
         shell: bash
         run: |
           cd platform
+          git --version
           git reset --hard 6f85b7ffb0
           cd ..
 
