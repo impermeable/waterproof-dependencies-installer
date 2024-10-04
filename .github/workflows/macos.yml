@@ -78,7 +78,7 @@ jobs:
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
           echo "/usr/local/bin/bash" >> $GITHUB_PATH
 
-      - name: fix platform version
+      - name: fix platform version by reset to specific commit
         shell: bash
         run: |
           cd platform
