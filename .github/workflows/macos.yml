@@ -83,7 +83,7 @@ jobs:
         run: |
           cd platform
           git --version
-          dir
+          ls
           git status
           git reset --hard 6f85b7ffb0
           cd ..
