@@ -85,8 +85,7 @@ jobs:
           git --version
           ls
           git status
-          git commit --allow-empty -n -m "Empty commit to reset to 6f85b7ffb0"
-          git reset --hard 6f85b7ffb0
+          git reset --hard 6f85b7ffb01ec9de46e6d5eac7ee251093199daf
           cd ..
 
       # Add placeholder for dmg,app name as well as package pick for readme
