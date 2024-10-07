@@ -90,11 +90,6 @@ jobs:
       #     git reset --hard 6f85b7ffb01ec9de46e6d5eac7ee251093199daf
       #     cd ..
 
-      - name: Install adwaita-icon-theme
-        if: always()
-        shell: bash
-        run: brew install adwaita-icon-theme
-
       # Add placeholder for dmg,app name as well as package pick for readme
       - name: Change switch name in installer script
         if: always()
@@ -140,6 +135,7 @@ jobs:
           pip3 install macpack
           brew install findutils
           brew install coreutils
+          brew install adwaita-icon-theme
 
       - name: Update PATH variable
         if: always()
