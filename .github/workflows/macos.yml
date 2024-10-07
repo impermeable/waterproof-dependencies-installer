@@ -47,9 +47,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: coq/platform
-          ref: main
+          ref: '2023.11.0'
           path: platform
-          fetch-depth: 1
 
       - name: Update XCode installation
         if: always()
@@ -78,18 +77,18 @@ jobs:
           echo "$(brew --prefix)/opt/gnu-sed/libexec/gnubin" >> $GITHUB_PATH
           echo "/usr/local/bin/bash" >> $GITHUB_PATH
 
-      - name: fix platform version by reset to specific commit
-        shell: bash
-        run: |
-          cd platform
-          git --version
-          ls
-          git status
-          git fetch
-          git pull
-          git commit --allow-empty -n -m "Empty commit to reset to 6f85b7ffb0"
-          git reset --hard 6f85b7ffb01ec9de46e6d5eac7ee251093199daf
-          cd ..
+      # - name: fix platform version by reset to specific commit
+      #   shell: bash
+      #   run: |
+      #     cd platform
+      #     git --version
+      #     ls
+      #     git status
+      #     git fetch
+      #     git pull
+      #     git commit --allow-empty -n -m "Empty commit to reset to 6f85b7ffb0"
+      #     git reset --hard 6f85b7ffb01ec9de46e6d5eac7ee251093199daf
+      #     cd ..
 
       # Add placeholder for dmg,app name as well as package pick for readme
       - name: Change switch name in installer script
