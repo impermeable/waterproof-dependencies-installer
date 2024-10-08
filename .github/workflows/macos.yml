@@ -135,7 +135,6 @@ jobs:
           pip3 install macpack
           brew install findutils
           brew install coreutils
-          brew install adwaita-icon-theme
 
       - name: Update PATH variable
         if: always()
@@ -159,7 +158,12 @@ jobs:
         if: always()
         shell: bash
         run: opam pin add -y https://github.com/impermeable/coq-waterproof.git#2.1.1+8.18
-      
+
+      - name: Install adwaita-icon-theme
+        if: always()
+        shell: bash
+        run: opam install -y conf-adwaita-icon-theme.2
+
       # - name: Check coq installed
       #   if: always()
       #   shell: bash
