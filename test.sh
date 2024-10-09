@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 test_folder="test_files"
-installer_file_folder="windows_installer"
+installer_file_folder="../platform/windows_installer"
 
 exit_code=0
 
