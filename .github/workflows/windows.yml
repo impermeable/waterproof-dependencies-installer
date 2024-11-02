@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: main
-          ref: lsp-0.2.0+8.17
+          ref: waterproof_2.2.0+8.17
 
       - name: Some steps for debugging
         shell: cmd
