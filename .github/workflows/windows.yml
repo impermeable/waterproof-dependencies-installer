@@ -101,6 +101,14 @@ jobs:
           mkdir C:\cygwin_wp\home\runneradmin\wpdinstaller\test_files
           copy main\* C:\cygwin_wp\home\runneradmin\wpdinstaller\
           copy main\test_files\* C:\cygwin_wp\home\runneradmin\wpdinstaller\test_files\
+
+      - name: Create symlink
+        if: always()
+        shell: cmd
+        run: |
+          echo "Create symbolic links..."
+          C:\cygwin_wp\bin\bash --login -c "ln -s /home/runneradmin/.opam /opam"
+          C:\cygwin_wp\bin\bash --login -c "ls /opam"
     
       - name: Install coq-lsp
         if: always()
