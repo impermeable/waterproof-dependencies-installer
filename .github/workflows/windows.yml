@@ -108,11 +108,12 @@ jobs:
         run: |          
           C:\cygwin_wp\bin\bash --login -c "opam install -y coq-lsp.0.2.0+8.20"
       
-      - name: Install coq-waterproof
-        if: always()
-        shell: cmd
-        run: |          
-          C:\cygwin_wp\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#2.2.0+8.17"
+      #  Coq waterproof is not yet compatible with 8.20
+      # - name: Install coq-waterproof
+      #   if: always()
+      #   shell: cmd
+      #   run: |          
+      #     C:\cygwin_wp\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#2.2.0+8.17"
   
       # - name: Install packages specified in cfg file
       #   if: always()
