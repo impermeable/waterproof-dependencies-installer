@@ -156,7 +156,6 @@ jobs:
       #     C:\cygwin_wp\bin\bash --login -c "cd ../../platform && sed -i 's$cp source/coqide/ide/coqide/coq.ico files/bin/$#cp source/coqide/ide/coqide/coq.ico files/bin/$g' windows/create_installer_windows.sh && sed -i 's$cp source/coqide/ide/coqide/coq.ico .$#cp source/coqide/ide/coqide/coq.ico .$g' windows/create_installer_windows.sh && cat windows/create_installer_windows.sh"
       #     C:\cygwin_wp\bin\bash --login -c "cd ../../platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
 
-
       - name: Create installer
         if: always()
         shell: cmd
