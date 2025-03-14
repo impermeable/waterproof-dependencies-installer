@@ -116,12 +116,11 @@ jobs:
         run: |          
           C:\cygwin_wp\bin\bash --login -c "opam install -y coq-lsp.0.2.0+8.20"
       
-      #  Coq waterproof is not yet compatible with 8.20
-      # - name: Install coq-waterproof
-      #   if: always()
-      #   shell: cmd
-      #   run: |          
-      #     C:\cygwin_wp\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#2.2.0+8.17"
+      - name: Install coq-waterproof
+        if: always()
+        shell: cmd
+        run: |          
+          C:\cygwin_wp\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#2.2.0+8.20"
   
       # - name: Install packages specified in cfg file
       #   if: always()
@@ -163,14 +162,14 @@ jobs:
           dir C:\cygwin_wp\wpdinstaller
           C:\cygwin_wp\bin\bash --login -c "cd ../../platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
 
-      - name: Sign the installer
-        if: always()
-        run: |
-          New-Item -ItemType directory -Path certificate
-          Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
-          certutil -decode certificate\certificate.txt certificate\certificate.pfx
-          & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.CODE_SIGNING_CERTIFICATE_PASS }}' C:\installer\*.exe
-          Remove-Item -Path certificate\*
+      # - name: Sign the installer
+      #   if: always()
+      #   run: |
+      #     New-Item -ItemType directory -Path certificate
+      #     Set-Content -Path certificate\certificate.txt -Value '${{ secrets.CODE_SIGNING_CERTIFICATE }}'
+      #     certutil -decode certificate\certificate.txt certificate\certificate.pfx
+      #     & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.CODE_SIGNING_CERTIFICATE_PASS }}' C:\installer\*.exe
+      #     Remove-Item -Path certificate\*
 
       # - name: Run test file
       #   if: always()
