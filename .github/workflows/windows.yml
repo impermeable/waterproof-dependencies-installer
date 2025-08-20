@@ -60,13 +60,13 @@ jobs:
           repository: coq/platform
           ref: main
           path: platform
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: fix platform version
         shell: cmd
         run: |
           cd platform
-          git reset --hard 6f85b7ffb0
+          git checkout 6f85b7ffb0
           cd ..
 
       - name: Set switch name in coq platform
