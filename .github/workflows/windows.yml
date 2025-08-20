@@ -58,16 +58,16 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: coq/platform
-          ref: main
+          ref: 2025.01.0
           path: platform
           fetch-depth: 0
 
-      - name: fix platform version
-        shell: cmd
-        run: |
-          cd platform
-          git checkout 483a341
-          cd ..
+      # - name: fix platform version
+      #   shell: cmd
+      #   run: |
+      #     cd platform
+      #     git checkout 483a341
+      #     cd ..
 
       - name: Set switch name in coq platform
         shell: cmd
