@@ -127,7 +127,7 @@ jobs:
         if: always()
         shell: cmd
         run: |
-          C:\cygwin_wp\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#3.0.0+8.19pre"
+          C:\cygwin_wp\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#3.0.0+8.19platform"
 
       # - name: Install packages specified in cfg file
       #   if: always()
