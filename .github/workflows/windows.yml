@@ -6,13 +6,13 @@ name: Windows
 
 ###############################################################################
 # Schedule:
-# Workflow runs on pushes to main and to waterproof_2.2.0+8.17 branch
+# Workflow runs on pushes to main and to waterproof_3.0.0+9.0 branch
 ###############################################################################
 on:
   push:
     branches:
       - main
-      - waterproof_2.2.0+8.17
+      - waterproof_3.0.0+9.0
   pull_request:
   workflow_dispatch:
 
@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: main
-          ref: waterproof_2.2.0+8.17
+          ref: waterproof_3.0.0+9.0
 
       - name: Some steps for debugging
         shell: cmd
@@ -83,6 +83,11 @@ jobs:
           sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\cygwin_wp\\\home\\\runneradmin\\\.opam\\\wp"/g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
+      - name: Copy platform pick script to right place
+        shell: cmd
+        run : |
+          copy main\package-pick-9.0~wp.sh platform\package_picks\package-pick-9.0~wp.sh
+
       - name: Missing dependency
         shell: cmd
         run: |
@@ -101,7 +106,7 @@ jobs:
 
       - name: Run coq platform make windows
         shell: cmd
-        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_wp -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="8.17~2023.08" -set-switch=y
+        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_wp -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="9.0~wp" -set-switch=y
 
       - name: Copy scripts to places that are easy to reach from within cygwin
         shell: cmd
@@ -123,17 +128,17 @@ jobs:
           C:\cygwin_wp\bin\bash --login -c "ln -s /home/runneradmin/.opam /opam"
           C:\cygwin_wp\bin\bash --login -c "ls /opam"
 
-      - name: Install coq-lsp
-        if: always()
-        shell: cmd
-        run: |
-          C:\cygwin_wp\bin\bash --login -c "opam install -y coq-lsp.0.2.3+8.17"
+      # - name: Install coq-lsp
+      #   if: always()
+      #   shell: cmd
+      #   run: |
+      #     C:\cygwin_wp\bin\bash --login -c "opam install -y coq-lsp.0.2.3+9.0"
 
       - name: Install coq-waterproof
         if: always()
         shell: cmd
         run: |
-          C:\cygwin_wp\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#2.2.0+8.17"
+          C:\cygwin_wp\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#3.0.0+9.0pre"
 
       # - name: Create installer - comment out coqide
       #   if: always()
