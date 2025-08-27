@@ -127,13 +127,13 @@ jobs:
         if: always()
         shell: cmd
         run: |
-          C:\cygwin_wp\bin\bash --login -c "opam install -y coq-lsp.0.2.3+8.17"
+          C:\cygwin_wp\bin\bash --login -c "opam install -y coq-lsp.0.2.2+8.17"
 
       - name: Install coq-waterproof
         if: always()
         shell: cmd
         run: |
-          C:\cygwin_wp\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#2.2.0+8.17"
+          C:\cygwin_wp\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#3.0.0+8.17+platform"
 
       # - name: Create installer - comment out coqide
       #   if: always()
