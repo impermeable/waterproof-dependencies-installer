@@ -77,10 +77,11 @@ jobs:
           echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=wp" >> platform\package_picks\coq_platform_switch_name.sh
           type platform\package_picks\coq_platform_switch_name.sh
 
+        # sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\\cygwin_wp\\\\home\\\\runneradmin\\\\.opam\\\\wp"/g' platform/windows/Coq.nsi
       - name: Set default install directory
         shell: cmd
         run: |
-          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\cygwin_wp\\\home\\\runneradmin\\\.opam\\\wp"/g' platform/windows/Coq.nsi
+          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\\cygwin_wp\\\\home\\\\runneradmin\\\\.opam\\\\wp"/g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
       - name: Copy platform pick script to right place
@@ -97,7 +98,7 @@ jobs:
       - name: Fix license to rocq-core
         shell: cmd
         run: |
-          sed -i 's$cp source/coq/LICENSE$opam source --dir=source/rocq-core rocq-core.9.0.0\ncp source/rocq-core/LICENSE$g' platform/windows/create_installer_windows.sh
+          sed -i 's$cp source/coq/LICENSE$echo \"---- going to source rocq-core ----\"\nopam source --dir=source/rocq-core rocq-core.9.0.0\ncp source/rocq-core/LICENSE$g' platform/windows/create_installer_windows.sh
           cat platform/windows/create_installer_windows.sh
 
       - name: Comment compcert
