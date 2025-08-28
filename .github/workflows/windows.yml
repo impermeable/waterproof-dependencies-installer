@@ -80,7 +80,7 @@ jobs:
       - name: Set default install directory
         shell: cmd
         run: |
-          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\cygwin_wp\\\home\\\runneradmin\\\.opam\\\wp"/g' platform/windows/Coq.nsi
+          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\cygwin_wp\\home\\runneradmin\\.opam\\wp"/g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
       - name: Missing dependency
@@ -89,15 +89,27 @@ jobs:
           sed -i '/^###################### Create installer.*/i add_folder_recursively \"/home/runneradmin/.opam/wp/\" \"lib/sexplib0\" \"files_coq-waterproof\"' platform/windows/create_installer_windows.sh
           cat platform/windows/create_installer_windows.sh
 
-      - name: Comment compcert
+      - name: Define product name
         shell: cmd
         run: |
-          sed -i 's$cp source/coq-compcert/LICENSE coq-compcert-license.txt$#cp source/coq-compcert/LICENSE coq-compcert-license.txt$g' platform/windows/create_installer_windows.sh
+          sed -i 's$define MY_PRODUCT \"Coq-Platform$define MY_PRODUCT \"Waterproof-dependencies$g' platform/windows/Coq.nsi
+          sed -i 's$define OUTFILE \"Coq-Platform-release-\${RELEASE}-version\${VERSION}-Windows-\${ARCH}.exe$define OUTFILE \"Waterproof-dependencies-\${VERSION}-Windows-\${ARCH}.exe$g' platform/windows/Coq.nsi
+          sed -i 's$define MUI_ICON \"coq.ico$define MUI_ICON \"Waterproof.ico$g' platform/windows/Coq.nsi
+          cat platform/windows/Coq.nsi
+      - name: Comment compcert and coqide
+        shell: cmd
+        run: |
+          sed -i 's$cp "source/\${ide_name}/$#cp "source/\${ide_name}/$g' platform/windows/create_installer_windows.sh
+          cat platform/windows/create_installer_windows.sh
+      # - name: Comment compcert
+      #   shell: cmd
+      #   run: |
+      #     sed -i 's$cp source/coq-compcert/LICENSE coq-compcert-license.txt$#cp source/coq-compcert/LICENSE coq-compcert-license.txt$g' platform/windows/create_installer_windows.sh
 
-      - name: Fix link to coq-core 8.17
-        shell: cmd
-        run: |
-          sed -i 's$https://github.com/coq/coq/archive/refs/tags/V8.17.1.tar.gz$https://github.com/coq/coq/releases/download/V8.17.1/coq-8.17.1.tar.gz$g' platform/opam/opam-repository/packages/coq-core/coq-core.8.17.1/opam
+      # - name: Fix link to coq-core 8.17
+      #   shell: cmd
+      #   run: |
+      #     sed -i 's$https://github.com/coq/coq/archive/refs/tags/V8.17.1.tar.gz$https://github.com/coq/coq/releases/download/V8.17.1/coq-8.17.1.tar.gz$g' platform/opam/opam-repository/packages/coq-core/coq-core.8.17.1/opam
 
       - name: Run coq platform make windows
         shell: cmd
