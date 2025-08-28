@@ -110,10 +110,12 @@ jobs:
           sed -i 's$define MUI_ICON \"coq.ico$define MUI_ICON \"Waterproof.ico$g' platform/windows/Coq.nsi
           cat Coq.nsi
 
-      - name: Comment compcert
+      - name: Comment compcert and coqide
         shell: cmd
         run: |
           sed -i 's$cp source/coq-compcert/LICENSE coq-compcert-license.txt$#cp source/coq-compcert/LICENSE coq-compcert-license.txt$g' platform/windows/create_installer_windows.sh
+          sed -i 's$cp "source/\${ide_name}/$#cp "source/\${ide_name}/$g' platform/windows/create_installer_windows.sh
+          cat platform/windows/create_installer_windows.sh
 
       - name: Run coq platform make windows
         shell: cmd
