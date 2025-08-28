@@ -54,3 +54,6 @@ PACKAGES="${PACKAGES} PIN.dune-configurator.3.19.1"
 # The Coq compiler coqc and the Coq standard library
 PACKAGES="${PACKAGES} PIN.rocq-prover.9.0.0"
 PACKAGES="${PACKAGES} coq-lsp.0.2.3+9.0"
+
+# For now include rocqide, although eventually we would like to remove this
+PACKAGES="${PACKAGES} rocqide.9.0.0"
