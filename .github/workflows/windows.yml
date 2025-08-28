@@ -11,8 +11,8 @@ name: Windows
 on:
   push:
     branches:
-      - main
       - waterproof_3.0.0+9.0
+      - main
   pull_request:
   workflow_dispatch:
 
@@ -81,13 +81,14 @@ jobs:
       - name: Set default install directory
         shell: cmd
         run: |
-          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\\cygwin_wp\\\\home\\\\runneradmin\\\\.opam\\\\wp"/g' platform/windows/Coq.nsi
+          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\cygwin_wp\\home\\runneradmin\\.opam\\wp"/g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
-      - name: Copy platform pick script to right place
+      - name: Copy platform pick script and icon to right place
         shell: cmd
         run : |
           copy main\package-pick-9.0~wp.sh platform\package_picks\package-pick-9.0~wp.sh
+          copy main\Waterproof.ico platform\windows_installer\Waterproof.ico
 
       - name: Missing dependency
         shell: cmd
@@ -100,6 +101,14 @@ jobs:
         run: |
           sed -i 's$cp source/coq/LICENSE$echo \"---- going to source rocq-core ----\"\nopam source --dir=source/rocq-core rocq-core.9.0.0\ncp source/rocq-core/LICENSE$g' platform/windows/create_installer_windows.sh
           cat platform/windows/create_installer_windows.sh
+
+      - name: Define product name
+        shell: cmd
+        run: |
+          sed -i 's$define MY_PRODUCT \"Coq-Platform$define MY_PRODUCT \"Waterproof-dependencies$g' platform/windows/Coq.nsi
+          sed -i 's$define OUTFILE \"Coq-Platform-release-\${RELEASE}-version\${VERSION}-Windows-\${ARCH}.exe$define OUTFILE \"Waterproof-dependencies-\${VERSION}-Windows-\${ARCH}.exe$g' platform/windows/Coq.nsi
+          sed -i 's$define MUI_ICON \"coq.ico$define MUI_ICON \"Waterproof.ico$g' platform/windows/Coq.nsi
+          cat Coq.nsi
 
       - name: Comment compcert
         shell: cmd
