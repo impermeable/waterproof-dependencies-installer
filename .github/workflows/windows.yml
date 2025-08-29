@@ -93,9 +93,7 @@ jobs:
           cat main\package-pick-${{ env.SWITCH_NAME }}.sh
           dir platform
           dir platform\package_picks
-          copy main\package-pick-${{ env.SWITCH_NAME }}.sh main\package-pick-test.sh
-          copy "main\package-pick-${{ env.SWITCH_NAME }}.sh" main\package-pick-test.sh
-          copy "main\package-pick-${{ env.SWITCH_NAME }}.sh" platform\package_picks\package-pick-${{ env.SWITCH_NAME }}.sh
+          copy "main\package-pick-${{ env.SWITCH_NAME }}.sh" "platform\package_picks\package-pick-${{ env.SWITCH_NAME }}.sh"
 
       - name: Missing dependency
         shell: cmd
