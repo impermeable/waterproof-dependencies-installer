@@ -106,7 +106,7 @@ jobs:
       - name: Fix getting names
         shell: cmd
         run: |
-          sed -i 's$source shell_scripts/get_names_from_switch.sh$source package_picks/coq_platform_release.sh\nCOQ_PLATFORM_PACKAGE_PICK_POSTFIX=\"~wp-3.0.0+9.0\"$g' platform/windows/create_installer_windows.sh
+          sed -i 's$source shell_scripts/get_names_from_switch.sh$source package_picks/coq_platform_release.sh\nCOQ_PLATFORM_PACKAGE_PICK_POSTFIX=\"${{ env.SWITCH_NAME }}\"$g' platform/windows/create_installer_windows.sh
           cat platform/windows/create_installer_windows.sh
 
       - name: Fix license to rocq-core
@@ -126,8 +126,9 @@ jobs:
       - name: Redefine text in installer
         shell: cmd
         run: |
-          sed -i 's/!define MUI_DIRECTORYPAGE_TEXT_TOP/!define MUI_COMPONENTSPAGE_TEXT_TOP "Waterproof needs all the components below in order to work."\n  !define MUI_DIRECTORYPAGE_TEXT_TOP "Please note:\$\\\r\$\\\n- Waterproof works best if you **do not change the folder below**.\$\\\r\$\\\n- If you do change the folder, please make a note of what you set it to.\$\\\r\$\\\n- The path to the folder may not include spaces.\$\\\r\$\\\n- If you have installed Waterproof dependency software in the same folder before, please remove it through add or remove programs in Windows.\$\\\r\$\\\n- It is fine to install different versions of the software in different folders."\n;!define MUI_DIRECTORYPAGE_TEXT_TOP/g' platform/windows/Coq.nsi
+          sed -i 's/!define MUI_DIRECTORYPAGE_TEXT_TOP/!define MUI_DIRECTORYPAGE_TEXT_TOP "Please note:\$\\\r\$\\\n- Waterproof works best if you **do not change the folder below**.\$\\\r\$\\\n- If you do change the folder, please make a note of what you set it to.\$\\\r\$\\\n- The path to the folder may not include spaces.\$\\\r\$\\\n- If you have installed Waterproof dependency software in the same folder before, please remove it through add or remove programs in Windows.\$\\\r\$\\\n- It is fine to install different versions of the software in different folders."\n;!define MUI_DIRECTORYPAGE_TEXT_TOP/g' platform/windows/Coq.nsi
           sed -i 's$\"Publisher\" \"The Coq Team\"$\"Publisher\" \"The Waterproof Team\"$g' platform/windows/Coq.nsi
+          sed -i 's$  !insertmacro MUI_PAGE_COMPONENTS$  !define MUI_COMPONENTSPAGE_TEXT_TOP \"Waterproof needs all the components below in order to work.\"\n  !insertmacro MUI_PAGE_COMPONENTS$g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
 
