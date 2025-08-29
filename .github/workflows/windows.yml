@@ -113,7 +113,7 @@ jobs:
       - name: Redefine text in installer
         shell: cmd
         run: |
-          sed -i 's/!define MUI_DIRECTORYPAGE_TEXT_TOP/!define MUI_COMPONENTS_PAGE_TEXT_TOP "Waterproof needs all the components below in order to work."\n\s\s!define MUI_DIRECTORYPAGE_TEXT_TOP "Please note:\$\\\r\$\\\n- Waterproof works best if you **do not change the path below**.\$\\\r\$\\\n- If you do change the path, please make a note of what you set it to.\$\\\r\$\\\n- The path may not include spaces.\$\\\r\$\\\n- If you have installed Waterproof dependency software in the same folder before, please remove it through add or remove programs in Windows.\$\\\r\$\\\n- It is fine to install different versions of Waterproof dependency software in different folders."\n;!define MUI_DIRECTORYPAGE_TEXT_TOP/g' platform/windows/Coq.nsi
+          sed -i 's/!define MUI_DIRECTORYPAGE_TEXT_TOP/!define MUI_COMPONENTS_PAGE_TEXT_TOP "Waterproof needs all the components below in order to work."\n  !define MUI_DIRECTORYPAGE_TEXT_TOP "Please note:\$\\\r\$\\\n- Waterproof works best if you **do not change the path below**.\$\\\r\$\\\n- If you do change the path, please make a note of what you set it to.\$\\\r\$\\\n- The path may not include spaces.\$\\\r\$\\\n- If you have installed Waterproof dependency software in the same folder before, please remove it through add or remove programs in Windows.\$\\\r\$\\\n- It is fine to install different versions of Waterproof dependency software in different folders."\n;!define MUI_DIRECTORYPAGE_TEXT_TOP/g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
 
