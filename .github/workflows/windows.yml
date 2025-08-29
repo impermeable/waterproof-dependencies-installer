@@ -21,6 +21,7 @@ on:
 ###############################################################################
 env:
   COQREGTESTING: y
+  SWITCH_NAME: wp-3.0.0+9.0
 
 ###############################################################################
 # Builds Windows installer
@@ -74,7 +75,7 @@ jobs:
         shell: cmd
         # We need to output without a (windows style new line here) else bash will complain AND we rely on the fact that the file has a trailing new line.
         run: |
-          echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=wp" >> platform\package_picks\coq_platform_switch_name.sh
+          echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=${{ env.SWITCH_NAME }}" >> platform\package_picks\coq_platform_switch_name.sh
           type platform\package_picks\coq_platform_switch_name.sh
 
         # sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\\waterproof_dependencies\\\\home\\\\runneradmin\\\\.opam\\\\wp"/g' platform/windows/Coq.nsi
@@ -82,18 +83,18 @@ jobs:
         shell: cmd
         run: |
           sed -i 's$Name \"Coq\"$Name \"Waterproof dependency software\"$g' platform/windows/Coq.nsi
-          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\waterproof_dependencies\\\opam\\\wp"/g' platform/windows/Coq.nsi
+          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\waterproof_dependencies\\\opam\\\${{ env.SWITCH_NAME }}"/g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
       - name: Copy platform pick script and icon to right place
         shell: cmd
         run : |
-          copy main\package-pick-9.0~wp.sh platform\package_picks\package-pick-9.0~wp.sh
+          copy main\package-pick-${{ env.SWITCH_NAME }}.sh platform\package_picks\package-pick-${{ env.SWITCH_NAME }}.sh
 
       - name: Missing dependency
         shell: cmd
         run: |
-          sed -i '/^###################### Create installer.*/i add_folder_recursively \"/home/runneradmin/.opam/wp/\" \"lib/sexplib0\" \"files_coq-waterproof\"' platform/windows/create_installer_windows.sh
+          sed -i '/^###################### Create installer.*/i add_folder_recursively \"/home/runneradmin/.opam/${{ env.SWITCH_NAME }}/\" \"lib/sexplib0\" \"files_coq-waterproof\"' platform/windows/create_installer_windows.sh
           cat platform/windows/create_installer_windows.sh
 
       - name: Fix license to rocq-core
@@ -126,7 +127,7 @@ jobs:
 
       - name: Run coq platform make windows
         shell: cmd
-        run: platform\coq_platform_make_windows.bat -destcyg=C:\waterproof_dependencies -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="9.0~wp" -set-switch=y
+        run: platform\coq_platform_make_windows.bat -destcyg=C:\waterproof_dependencies -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="${{ env.SWITCH_NAME }}" -set-switch=y
 
       - name: Copy scripts to places that are easy to reach from within cygwin
         shell: cmd
@@ -183,6 +184,7 @@ jobs:
           dir C:\waterproof_dependencies\platform\
           dir C:\waterproof_dependencies\home\runneradmin\platform\
           dir C:\waterproof_dependencies\wpdinstaller
+          echo "We're going to try to run the installer creation script"
           C:\waterproof_dependencies\bin\bash --login -c "cd ../../platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
 
       - name: 'Upload Artifact'
