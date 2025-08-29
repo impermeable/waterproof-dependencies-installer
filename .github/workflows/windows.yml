@@ -54,6 +54,7 @@ jobs:
         run: |
           cd main
           dir
+          cat package-pick-${{ env.SWITCH_NAME }}
           cd ..
 
       - name: Git checkout Coq platform
@@ -89,6 +90,9 @@ jobs:
       - name: Copy platform pick script and icon to right place
         shell: cmd
         run : |
+          cat main\package-pick-${{ env.SWITCH_NAME }}
+          dir platform
+          dir platform\package_picks
           copy main\package-pick-${{ env.SWITCH_NAME }}.sh platform\package_picks\package-pick-${{ env.SWITCH_NAME }}.sh
 
       - name: Missing dependency
