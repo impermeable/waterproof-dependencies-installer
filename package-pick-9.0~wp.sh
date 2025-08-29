@@ -18,7 +18,7 @@ COQ_PLATFORM_VERSION_SORTORDER=1
 # It is usually either empty ot starts with ~.
 # It might also be used for installer package names, but with ~ replaced by _
 # It is also used for version specific file selections in the smoke test kit.
-COQ_PLATFORM_PACKAGE_PICK_POSTFIX='~9.0~wp'
+COQ_PLATFORM_PACKAGE_PICK_POSTFIX='~3.0.0+9.0'
 
 # The corresponding Coq development branch and tag
 COQ_PLATFORM_COQ_BRANCH='v9.0'
@@ -28,8 +28,8 @@ COQ_PLATFORM_COQ_TAG='9.0.0'
 COQ_PLATFORM_USE_DEV_REPOSITORY='N'
 
 # This extended descriptions is used for readme files
-COQ_PLATFORM_VERSION_DESCRIPTION='This version of Coq Platform includes Rocq 9.0 and dependencies for Waterproof. '
-COQ_PLATFORM_VERSION_DESCRIPTION+='This is a custom version of the Coq Platform. '
+COQ_PLATFORM_VERSION_DESCRIPTION='This version of Waterproof dependency software includes Rocq 9.0 and dependencies for Waterproof. '
+COQ_PLATFORM_VERSION_DESCRIPTION+='Waterproof dependency software is a customized version of the Coq Platform. '
 
 # The OCaml version to use for this pick (just the version number - options are elaborated in a platform dependent way)
 COQ_PLATFORM_OCAML_VERSION='4.14.2'

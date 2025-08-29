@@ -77,12 +77,12 @@ jobs:
           echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=wp" >> platform\package_picks\coq_platform_switch_name.sh
           type platform\package_picks\coq_platform_switch_name.sh
 
-        # sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\\cygwin_wp\\\\home\\\\runneradmin\\\\.opam\\\\wp"/g' platform/windows/Coq.nsi
+        # sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\\waterproof_dependencies\\\\home\\\\runneradmin\\\\.opam\\\\wp"/g' platform/windows/Coq.nsi
       - name: Set default install directory
         shell: cmd
         run: |
           sed -i 's$Name \"Coq\"$Name \"Waterproof dependency software\"$g' platform/windows/Coq.nsi
-          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\cygwin_wp\\\home\\\runneradmin\\\.opam\\\wp"/g' platform/windows/Coq.nsi
+          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\waterproof_dependencies\\\opam\\\wp"/g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
       - name: Copy platform pick script and icon to right place
@@ -110,6 +110,12 @@ jobs:
           sed -i 's$define MUI_ICON \"coq.ico$define MUI_ICON \"Waterproof.ico$g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
+      - name: Redefine text in installer
+        shell: cmd
+        run: |
+          sed -i 's/!define MUI_COMPONENTS_PAGE_TEXT_TOP "Waterproof needs all the components below in order to work."\n!define MUI_DIRECTORYPAGE_TEXT_TOP/!define MUI_DIRECTORYPAGE_TEXT_TOP "Please note:$\\\r$\\\n- Waterproof works best if you **do not change the path below**.$\\\r$\\\n- If you do change the path, please make a note of what you set it to.$\\\r$\\\n- The path may not include spaces.$\\\r$\\\n- If you have installed Waterproof dependency software in the same folder before, please remove it through add/remove programs in Windows.$\\\r$\\\n- It is fine to install different versions of Waterproof dependency software in different folders."\n;!define MUI_DIRECTORYPAGE_TEXT_TOP/g' platform/windows/Coq.nsi
+
+
       - name: Comment compcert and coqide
         shell: cmd
         run: |
@@ -119,64 +125,64 @@ jobs:
 
       - name: Run coq platform make windows
         shell: cmd
-        run: platform\coq_platform_make_windows.bat -destcyg=C:\cygwin_wp -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="9.0~wp" -set-switch=y
+        run: platform\coq_platform_make_windows.bat -destcyg=C:\waterproof_dependencies -arch=${{matrix.architecture}} -extent=i -parallel=p -jobs=2 -vst=n -compcert=n -pick="9.0~wp" -set-switch=y
 
       - name: Copy scripts to places that are easy to reach from within cygwin
         shell: cmd
         run: |
           dir C:\
-          dir C:\cygwin_wp
-          dir C:\cygwin_wp\home
-          dir C:\cygwin_wp\home\runneradmin
-          mkdir C:\cygwin_wp\home\runneradmin\wpdinstaller\
-          mkdir C:\cygwin_wp\home\runneradmin\wpdinstaller\test_files
-          copy main\* C:\cygwin_wp\home\runneradmin\wpdinstaller\
-          copy main\test_files\* C:\cygwin_wp\home\runneradmin\wpdinstaller\test_files\
+          dir C:\waterproof_dependencies
+          dir C:\waterproof_dependencies\home
+          dir C:\waterproof_dependencies\home\runneradmin
+          mkdir C:\waterproof_dependencies\home\runneradmin\wpdinstaller\
+          mkdir C:\waterproof_dependencies\home\runneradmin\wpdinstaller\test_files
+          copy main\* C:\waterproof_dependencies\home\runneradmin\wpdinstaller\
+          copy main\test_files\* C:\waterproof_dependencies\home\runneradmin\wpdinstaller\test_files\
 
       - name: Create symlink
         if: always()
         shell: cmd
         run: |
           echo "Create symbolic links..."
-          C:\cygwin_wp\bin\bash --login -c "ln -s /home/runneradmin/.opam /opam"
-          C:\cygwin_wp\bin\bash --login -c "ls /opam"
+          C:\waterproof_dependencies\bin\bash --login -c "ln -s /home/runneradmin/.opam /opam"
+          C:\waterproof_dependencies\bin\bash --login -c "ls /opam"
 
       # - name: Install coq-lsp
       #   if: always()
       #   shell: cmd
       #   run: |
-      #     C:\cygwin_wp\bin\bash --login -c "opam install -y coq-lsp.0.2.3+9.0"
+      #     C:\waterproof_dependencies\bin\bash --login -c "opam install -y coq-lsp.0.2.3+9.0"
 
       - name: Install coq-waterproof
         if: always()
         shell: cmd
         run: |
-          C:\cygwin_wp\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#3.0.0+9.0"
+          C:\waterproof_dependencies\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#3.0.0+9.0"
 
       # - name: Create installer - comment out coqide
       #   if: always()
       #   shell: cmd
       #   run: |
       #     dir
-      #     dir C:\cygwin_wp\home\runneradmin\
-      #     dir C:\cygwin_wp\home\runneradmin\wpdinstaller\
-      #     dir C:\cygwin_wp\platform\
-      #     dir C:\cygwin_wp\home\runneradmin\platform\
-      #     dir C:\cygwin_wp\wpdinstaller
-      #     C:\cygwin_wp\bin\bash --login -c "cd ../../platform && sed -i 's$cp source/coqide/ide/coqide/coq.ico files/bin/$#cp source/coqide/ide/coqide/coq.ico files/bin/$g' windows/create_installer_windows.sh && sed -i 's$cp source/coqide/ide/coqide/coq.ico .$#cp source/coqide/ide/coqide/coq.ico .$g' windows/create_installer_windows.sh && cat windows/create_installer_windows.sh"
-      #     C:\cygwin_wp\bin\bash --login -c "cd ../../platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
+      #     dir C:\waterproof_dependencies\home\runneradmin\
+      #     dir C:\waterproof_dependencies\home\runneradmin\wpdinstaller\
+      #     dir C:\waterproof_dependencies\platform\
+      #     dir C:\waterproof_dependencies\home\runneradmin\platform\
+      #     dir C:\waterproof_dependencies\wpdinstaller
+      #     C:\waterproof_dependencies\bin\bash --login -c "cd ../../platform && sed -i 's$cp source/coqide/ide/coqide/coq.ico files/bin/$#cp source/coqide/ide/coqide/coq.ico files/bin/$g' windows/create_installer_windows.sh && sed -i 's$cp source/coqide/ide/coqide/coq.ico .$#cp source/coqide/ide/coqide/coq.ico .$g' windows/create_installer_windows.sh && cat windows/create_installer_windows.sh"
+      #     C:\waterproof_dependencies\bin\bash --login -c "cd ../../platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
 
       - name: Create installer
         if: always()
         shell: cmd
         run: |
           dir
-          dir C:\cygwin_wp\home\runneradmin\
-          dir C:\cygwin_wp\home\runneradmin\wpdinstaller\
-          dir C:\cygwin_wp\platform\
-          dir C:\cygwin_wp\home\runneradmin\platform\
-          dir C:\cygwin_wp\wpdinstaller
-          C:\cygwin_wp\bin\bash --login -c "cd ../../platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
+          dir C:\waterproof_dependencies\home\runneradmin\
+          dir C:\waterproof_dependencies\home\runneradmin\wpdinstaller\
+          dir C:\waterproof_dependencies\platform\
+          dir C:\waterproof_dependencies\home\runneradmin\platform\
+          dir C:\waterproof_dependencies\wpdinstaller
+          C:\waterproof_dependencies\bin\bash --login -c "cd ../../platform && windows/create_installer_windows.sh && mkdir /cygdrive/c/installer && cp windows_installer/*exe /cygdrive/c/installer/"
 
       - name: 'Upload Artifact'
         if: always()
