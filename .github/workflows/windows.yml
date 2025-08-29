@@ -118,7 +118,7 @@ jobs:
       - name: Define product name
         shell: cmd
         run: |
-          sed -i 's$define MY_PRODUCT \"Coq-Platform$define MY_PRODUCT \"Waterproof-dependencies$g' platform/windows/Coq.nsi
+          sed -i 's$define MY_PRODUCT \"Coq-Platform$define MY_PRODUCT \"Waterproof-dependencies-$g' platform/windows/Coq.nsi
           sed -i 's$define OUTFILE \"Coq-Platform-release-\${RELEASE}-version\${VERSION}-Windows-\${ARCH}.exe$define OUTFILE \"Waterproof-dependencies-\${VERSION}-Windows-\${ARCH}.exe$g' platform/windows/Coq.nsi
           sed -i 's$define MUI_ICON \"coq.ico$define MUI_ICON \"Waterproof.ico$g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
