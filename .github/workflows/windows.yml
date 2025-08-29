@@ -78,6 +78,7 @@ jobs:
         run: |
           echo | set /p dummyName="COQ_PLATFORM_SWITCH_NAME=${{ env.SWITCH_NAME }}" >> platform\package_picks\coq_platform_switch_name.sh
           type platform\package_picks\coq_platform_switch_name.sh
+          cat platform\package_picks\coq_platform_switch_name.sh
 
         # sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\\waterproof_dependencies\\\\home\\\\runneradmin\\\\.opam\\\\wp"/g' platform/windows/Coq.nsi
       - name: Set default install directory
