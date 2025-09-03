@@ -136,7 +136,7 @@ jobs:
         shell: cmd
         run: |
           sed -i 's$# Copy some files from source$# Copy some files from source\ncp /home/runneradmin/wpdinstaller/Waterproof.ico .$g' platform/windows/create_installer_windows.sh
-          sed -i 's$cp "source/\${ide_name}/$#cp "source/\${ide_name}/$g' platform/windows/create_installer_windows.sh
+          # sed -i 's$cp "source/\${ide_name}/$#cp "source/\${ide_name}/$g' platform/windows/create_installer_windows.sh
           cat platform/windows/create_installer_windows.sh
 
       - name: Run coq platform make windows
