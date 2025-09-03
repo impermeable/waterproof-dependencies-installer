@@ -1,10 +1,11 @@
+
 name: Print Hello World Artifact
 
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - test-installer
+  workflow_run:
+    workflows: ["Debug Hello World Artifact"]
+    types:
+      - completed
 
 jobs:
   print_hello_world:
