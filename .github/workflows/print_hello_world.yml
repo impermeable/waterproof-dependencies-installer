@@ -2,6 +2,9 @@ name: Print Hello World Artifact
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - test-installer
 
 jobs:
   print_hello_world:
