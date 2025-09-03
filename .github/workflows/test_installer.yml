@@ -2,6 +2,7 @@
 name: Test Installer After Build
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["Windows"]
     types:
