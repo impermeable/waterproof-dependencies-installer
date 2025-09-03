@@ -21,8 +21,8 @@ COQ_PLATFORM_VERSION_SORTORDER=1
 COQ_PLATFORM_PACKAGE_PICK_POSTFIX='wp-3.0.0+9.0'
 
 # The corresponding Coq development branch and tag
-COQ_PLATFORM_COQ_BRANCH='v9.0'
-COQ_PLATFORM_COQ_TAG='9.0.0'
+COQ_PLATFORM_COQ_BRANCH="v9.0"
+COQ_PLATFORM_COQ_TAG="9.0.0"
 
 # This controls if opam repositories for development packages are selected
 COQ_PLATFORM_USE_DEV_REPOSITORY='N'
