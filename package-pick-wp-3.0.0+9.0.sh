@@ -57,3 +57,4 @@ PACKAGES="${PACKAGES} coq-lsp.0.2.3+9.0"
 
 # For now include rocqide, although eventually we would like to remove this
 PACKAGES="${PACKAGES} rocqide.9.0.0"
+PACKAGEs="${PACKAGES} vscoq-language-server.2.2.5"
