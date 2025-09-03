@@ -137,6 +137,12 @@ jobs:
           sed -i 's$for binfile in coqc vscoqtop gappa pocklington$for binfile in coqc vscoqtop gappa pocklington coq-lsp$g' platform/windows/link_shared_libraries.sh
           cat platform/windows/link_shared_libraries.sh
 
+      - name: Link shared coq-lsp libraries in a different way
+        shell: cmd
+        run: |
+          sed -i 's$###### Add system DLLs to some packages #####$###### Add system DLLs to some packages #####\n\nadd_shared_library_dependencies \"coq-lsp\" \"/usr/\$\{COQ_ARCH\}-w64-mingw32/sys-root/\" \"files_coq-lsp\"$g' platform/windows/create_installer_windows.sh
+          cat platform/windows/create_installer_windows.sh
+
 # sed -i 's$cp "source/\${ide_name}/$#cp "source/\${ide_name}/$g' platform/windows/create_installer_windows.sh
       - name: Comment compcert and coqide
         shell: cmd
