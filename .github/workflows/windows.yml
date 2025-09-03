@@ -131,6 +131,12 @@ jobs:
           sed -i 's$  !insertmacro MUI_PAGE_COMPONENTS$  !define MUI_COMPONENTSPAGE_TEXT_TOP \"Waterproof needs all the components below in order to work.\"\n  !insertmacro MUI_PAGE_COMPONENTS$g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
+      - name: Link shared coq-lsp libraries
+        shell: cmd
+        run: |
+          sed -i 's$for binfile in coqc vscoqtop gappa pocklington$for binfile in coqc vscoqtop gappa pocklington coq-lsp$g' platform/windows/link_shared_libraries.sh
+          cat platform/windows/link_shared_libraries.sh
+
 # sed -i 's$cp "source/\${ide_name}/$#cp "source/\${ide_name}/$g' platform/windows/create_installer_windows.sh
       - name: Comment compcert and coqide
         shell: cmd
