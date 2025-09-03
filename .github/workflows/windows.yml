@@ -131,12 +131,11 @@ jobs:
           sed -i 's$  !insertmacro MUI_PAGE_COMPONENTS$  !define MUI_COMPONENTSPAGE_TEXT_TOP \"Waterproof needs all the components below in order to work.\"\n  !insertmacro MUI_PAGE_COMPONENTS$g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
-
+# sed -i 's$cp "source/\${ide_name}/$#cp "source/\${ide_name}/$g' platform/windows/create_installer_windows.sh
       - name: Comment compcert and coqide
         shell: cmd
         run: |
           sed -i 's$# Copy some files from source$# Copy some files from source\ncp /home/runneradmin/wpdinstaller/Waterproof.ico .$g' platform/windows/create_installer_windows.sh
-          # sed -i 's$cp "source/\${ide_name}/$#cp "source/\${ide_name}/$g' platform/windows/create_installer_windows.sh
           cat platform/windows/create_installer_windows.sh
 
       - name: Run coq platform make windows
