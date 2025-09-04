@@ -17,3 +17,14 @@ jobs:
         with:
           name: hello-world-artifact
           path: hello.txt
+
+  print_hello_world:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download hello-world-artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: hello-world-artifact
+          path: ./artifact
+      - name: Print hello.txt contents
+        run: cat ./artifact/hello.txt
