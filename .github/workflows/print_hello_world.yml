@@ -20,13 +20,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print run id
-        run: echo "Run ID is ${{ github.event.inputs.run_id }}"
+        run: echo "Run ID is ${{ inputs.run_id }}"
       - name: Download hello-world-artifact
         uses: actions/download-artifact@v4
         with:
           name: hello-world-artifact
           path: ./artifact
           github-token: ${{ secrets.READ_ACCESS_FOR_ARTIFACTS }}
-          run-id: ${{ github.event.inputs.run_id }}
+          run-id: ${{ inputs.run_id }}
       - name: Print hello.txt contents
         run: cat ./artifact/hello.txt
