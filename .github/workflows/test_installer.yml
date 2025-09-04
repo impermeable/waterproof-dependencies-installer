@@ -37,5 +37,7 @@ jobs:
       - name: Check Installed Programs Running
         run: |
           # Example: check if 'coq-lsp.exe' is running
-          /waterproof_dependencies/opam/wp-3.0.0+9.0/bin/coq-lsp.exe --version
+          ls
+          ls C:\
+          C:\waterproof_dependencies\opam\wp-3.0.0+9.0\bin\coq-lsp.exe --version
         shell: pwsh
