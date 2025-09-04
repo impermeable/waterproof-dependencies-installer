@@ -2,6 +2,12 @@
 name: Print Hello World Artifact
 
 on:
+  workflow_call:
+    inputs:
+      run_id:
+        description: 'Workflow run ID to download artifact from'
+        required: true
+        type: string
   workflow_dispatch:
     inputs:
       run_id:
@@ -13,6 +19,8 @@ jobs:
   print_hello_world:
     runs-on: ubuntu-latest
     steps:
+      - name: Print run id
+        run: echo "Run ID is ${{ github.event.inputs.run_id }}"
       - name: Download hello-world-artifact
         uses: actions/download-artifact@v4
         with:

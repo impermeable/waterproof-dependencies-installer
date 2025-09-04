@@ -18,14 +18,8 @@ jobs:
           name: hello-world-artifact
           path: hello.txt
 
-  print_hello_world:
-    runs-on: ubuntu-latest
+  call_print_hello_world:
     needs: create_hello_world_artifact
-    steps:
-      - name: Download hello-world-artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: hello-world-artifact
-          path: ./artifact
-      - name: Print hello.txt contents
-        run: cat ./artifact/hello.txt
+    uses: ./.github/workflows/print_hello_world.yml
+    with:
+      run_id: ${{ github.run_id }}
