@@ -2,10 +2,12 @@
 name: Print Hello World Artifact
 
 on:
-  workflow_run:
-    workflows: ["Debug Hello World Artifact"]
-    types:
-      - completed
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'Workflow run ID to download artifact from'
+        required: true
+        type: string
 
 jobs:
   print_hello_world:
@@ -16,5 +18,7 @@ jobs:
         with:
           name: hello-world-artifact
           path: ./artifact
+          github-token: ${{ secrets.READ_ACCESS_FOR_ARTIFACTS }}
+          run-id: ${{ github.event.inputs.run_id }}
       - name: Print hello.txt contents
         run: cat ./artifact/hello.txt
