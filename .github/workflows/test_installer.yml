@@ -44,7 +44,24 @@ jobs:
 
       - name: Remove dll
         run: |
+          ls C:\waterproof_dependencies\opam\wp-3.0.0+9.0\bin
           Remove-Item -Path "C:\waterproof_dependencies\opam\wp-3.0.0+9.0\bin\libgmp-10.dll"
+        shell: pwsh
+
+      - name: Search for libgmp-10.dll on C drive
+        run: |
+          Write-Host "Searching for libgmp-10.dll on C:\"
+          $dlls = Get-ChildItem -Path C:\ -Filter libgmp-10.dll -Recurse -ErrorAction SilentlyContinue
+          if ($dlls) {
+            Write-Host "Found libgmp-10.dll at:"
+            $dlls | ForEach-Object { Write-Host $_.FullName }
+          } else {
+            Write-Host "libgmp-10.dll not found on C drive."
+          }
+        shell: pwsh
+
+      - name: Check coq-lsp fails
+        run: |
           & "C:\waterproof_dependencies\opam\wp-3.0.0+9.0\bin\coq-lsp.exe" --version
           if ($LASTEXITCODE -eq 0) {
             Write-Error "coq-lsp ran successfully, but it was expected to fail."
