@@ -1,0 +1,38 @@
+# This workflow runs after the 'Windows' workflow completes and tests the installer
+name: Test Installer After Build
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Windows"]
+    types:
+      - completed
+
+jobs:
+  test_installer:
+    runs-on: windows-latest
+    steps:
+      - name: Download Installer Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: 'Windows installer 64 bits'
+          path: installer
+
+      # - name: Find Installer
+      #   run: |
+      #     dir installer
+      #     $installerExe = Get-ChildItem installer\*.exe | Select-Object -First 1
+      #     echo "Installer found: $installerExe"
+      #   shell: pwsh
+
+      # - name: Run Installer Silently
+      #   run: |
+      #     $installerExe = Get-ChildItem installer\*.exe | Select-Object -First 1
+      #     Start-Process -FilePath $installerExe.FullName -ArgumentList "/S" -Wait
+      #   shell: pwsh
+
+      # - name: Check Installed Programs Running
+      #   run: |
+      #     # Example: check if 'coq-lsp.exe' is running
+      #     /waterproof_dependencies/opam/wp-3.0.0+9.0/bin/coq-lsp.exe --version
+      #   shell: pwsh
