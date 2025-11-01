@@ -6,12 +6,13 @@ name: Windows
 
 ###############################################################################
 # Schedule:
-# Workflow runs on pushes to main and to waterproof_3.0.0+9.0 branch
+# Workflow runs on pushes to main and to waterproof_3.1.0+9.0 branch
 ###############################################################################
 on:
   push:
     branches:
       - main
+      - "chore/update-to-3.1.0+9.0"
       # - test-installer
   pull_request:
   workflow_dispatch:
@@ -21,7 +22,7 @@ on:
 ###############################################################################
 env:
   COQREGTESTING: y
-  SWITCH_NAME: wp-3.0.0+9.0
+  SWITCH_NAME: wp-3.1.0+9.0
 
 ###############################################################################
 # Builds Windows installer
@@ -178,13 +179,13 @@ jobs:
       #   if: always()
       #   shell: cmd
       #   run: |
-      #     C:\waterproof_dependencies\bin\bash --login -c "opam install -y coq-lsp.0.2.3+9.0"
+      #     C:\waterproof_dependencies\bin\bash --login -c "opam install -y coq-lsp.0.2.4+9.0"
 
       - name: Install coq-waterproof
         if: always()
         shell: cmd
         run: |
-          C:\waterproof_dependencies\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#3.0.0+9.0"
+          C:\waterproof_dependencies\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#3.1.0+9.0-pre"
 
       # - name: Create installer - comment out coqide
       #   if: always()

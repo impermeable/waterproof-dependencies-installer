@@ -6,7 +6,7 @@
 In the intended usage, the installer is downloaded and executed automatically from the vscode extension.
 Alternatively, it can be downloaded manually.
 
-⚠ Note that the installation path should be chosen to be `C:\waterproof_dependencies\opam\wp-3.0.0+9.0\`
+⚠ Note that the installation path should be chosen to be `C:\waterproof_dependencies\opam\wp-3.1.0+9.0\`
 
 ⚠ Note that in the library selection window, all selected libraries are necessary for Waterproof to function
 
