@@ -136,7 +136,7 @@ jobs:
       - name: Include custom .nsh script before all install sections
         shell: cmd
         run: |
-          sed -i 's/;Installer Sections/;Installer Sections\\\n\\\n!include "before-sections.nsh"/g' platform/windows/Coq.nsi
+          sed -i 's/;Installer Sections/;Installer Sections\n\n!include "before_sections.nsh"\n\n/g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
       - name: Link shared coq-lsp libraries
