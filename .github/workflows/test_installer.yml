@@ -45,10 +45,10 @@ jobs:
           # Example: check if 'coq-lsp.exe' is running
           ls
           ls C:\
-          C:\waterproof_dependencies\opam\wp-3.0.0+9.0\bin\coq-lsp.exe --version
+          C:\waterproof_dependencies\opam\wp-3.1.0+9.0\bin\coq-lsp.exe --version
         shell: pwsh
 
       - name: Confirm dll exists in directory
         run: |
-          Test-Path "C:\waterproof_dependencies\opam\wp-3.0.0+9.0\bin\libgmp-10.dll"
+          Test-Path "C:\waterproof_dependencies\opam\wp-3.1.0+9.0\bin\libgmp-10.dll"
         shell: pwsh

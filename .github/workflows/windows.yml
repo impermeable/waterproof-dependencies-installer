@@ -6,7 +6,7 @@ name: Windows
 
 ###############################################################################
 # Schedule:
-# Workflow runs on pushes to main and to waterproof_3.0.0+9.0 branch
+# Workflow runs on pushes to main and to waterproof_3.1.0+9.0 branch
 ###############################################################################
 on:
   push:
@@ -21,7 +21,7 @@ on:
 ###############################################################################
 env:
   COQREGTESTING: y
-  SWITCH_NAME: wp-3.0.0+9.0
+  SWITCH_NAME: wp-3.1.0+9.0
 
 ###############################################################################
 # Builds Windows installer
@@ -89,13 +89,14 @@ jobs:
           sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\waterproof_dependencies\\\opam\\\${{ env.SWITCH_NAME }}"/g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
-      - name: Copy platform pick script and icon to right place
+      - name: Copy platform pick script, icon, and before-section script to right place
         shell: cmd
         run : |
           cat main\package-pick-${{ env.SWITCH_NAME }}.sh
           dir platform
           dir platform\package_picks
           copy "main\package-pick-${{ env.SWITCH_NAME }}.sh" "platform\package_picks\package-pick-${{ env.SWITCH_NAME }}.sh"
+          copy "main\before_sections.nsh" "platform\windows\before_sections.nsh"
 
       - name: Missing dependency
         shell: cmd
@@ -129,6 +130,12 @@ jobs:
           sed -i 's/!define MUI_DIRECTORYPAGE_TEXT_TOP/!define MUI_DIRECTORYPAGE_TEXT_TOP "Please note:\$\\\r\$\\\n- Waterproof works best if you **do not change the folder below**.\$\\\r\$\\\n- If you do change the folder, please make a note of what you set it to.\$\\\r\$\\\n- The path to the folder may not include spaces.\$\\\r\$\\\n- If you have installed Waterproof dependency software in the same folder before, please remove it through add or remove programs in Windows.\$\\\r\$\\\n- It is fine to install different versions of the software in different folders."\n;!define MUI_DIRECTORYPAGE_TEXT_TOP/g' platform/windows/Coq.nsi
           sed -i 's$\"Publisher\" \"The Coq Team\"$\"Publisher\" \"The Waterproof Team\"$g' platform/windows/Coq.nsi
           sed -i 's$  !insertmacro MUI_PAGE_COMPONENTS$  !define MUI_COMPONENTSPAGE_TEXT_TOP \"Waterproof needs all the components below in order to work.\"\n  !insertmacro MUI_PAGE_COMPONENTS$g' platform/windows/Coq.nsi
+          cat platform/windows/Coq.nsi
+
+      - name: Include custom .nsh script before all install sections
+        shell: cmd
+        run: |
+          sed -i 's/;Installer Sections/;Installer Sections\n\n!include "before_sections.nsh"\n\n/g' platform/windows/Coq.nsi
           cat platform/windows/Coq.nsi
 
       - name: Link shared coq-lsp libraries
@@ -178,13 +185,13 @@ jobs:
       #   if: always()
       #   shell: cmd
       #   run: |
-      #     C:\waterproof_dependencies\bin\bash --login -c "opam install -y coq-lsp.0.2.3+9.0"
+      #     C:\waterproof_dependencies\bin\bash --login -c "opam install -y coq-lsp.0.2.4+9.0"
 
       - name: Install coq-waterproof
         if: always()
         shell: cmd
         run: |
-          C:\waterproof_dependencies\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#3.0.0+9.0"
+          C:\waterproof_dependencies\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#3.1.0+9.0-pre"
 
       # - name: Create installer - comment out coqide
       #   if: always()
