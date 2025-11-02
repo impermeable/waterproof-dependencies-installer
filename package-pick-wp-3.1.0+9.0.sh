@@ -47,7 +47,7 @@ PACKAGES=""
 ########## BASE PACKAGES ##########
 
 # Coq needs a patched ocamlfind to be relocatable by installers
-PACKAGES="${PACKAGES} PIN.ocamlfind.1.9.5~relocatable"  # TODO port patch to 1.9.6
+PACKAGES="${PACKAGES} PIN.ocamlfind.1.9.8"  # TODO port patch to 1.9.6
 # Since dune does support Coq, it is explicitly selected
 #PACKAGES="${PACKAGES} PIN.dune.3.16.1" # 3.17.2 has issues on Windows: cairo doesn't find cairo.h
 PACKAGES="${PACKAGES} PIN.dune-configurator.3.19.1"
