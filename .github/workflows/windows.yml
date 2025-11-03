@@ -191,7 +191,7 @@ jobs:
         if: always()
         shell: cmd
         run: |
-          C:\waterproof_dependencies\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#3.1.0+9.0-pre"
+          C:\waterproof_dependencies\bin\bash --login -c "opam pin add -y https://github.com/impermeable/coq-waterproof.git#3.1.0+9.0"
 
       # - name: Create installer - comment out coqide
       #   if: always()
