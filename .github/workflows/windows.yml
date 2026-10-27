@@ -22,6 +22,8 @@ on:
 env:
   COQREGTESTING: y
   SWITCH_NAME: wp-3.1.0+9.0
+  # For Rocq >= 9 the platform builds the installer from Rocq.nsi instead of Coq.nsi
+  NSIS_SCRIPT: Rocq.nsi
 
 ###############################################################################
 # Builds Windows installer
@@ -85,9 +87,9 @@ jobs:
       - name: Set default install directory
         shell: cmd
         run: |
-          sed -i 's$Name \"Coq\"$Name \"Waterproof dependency software\"$g' platform/windows/Coq.nsi
-          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\waterproof_dependencies\\\opam\\\${{ env.SWITCH_NAME }}"/g' platform/windows/Coq.nsi
-          cat platform/windows/Coq.nsi
+          sed -i 's$Name \"Rocq\"$Name \"Waterproof dependency software\"$g' platform/windows/${{ env.NSIS_SCRIPT }}
+          sed -i 's/\s\sInstallDir\s"C:\\\${MY_PRODUCT}"/  InstallDir "C:\\\waterproof_dependencies\\\opam\\\${{ env.SWITCH_NAME }}"/g' platform/windows/${{ env.NSIS_SCRIPT }}
+          cat platform/windows/${{ env.NSIS_SCRIPT }}
 
       - name: Copy platform pick script, icon, and before-section script to right place
         shell: cmd
@@ -110,33 +112,27 @@ jobs:
           sed -i 's$source shell_scripts/get_names_from_switch.sh$source package_picks/coq_platform_release.sh\nCOQ_PLATFORM_PACKAGE_PICK_POSTFIX=\"${{ env.SWITCH_NAME }}\"$g' platform/windows/create_installer_windows.sh
           cat platform/windows/create_installer_windows.sh
 
-      - name: Fix license to rocq-core
-        shell: cmd
-        run: |
-          sed -i 's$cp source/coq/LICENSE$echo \"---- going to source rocq-core ----\"\nopam source --dir=source/rocq-core rocq-core.9.0.0\ncp source/rocq-core/LICENSE$g' platform/windows/create_installer_windows.sh
-          cat platform/windows/create_installer_windows.sh
-
       - name: Define product name
         shell: cmd
         run: |
-          sed -i 's$define MY_PRODUCT \"Coq-Platform$define MY_PRODUCT \"Waterproof-dependencies-$g' platform/windows/Coq.nsi
-          sed -i 's$define OUTFILE \"Coq-Platform-release-\${RELEASE}-version\${VERSION}-Windows-\${ARCH}.exe$define OUTFILE \"Waterproof-dependencies-\${VERSION}-Windows-\${ARCH}.exe$g' platform/windows/Coq.nsi
-          sed -i 's$define MUI_ICON \"coq.ico$define MUI_ICON \"Waterproof.ico$g' platform/windows/Coq.nsi
-          cat platform/windows/Coq.nsi
+          sed -i 's$define MY_PRODUCT \"Rocq-Platform$define MY_PRODUCT \"Waterproof-dependencies-$g' platform/windows/${{ env.NSIS_SCRIPT }}
+          sed -i 's$define OUTFILE \"Rocq-Platform-release-\${RELEASE}-version\${VERSION}-Windows-\${ARCH}.exe$define OUTFILE \"Waterproof-dependencies-\${VERSION}-Windows-\${ARCH}.exe$g' platform/windows/${{ env.NSIS_SCRIPT }}
+          sed -i 's$define MUI_ICON \"coq.ico$define MUI_ICON \"Waterproof.ico$g' platform/windows/${{ env.NSIS_SCRIPT }}
+          cat platform/windows/${{ env.NSIS_SCRIPT }}
 
       - name: Redefine text in installer
         shell: cmd
         run: |
-          sed -i 's/!define MUI_DIRECTORYPAGE_TEXT_TOP/!define MUI_DIRECTORYPAGE_TEXT_TOP "Please note:\$\\\r\$\\\n- Waterproof works best if you **do not change the folder below**.\$\\\r\$\\\n- If you do change the folder, please make a note of what you set it to.\$\\\r\$\\\n- The path to the folder may not include spaces.\$\\\r\$\\\n- If you have installed Waterproof dependency software in the same folder before, please remove it through add or remove programs in Windows.\$\\\r\$\\\n- It is fine to install different versions of the software in different folders."\n;!define MUI_DIRECTORYPAGE_TEXT_TOP/g' platform/windows/Coq.nsi
-          sed -i 's$\"Publisher\" \"The Coq Team\"$\"Publisher\" \"The Waterproof Team\"$g' platform/windows/Coq.nsi
-          sed -i 's$  !insertmacro MUI_PAGE_COMPONENTS$  !define MUI_COMPONENTSPAGE_TEXT_TOP \"Waterproof needs all the components below in order to work.\"\n  !insertmacro MUI_PAGE_COMPONENTS$g' platform/windows/Coq.nsi
-          cat platform/windows/Coq.nsi
+          sed -i 's/!define MUI_DIRECTORYPAGE_TEXT_TOP/!define MUI_DIRECTORYPAGE_TEXT_TOP "Please note:\$\\\r\$\\\n- Waterproof works best if you **do not change the folder below**.\$\\\r\$\\\n- If you do change the folder, please make a note of what you set it to.\$\\\r\$\\\n- The path to the folder may not include spaces.\$\\\r\$\\\n- If you have installed Waterproof dependency software in the same folder before, please remove it through add or remove programs in Windows.\$\\\r\$\\\n- It is fine to install different versions of the software in different folders."\n;!define MUI_DIRECTORYPAGE_TEXT_TOP/g' platform/windows/${{ env.NSIS_SCRIPT }}
+          sed -i 's$\"Publisher\" \"The Rocq Team\"$\"Publisher\" \"The Waterproof Team\"$g' platform/windows/${{ env.NSIS_SCRIPT }}
+          sed -i 's$  !insertmacro MUI_PAGE_COMPONENTS$  !define MUI_COMPONENTSPAGE_TEXT_TOP \"Waterproof needs all the components below in order to work.\"\n  !insertmacro MUI_PAGE_COMPONENTS$g' platform/windows/${{ env.NSIS_SCRIPT }}
+          cat platform/windows/${{ env.NSIS_SCRIPT }}
 
       - name: Include custom .nsh script before all install sections
         shell: cmd
         run: |
-          sed -i 's/;Installer Sections/;Installer Sections\n\n!include "before_sections.nsh"\n\n/g' platform/windows/Coq.nsi
-          cat platform/windows/Coq.nsi
+          sed -i 's/;Installer Sections/;Installer Sections\n\n!include "before_sections.nsh"\n\n/g' platform/windows/${{ env.NSIS_SCRIPT }}
+          cat platform/windows/${{ env.NSIS_SCRIPT }}
 
       - name: Link shared coq-lsp libraries
         shell: cmd
@@ -156,6 +152,35 @@ jobs:
         run: |
           sed -i 's$# Copy some files from source$# Copy some files from source\ncp /home/runneradmin/wpdinstaller/Waterproof.ico .$g' platform/windows/create_installer_windows.sh
           cat platform/windows/create_installer_windows.sh
+
+      # The sed patching above silently does nothing if the platform files change upstream,
+      # so check that every customization actually ended up in the files.
+      - name: Verify customizations were applied
+        shell: bash
+        run: |
+          missing=0
+          check() {
+            if ! grep -qF -- "$2" "platform/windows/$1"; then
+              echo "::error::Customization not applied in $1: $2"
+              missing=1
+            fi
+          }
+          check "${{ env.NSIS_SCRIPT }}" 'Name "Waterproof dependency software"'
+          check "${{ env.NSIS_SCRIPT }}" 'waterproof_dependencies'
+          check "${{ env.NSIS_SCRIPT }}" 'define MY_PRODUCT "Waterproof-dependencies-'
+          check "${{ env.NSIS_SCRIPT }}" 'define OUTFILE "Waterproof-dependencies-'
+          check "${{ env.NSIS_SCRIPT }}" 'define MUI_ICON "Waterproof.ico"'
+          check "${{ env.NSIS_SCRIPT }}" 'Waterproof works best'
+          check "${{ env.NSIS_SCRIPT }}" '"Publisher" "The Waterproof Team"'
+          check "${{ env.NSIS_SCRIPT }}" 'MUI_COMPONENTSPAGE_TEXT_TOP'
+          check "${{ env.NSIS_SCRIPT }}" '!include "before_sections.nsh"'
+          check create_installer_windows.sh 'files_coq-waterproof'
+          check create_installer_windows.sh 'source package_picks/coq_platform_release.sh'
+          check create_installer_windows.sh '"files_coq-lsp"'
+          check create_installer_windows.sh 'wpdinstaller/Waterproof.ico'
+          check link_shared_libraries.sh 'pocklington coq-lsp'
+          grep -q "${{ env.NSIS_SCRIPT }}" platform/windows/create_installer_windows.sh || { echo "::error::create_installer_windows.sh no longer uses ${{ env.NSIS_SCRIPT }}"; missing=1; }
+          exit $missing
 
       - name: Run coq platform make windows
         shell: cmd
