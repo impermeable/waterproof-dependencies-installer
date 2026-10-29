@@ -222,7 +222,7 @@ jobs:
         if: always()
         shell: cmd
         run: |
-          C:\waterproof_dependencies\bin\bash --login -c "opam pin add -y https://github.com/impermeable/analysis-rug.git#3.1.0+9.0"
+          C:\waterproof_dependencies\bin\bash --login -c "opam pin add -y https://github.com/impermeable/analysis-rug.git"
 
       # - name: Create installer - comment out coqide
       #   if: always()
