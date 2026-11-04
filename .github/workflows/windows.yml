@@ -21,7 +21,7 @@ on:
 ###############################################################################
 env:
   COQREGTESTING: y
-  SWITCH_NAME: wp-3.1.0+9.0
+  SWITCH_NAME: wp-3.1.0+9.1
   # For Rocq >= 9 the platform builds the installer from Rocq.nsi instead of Coq.nsi
   NSIS_SCRIPT: Rocq.nsi
 
