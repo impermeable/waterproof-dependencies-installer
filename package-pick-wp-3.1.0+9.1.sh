@@ -52,9 +52,8 @@ PACKAGES="${PACKAGES} PIN.ocamlfind.1.9.8"  # TODO port patch to 1.9.6
 #PACKAGES="${PACKAGES} PIN.dune.3.16.1" # 3.17.2 has issues on Windows: cairo doesn't find cairo.h
 PACKAGES="${PACKAGES} PIN.dune-configurator.3.19.1"
 # The Coq compiler coqc and the Coq standard library
-PACKAGES="${PACKAGES} PIN.rocq-prover.9.0.0"
 PACKAGES="${PACKAGES} coq-lsp.0.2.5+9.1"
 
 # For now include rocqide, although eventually we would like to remove this
-PACKAGES="${PACKAGES} rocqide.9.0.0"
+PACKAGES="${PACKAGES} rocqide.9.1.1"
 PACKAGEs="${PACKAGES} vscoq-language-server.2.2.5"
