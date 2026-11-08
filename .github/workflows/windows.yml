@@ -21,6 +21,8 @@ on:
 ###############################################################################
 env:
   COQREGTESTING: y
+  # Retry failed source downloads more often; transient 504s from the opam cache/GitHub otherwise abort the build
+  OPAMRETRIES: 10
   SWITCH_NAME: wp-3.1.1+9.1
   # For Rocq >= 9 the platform builds the installer from Rocq.nsi instead of Coq.nsi
   NSIS_SCRIPT: Rocq.nsi
