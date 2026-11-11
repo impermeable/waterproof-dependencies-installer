@@ -28,7 +28,7 @@ To update to a new coq and/or [coq/platform](https://github.com/coq/platform/) v
 
 In .github/workflows/windows.yml
  - Change the coq/platform version in step "Git checkout Coq platform", by changing the value after "ref:". For now it is set to `main`, which should be okay but is not stable.
- - Change the pick, i.e. coq version for coq platform in step "Run coq platform make windows", by changing the argument -pick="COQ-VERSION-AND-PLATFORM-VERSION", for example: "8.17~2023.08" or "8.20~2025.01", check coq/platform for valid options.
+ - Change the pick, i.e. coq version for coq platform in step "Run coq platform make windows", by changing the argument -pick="COQ-VERSION-AND-PLATFORM-VERSION", for example: "8.17\~2023.08" or "8.20\~2025.01", check coq/platform for valid options.
  - Change the coq-lsp version, to the one matching the chosen coq version.
  - Change the waterproof version.
 
